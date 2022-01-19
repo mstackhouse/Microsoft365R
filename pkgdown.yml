@@ -1,0 +1,12 @@
+pandoc: 2.7.3
+pkgdown: 2.0.2
+pkgdown_sha: ~
+articles:
+  auth: auth.html
+  od_sp: od_sp.html
+  outlook: outlook.html
+  scripted: scripted.html
+  shiny: shiny.html
+  teams: teams.html
+last_built: 2022-01-19T22:21Z
+
