@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">Microsoft365R</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.3.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.0.9000</span>
       </span>
     </div>
 
@@ -50,7 +50,7 @@
   <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -102,7 +102,7 @@
 <div class="section level1">
 <div class="page-header"><h1 id="microsoft365r-">Microsoft365R <img src="reference/figures/logo.png" align="right" width="150"><a class="anchor" aria-label="anchor" href="#microsoft365r-"></a>
 </h1></div>
-
+<p><a href="https://cran.r-project.org/package=Microsoft365R" class="external-link"><img src="https://www.r-pkg.org/badges/version/Microsoft365R" alt="CRAN"></a> <img src="https://cranlogs.r-pkg.org/badges/Microsoft365R" alt="Downloads"><img src="https://github.com/Azure/Microsoft365R/workflows/R-CMD-check/badge.svg" alt="R-CMD-check"></p>
 <p>Microsoft365R is intended to be a simple yet powerful R interface to <a href="https://www.microsoft.com/en-us/microsoft-365" class="external-link">Microsoft 365</a> (formerly known as Office 365), leveraging the facilities provided by the <a href="https://cran.r-project.org/package=AzureGraph" class="external-link">AzureGraph</a> package. Currently it supports Microsoft Teams, Outlook, SharePoint Online, and OneDrive.</p>
 <p>The primary repo for this package is at <a href="https://github.com/Azure/Microsoft365R" class="external-link uri">https://github.com/Azure/Microsoft365R</a>; please submit issues and PRs there. It is also mirrored at the Cloudyr org at <a href="https://github.com/cloudyr/Microsoft365R" class="external-link uri">https://github.com/cloudyr/Microsoft365R</a>. You can install the development version of the package with <code>devtools::install_github("Azure/Microsoft365R")</code>.</p>
 <div class="section level2">
@@ -119,114 +119,122 @@
 </h3>
 <p>To access your personal OneDrive call <code><a href="reference/client.html">get_personal_onedrive()</a></code>, and to access OneDrive for Business, call <code><a href="reference/client.html">get_business_onedrive()</a></code>. These return an R6 client object of class <code>ms_drive</code>, which has methods for working with files and folders. `</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">od</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/client.html">get_personal_onedrive</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">odb</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/client.html">get_business_onedrive</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># list files and folders</span>
-<span class="va">od</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span><span class="op">)</span>
-<span class="va">od</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span><span class="st">"Documents"</span><span class="op">)</span>
-
-<span class="co"># upload and download files</span>
-<span class="va">od</span><span class="op">$</span><span class="fu">upload_file</span><span class="op">(</span><span class="st">"somedata.xlsx"</span><span class="op">)</span>
-<span class="va">od</span><span class="op">$</span><span class="fu">download_file</span><span class="op">(</span><span class="st">"Documents/myfile.docx"</span><span class="op">)</span>
-
-<span class="co"># create a folder</span>
-<span class="va">od</span><span class="op">$</span><span class="fu">create_folder</span><span class="op">(</span><span class="st">"Documents/newfolder"</span><span class="op">)</span>
-
-<span class="co"># open a document for editing in Word Online</span>
-<span class="va">od</span><span class="op">$</span><span class="fu">open_item</span><span class="op">(</span><span class="st">"Documents/myfile.docx"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">od</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/client.html">get_personal_onedrive</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">odb</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/client.html">get_business_onedrive</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># list files and folders</span></span>
+<span><span class="va">od</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">od</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span><span class="st">"Documents"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># upload and download files</span></span>
+<span><span class="va">od</span><span class="op">$</span><span class="fu">upload_file</span><span class="op">(</span><span class="st">"somedata.xlsx"</span><span class="op">)</span></span>
+<span><span class="va">od</span><span class="op">$</span><span class="fu">download_file</span><span class="op">(</span><span class="st">"Documents/myfile.docx"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># create a folder</span></span>
+<span><span class="va">od</span><span class="op">$</span><span class="fu">create_folder</span><span class="op">(</span><span class="st">"Documents/newfolder"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># open a document for editing in Word Online</span></span>
+<span><span class="va">od</span><span class="op">$</span><span class="fu">open_item</span><span class="op">(</span><span class="st">"Documents/myfile.docx"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># working with data frames and R objects</span></span>
+<span><span class="va">od</span><span class="op">$</span><span class="fu">save_dataframe</span><span class="op">(</span><span class="va">iris</span>, <span class="st">"Documents/iris.csv"</span><span class="op">)</span></span>
+<span><span class="va">iris2</span> <span class="op">&lt;-</span> <span class="va">od</span><span class="op">$</span><span class="fu">load_dataframe</span><span class="op">(</span><span class="st">"Documents/iris.csv"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">wtmod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">wt</span> <span class="op">~</span> <span class="va">.</span>, data<span class="op">=</span><span class="va">mtcars</span><span class="op">)</span></span>
+<span><span class="va">od</span><span class="op">$</span><span class="fu">save_rds</span><span class="op">(</span><span class="va">wtmod</span>, <span class="st">"Documents/wtmod.rds"</span><span class="op">)</span></span>
+<span><span class="va">wtmod2</span> <span class="op">&lt;-</span> <span class="va">od</span><span class="op">$</span><span class="fu">load_rds</span><span class="op">(</span><span class="st">"Documents/wtmod.rds"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="sharepoint-online">SharePoint Online<a class="anchor" aria-label="anchor" href="#sharepoint-online"></a>
 </h3>
 <p>To access a SharePoint site, use the <code><a href="reference/client.html">get_sharepoint_site()</a></code> function and provide the site name, URL or ID. You can also list the sites you’re following with <code><a href="reference/client.html">list_sharepoint_sites()</a></code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/client.html">list_sharepoint_sites</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">site</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/client.html">get_sharepoint_site</a></span><span class="op">(</span><span class="st">"My site"</span><span class="op">)</span>
-
-<span class="co"># document libraries</span>
-<span class="va">site</span><span class="op">$</span><span class="fu">list_drives</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># default document library</span>
-<span class="va">drv</span> <span class="op">&lt;-</span> <span class="va">site</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># a drive has the same methods as for OneDrive above</span>
-<span class="va">drv</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span><span class="op">)</span>
-<span class="va">drv</span><span class="op">$</span><span class="fu">open_item</span><span class="op">(</span><span class="st">"teamproject/plan.xlsx"</span><span class="op">)</span>
-
-<span class="co"># lists</span>
-<span class="va">site</span><span class="op">$</span><span class="fu">get_lists</span><span class="op">(</span><span class="op">)</span>
-
-<span class="va">lst</span> <span class="op">&lt;-</span> <span class="va">site</span><span class="op">$</span><span class="fu">get_list</span><span class="op">(</span><span class="st">"my-list"</span><span class="op">)</span>
-
-<span class="co"># return the items in the list as a data frame</span>
-<span class="va">lst</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/client.html">list_sharepoint_sites</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">site</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/client.html">get_sharepoint_site</a></span><span class="op">(</span><span class="st">"My site"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># document libraries</span></span>
+<span><span class="va">site</span><span class="op">$</span><span class="fu">list_drives</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># default document library</span></span>
+<span><span class="va">drv</span> <span class="op">&lt;-</span> <span class="va">site</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># a drive has the same methods as for OneDrive above</span></span>
+<span><span class="va">drv</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">drv</span><span class="op">$</span><span class="fu">open_item</span><span class="op">(</span><span class="st">"teamproject/plan.xlsx"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># lists</span></span>
+<span><span class="va">site</span><span class="op">$</span><span class="fu">get_lists</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">lst</span> <span class="op">&lt;-</span> <span class="va">site</span><span class="op">$</span><span class="fu">get_list</span><span class="op">(</span><span class="st">"my-list"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># return the items in the list as a data frame</span></span>
+<span><span class="va">lst</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="teams">Teams<a class="anchor" aria-label="anchor" href="#teams"></a>
 </h3>
 <p>To access a team in Microsoft Teams, use the <code><a href="reference/client.html">get_team()</a></code> function and provide the team name or ID. You can also list the teams you’re in with <code><a href="reference/client.html">list_teams()</a></code>. These return objects of R6 class <code>ms_team</code> which has methods for working with channels; in turn, a channel has methods for working with messages and transferring files.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/client.html">list_teams</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">team</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/client.html">get_team</a></span><span class="op">(</span><span class="st">"My team"</span><span class="op">)</span>
-
-<span class="co"># associated SharePoint site and drive</span>
-<span class="va">team</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span>
-<span class="va">team</span><span class="op">$</span><span class="fu">get_sharepoint_site</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># channels</span>
-<span class="va">team</span><span class="op">$</span><span class="fu">list_channels</span><span class="op">(</span><span class="op">)</span>
-
-<span class="va">chan</span> <span class="op">&lt;-</span> <span class="va">team</span><span class="op">$</span><span class="fu">get_channel</span><span class="op">(</span><span class="st">"General"</span><span class="op">)</span>
-
-<span class="co"># messages</span>
-<span class="va">chan</span><span class="op">$</span><span class="fu">list_messages</span><span class="op">(</span><span class="op">)</span>
-<span class="va">chan</span><span class="op">$</span><span class="fu">send_message</span><span class="op">(</span><span class="st">"Hello from R"</span>, attachments<span class="op">=</span><span class="st">"hello.md"</span><span class="op">)</span>
-
-<span class="va">msg</span> <span class="op">&lt;-</span> <span class="va">chan</span><span class="op">$</span><span class="fu">get_message</span><span class="op">(</span><span class="st">"msg-id"</span><span class="op">)</span>
-<span class="va">msg</span><span class="op">$</span><span class="fu">send_reply</span><span class="op">(</span><span class="st">"Reply from R"</span><span class="op">)</span>
-
-<span class="co"># files: similar methods to OneDrive</span>
-<span class="va">chan</span><span class="op">$</span><span class="fu">list_files</span><span class="op">(</span><span class="op">)</span>
-<span class="va">chan</span><span class="op">$</span><span class="fu">download_file</span><span class="op">(</span><span class="st">"myfile.docx"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/client.html">list_teams</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">team</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/client.html">get_team</a></span><span class="op">(</span><span class="st">"My team"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># associated SharePoint site and drive</span></span>
+<span><span class="va">team</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">team</span><span class="op">$</span><span class="fu">get_sharepoint_site</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># channels</span></span>
+<span><span class="va">team</span><span class="op">$</span><span class="fu">list_channels</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">chan</span> <span class="op">&lt;-</span> <span class="va">team</span><span class="op">$</span><span class="fu">get_channel</span><span class="op">(</span><span class="st">"General"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># messages</span></span>
+<span><span class="va">chan</span><span class="op">$</span><span class="fu">list_messages</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">chan</span><span class="op">$</span><span class="fu">send_message</span><span class="op">(</span><span class="st">"Hello from R"</span>, attachments<span class="op">=</span><span class="st">"hello.md"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">msg</span> <span class="op">&lt;-</span> <span class="va">chan</span><span class="op">$</span><span class="fu">get_message</span><span class="op">(</span><span class="st">"msg-id"</span><span class="op">)</span></span>
+<span><span class="va">msg</span><span class="op">$</span><span class="fu">send_reply</span><span class="op">(</span><span class="st">"Reply from R"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># files: similar methods to OneDrive</span></span>
+<span><span class="va">chan</span><span class="op">$</span><span class="fu">list_files</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">chan</span><span class="op">$</span><span class="fu">download_file</span><span class="op">(</span><span class="st">"myfile.docx"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="outlook">Outlook<a class="anchor" aria-label="anchor" href="#outlook"></a>
 </h3>
 <p>Microsoft365R supports sending, receiving and managing emails in Outlook. Use the <code><a href="reference/client.html">get_personal_outlook()</a></code> method to access your emails for your personal account, and <code><a href="reference/client.html">get_business_outlook()</a></code> for your work or school account. Emails can optionally be composed using either the blastula or emayili packages.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">outl</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/client.html">get_personal_outlook</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">outlb</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/client.html">get_business_outlook</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># compose an email with blastula</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rich-iannone/blastula" class="external-link">blastula</a></span><span class="op">)</span>
-<span class="va">bl_body</span> <span class="op">&lt;-</span> <span class="st">"## Hello!
-
-This is an email message that was generated by the blastula package.
-
-We can use **Markdown** formatting with the `md()` function.
-
-Cheers,
-
-The blastula team"</span>
-
-<span class="va">bl_em</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/blastula/man/compose_email.html" class="external-link">compose_email</a></span><span class="op">(</span>
-    body<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/blastula/man/md.html" class="external-link">md</a></span><span class="op">(</span><span class="va">bl_body</span><span class="op">)</span>,
-    footer<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/blastula/man/md.html" class="external-link">md</a></span><span class="op">(</span><span class="st">"sent via Microsoft365R"</span><span class="op">)</span>
-<span class="op">)</span>
-<span class="va">em</span> <span class="op">&lt;-</span> <span class="va">outl</span><span class="op">$</span><span class="fu">create_email</span><span class="op">(</span><span class="va">bl_em</span>, subject<span class="op">=</span><span class="st">"Hello from R"</span>, to<span class="op">=</span><span class="st">"bob@example.com"</span><span class="op">)</span>
-
-<span class="co"># add an attachment and send it</span>
-<span class="va">em</span><span class="op">$</span><span class="fu">add_attachment</span><span class="op">(</span><span class="st">"mydocument.docx"</span><span class="op">)</span>
-<span class="va">em</span><span class="op">$</span><span class="fu">send</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># list the most recent emails in your inbox</span>
-<span class="va">emlst</span> <span class="op">&lt;-</span> <span class="va">outl</span><span class="op">$</span><span class="fu">list_emails</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># reply to the most recent email</span>
-<span class="va">emlst</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span>
-    <span class="fu">create_reply</span><span class="op">(</span><span class="st">"Replying from R"</span><span class="op">)</span><span class="op">$</span>
-    <span class="fu">send</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">outl</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/client.html">get_personal_outlook</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">outlb</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/client.html">get_business_outlook</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># compose an email with blastula</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rstudio/blastula" class="external-link">blastula</a></span><span class="op">)</span></span>
+<span><span class="va">bl_body</span> <span class="op">&lt;-</span> <span class="st">"## Hello!</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">This is an email message that was generated by the blastula package.</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">We can use **Markdown** formatting with the `md()` function.</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">Cheers,</span></span>
+<span><span class="st"></span></span>
+<span><span class="st">The blastula team"</span></span>
+<span></span>
+<span><span class="va">bl_em</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/blastula/man/compose_email.html" class="external-link">compose_email</a></span><span class="op">(</span></span>
+<span>    body<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/blastula/man/md.html" class="external-link">md</a></span><span class="op">(</span><span class="va">bl_body</span><span class="op">)</span>,</span>
+<span>    footer<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/blastula/man/md.html" class="external-link">md</a></span><span class="op">(</span><span class="st">"sent via Microsoft365R"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">em</span> <span class="op">&lt;-</span> <span class="va">outl</span><span class="op">$</span><span class="fu">create_email</span><span class="op">(</span><span class="va">bl_em</span>, subject<span class="op">=</span><span class="st">"Hello from R"</span>, to<span class="op">=</span><span class="st">"bob@example.com"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># add an attachment and send it</span></span>
+<span><span class="va">em</span><span class="op">$</span><span class="fu">add_attachment</span><span class="op">(</span><span class="st">"mydocument.docx"</span><span class="op">)</span></span>
+<span><span class="va">em</span><span class="op">$</span><span class="fu">send</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># list the most recent emails in your inbox</span></span>
+<span><span class="va">emlst</span> <span class="op">&lt;-</span> <span class="va">outl</span><span class="op">$</span><span class="fu">list_emails</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># reply to the most recent email</span></span>
+<span><span class="va">emlst</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span></span>
+<span>    <span class="fu">create_reply</span><span class="op">(</span><span class="st">"Replying from R"</span><span class="op">)</span><span class="op">$</span></span>
+<span>    <span class="fu">send</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <hr>
 <p align="center">
 <a href="https://github.com/Azure/AzureR" class="external-link"><img src="https://github.com/Azure/AzureR/raw/master/images/logo2.png" width="800"></a>
@@ -276,12 +284,7 @@ The blastula team"</span>
 </ul>
 </div>
 
-<div class="dev-status">
-<h2 data-toc-skip>Dev status</h2>
-<ul class="list-unstyled">
-<li><a href="https://cran.r-project.org/package=Microsoft365R" class="external-link"><img src="https://www.r-pkg.org/badges/version/Microsoft365R" alt="CRAN"></a></li>
-</ul>
-</div>
+
 
   </div>
 </div>
@@ -294,7 +297,7 @@ The blastula team"</span>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Microsoft365R</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.3.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.0.9000</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -121,9 +121,9 @@
     <h2>Creating and sending emails</h2>
     
 
-<p>Outlook allows creating new draft emails in any folder, not just the Drafts folder (although that is the default location for the Outlook app, and the <code>ms_outlook</code> client class). To create a new email, call the <code>create_email()</code> method, which has the following signature:</p><div class="sourceCode"><pre><code><span class="fu">create_email</span><span class="op">(</span>body <span class="op">=</span> <span class="st">""</span>, content_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"text"</span>, <span class="st">"html"</span><span class="op">)</span>, subject <span class="op">=</span> <span class="st">""</span>,
-             to <span class="op">=</span> <span class="cn">NULL</span>, cc <span class="op">=</span> <span class="cn">NULL</span>, bcc <span class="op">=</span> <span class="cn">NULL</span>, reply_to <span class="op">=</span> <span class="cn">NULL</span>, send_now <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<ul><li><p><code>body</code>: The body of the message. This should be a string or vector of strings, which will be pasted together with newlines as separators. You can also supply a message object as created by the blastula or emayili packages---see the examples below.</p></li>
+<p>Outlook allows creating new draft emails in any folder, not just the Drafts folder (although that is the default location for the Outlook app, and the <code>ms_outlook</code> client class). To create a new email, call the <code>create_email()</code> method, which has the following signature:</p>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">create_email</span>(<span class="at">body =</span> <span class="st">""</span>, <span class="at">content_type =</span> <span class="fu">c</span>(<span class="st">"text"</span>, <span class="st">"html"</span>), <span class="at">subject =</span> <span class="st">""</span>,</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">to =</span> <span class="cn">NULL</span>, <span class="at">cc =</span> <span class="cn">NULL</span>, <span class="at">bcc =</span> <span class="cn">NULL</span>, <span class="at">reply_to =</span> <span class="cn">NULL</span>, <span class="at">send_now =</span> <span class="cn">FALSE</span>)</span></code></pre><p></p></div><ul><li><p><code>body</code>: The body of the message. This should be a string or vector of strings, which will be pasted together with newlines as separators. You can also supply a message object as created by the blastula or emayili packages---see the examples below.</p></li>
 <li><p><code>content_type</code>: The format of the body, either "text" (the default) or HTML.</p></li>
 <li><p><code>subject</code>: The subject of the message.</p></li>
 <li><p><code>to,cc,bcc,reply_to</code>: These should be lists of email addresses, in standard "user@host" format. You can also supply objects of class <code><a href="https://rdrr.io/pkg/AzureGraph/man/az_user.html" class="external-link">AzureGraph::az_user</a></code> representing user accounts in Azure Active Directory.</p></li>
@@ -136,9 +136,9 @@
     <h2>Listing emails</h2>
     
 
-<p>To list the emails in a folder, call the <code>list_emails()</code> method. This returns a list of objects of class <code><a href="ms_outlook_email.html">ms_outlook_email</a></code>, and has the following signature:</p><div class="sourceCode"><pre><code><span class="fu">list_emails</span><span class="op">(</span>by <span class="op">=</span> <span class="st">"received desc"</span>, search <span class="op">=</span> <span class="cn">NULL</span>, filter <span class="op">=</span> <span class="cn">NULL</span>, n <span class="op">=</span> <span class="fl">100</span>, pagesize <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
-<ul><li><p><code>by</code>: The sorting order of the message list. The possible fields are "received" (received date, the default), "from" and "subject". To sort in descending order, add a " desc". You can specify multiple sorting fields, with later fields used to break ties in earlier ones. The last sorting field is always "received desc" unless it appears earlier.</p></li>
-<li><p><code>search</code>: An optional string to search for. Only emails that contain the search string will be returned. See the <a href="https://docs.microsoft.com/en-us/graph/query-parameters#search-parameter" class="external-link">description of this parameter</a> for more information.</p></li>
+<p>To list the emails in a folder, call the <code>list_emails()</code> method. This returns a list of objects of class <code><a href="ms_outlook_email.html">ms_outlook_email</a></code>, and has the following signature:</p>
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">list_emails</span>(<span class="at">by =</span> <span class="st">"received desc"</span>, <span class="at">search =</span> <span class="cn">NULL</span>, <span class="at">filter =</span> <span class="cn">NULL</span>, <span class="at">n =</span> <span class="dv">100</span>, <span class="at">pagesize =</span> <span class="dv">10</span>)</span></code></pre><p></p></div><ul><li><p><code>by</code>: The sorting order of the message list. The possible fields are "received" (received date, the default), "from" and "subject". To sort in descending order, add a " desc". You can specify multiple sorting fields, with later fields used to break ties in earlier ones. The last sorting field is always "received desc" unless it appears earlier.</p></li>
+<li><p><code>search</code>: An optional string to search for. Only emails that contain the search string will be returned. See the <a href="https://learn.microsoft.com/en-us/graph/query-parameters#search-parameter" class="external-link">description of this parameter</a> for more information.</p></li>
 <li><p><code>filter, n</code>: See below.</p></li>
 <li><p><code>pagesize</code>: The number of emails per page. You can change this to a larger number to increase throughput, at the risk of running into timeouts.</p></li>
 </ul><p>Currently, searching and filtering the message list is subject to some limitations. You can only specify one of <code>search</code> and <code>filter</code>; searching and filtering at the same time will not work. Ordering the results is only allowed if neither a search term nor a filtering expression is present. If searching or filtering is done, the result is always sorted by date.</p>
@@ -147,87 +147,87 @@
     <h2>List methods generally</h2>
     
 
-<p>All <code>list_*</code> methods have <code>filter</code> and <code>n</code> arguments to limit the number of results. The former should be an <a href="https://docs.microsoft.com/en-us/graph/query-parameters#filter-parameter" class="external-link">OData expression</a> as a string to filter the result set on. The latter should be a number setting the maximum number of (filtered) results to return. The default values are <code>filter=NULL</code> and <code>n=100</code> for listing emails, and <code>n=Inf</code> for listing folders. If <code>n=NULL</code>, the <code>ms_graph_pager</code> iterator object is returned instead to allow manual iteration over the results.</p>
+<p>All <code>list_*</code> methods have <code>filter</code> and <code>n</code> arguments to limit the number of results. The former should be an <a href="https://learn.microsoft.com/en-us/graph/query-parameters#filter-parameter" class="external-link">OData expression</a> as a string to filter the result set on. The latter should be a number setting the maximum number of (filtered) results to return. The default values are <code>filter=NULL</code> and <code>n=100</code> for listing emails, and <code>n=Inf</code> for listing folders. If <code>n=NULL</code>, the <code>ms_graph_pager</code> iterator object is returned instead to allow manual iteration over the results.</p>
 <p>Support in the underlying Graph API for OData queries is patchy. Not all endpoints that return lists of objects support filtering, and if they do, they may not allow all of the defined operators. If your filtering expression results in an error, you can carry out the operation without filtering and then filter the results on the client side.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p><code><a href="ms_outlook.html">ms_outlook</a></code>, <code><a href="ms_outlook_email.html">ms_outlook_email</a></code></p>
-<p><a href="https://docs.microsoft.com/en-us/graph/overview" class="external-link">Microsoft Graph overview</a>,
-<a href="https://docs.microsoft.com/en-us/graph/api/resources/mail-api-overview?view=graph-rest-1.0" class="external-link">Outlook API reference</a></p></div>
+<p><a href="https://learn.microsoft.com/en-us/graph/overview" class="external-link">Microsoft Graph overview</a>,
+<a href="https://learn.microsoft.com/en-us/graph/api/resources/mail-api-overview?view=graph-rest-1.0" class="external-link">Outlook API reference</a></p></div>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">outl</span> <span class="op">&lt;-</span> <span class="fu"><a href="client.html">get_personal_outlook</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">folder</span> <span class="op">&lt;-</span> <span class="va">outl</span><span class="op">$</span><span class="fu">get_folder</span><span class="op">(</span><span class="st">"My folder"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">##</span></span>
-<span class="r-in"><span class="co">## listing emails</span></span>
-<span class="r-in"><span class="co">##</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># the default: 100 most recent messages</span></span>
-<span class="r-in"><span class="va">folder</span><span class="op">$</span><span class="fu">list_emails</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># sorted by subject, then by most recent received date</span></span>
-<span class="r-in"><span class="va">folder</span><span class="op">$</span><span class="fu">list_emails</span><span class="op">(</span>by<span class="op">=</span><span class="st">"subject"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># sorted by from name in descending order, then by most recent received date</span></span>
-<span class="r-in"><span class="va">folder</span><span class="op">$</span><span class="fu">list_emails</span><span class="op">(</span>by<span class="op">=</span><span class="st">"from desc"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># searching the list</span></span>
-<span class="r-in"><span class="va">folder</span><span class="op">$</span><span class="fu">list_emails</span><span class="op">(</span>search<span class="op">=</span><span class="st">"important information"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># retrieve a specific email:</span></span>
-<span class="r-in"><span class="co"># note the Outlook ID is NOT the same as the Internet message-id</span></span>
-<span class="r-in"><span class="va">email_id</span> <span class="op">&lt;-</span> <span class="va">folder</span><span class="op">$</span><span class="fu">list_emails</span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">properties</span><span class="op">$</span><span class="va">id</span></span>
-<span class="r-in"><span class="va">folder</span><span class="op">$</span><span class="fu">get_email</span><span class="op">(</span><span class="va">email_id</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co">##</span></span>
-<span class="r-in"><span class="co">## creating/sending emails</span></span>
-<span class="r-in"><span class="co">##</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># a simple text email with just a body:</span></span>
-<span class="r-in"><span class="co"># you can add other properties by calling the returned object's methods</span></span>
-<span class="r-in"><span class="va">folder</span><span class="op">$</span><span class="fu">create_email</span><span class="op">(</span><span class="st">"Hello from R"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># HTML-formatted email with all necessary fields, sent immediately</span></span>
-<span class="r-in"><span class="va">folder</span><span class="op">$</span><span class="fu">create_email</span><span class="op">(</span><span class="st">"&lt;emph&gt;Emphatic hello&lt;/emph&gt; from R"</span>,</span>
-<span class="r-in">    content_type<span class="op">=</span><span class="st">"html"</span>,</span>
-<span class="r-in">    to<span class="op">=</span><span class="st">"user@example.com"</span>,</span>
-<span class="r-in">    subject<span class="op">=</span><span class="st">"example email"</span>,</span>
-<span class="r-in">    send_now<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># using blastula to create a HTML email with Markdown</span></span>
-<span class="r-in"><span class="va">bl_msg</span> <span class="op">&lt;-</span> <span class="fu">blastula</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/blastula/man/compose_email.html" class="external-link">compose_email</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/blastula/man/md.html" class="external-link">md</a></span><span class="op">(</span></span>
-<span class="r-in"><span class="st">"</span>
-<span class="r-in">## Hello!</span>
-<span class="r-in"></span>
-<span class="r-in">This is an email message that was generated by the blastula package.</span>
-<span class="r-in"></span>
-<span class="r-in">We can use **Markdown** formatting with the `md()` function.</span>
-<span class="r-in"></span>
-<span class="r-in">Cheers,</span>
-<span class="r-in"></span>
-<span class="r-in">The blastula team</span>
-<span class="r-in">"</span><span class="op">)</span>,</span>
-<span class="r-in">    footer<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/blastula/man/md.html" class="external-link">md</a></span><span class="op">(</span><span class="st">"Sent via Microsoft365R"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">folder</span><span class="op">$</span><span class="fu">create_email</span><span class="op">(</span><span class="va">bl_msg</span>, subject<span class="op">=</span><span class="st">"example blastula email"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># using emayili to create an email with attachments</span></span>
-<span class="r-in"><span class="va">ey_email</span> <span class="op">&lt;-</span> <span class="fu">emayili</span><span class="fu">::</span><span class="fu"><a href="https://datawookie.github.io/emayili/reference/envelope.html" class="external-link">envelope</a></span><span class="op">(</span></span>
-<span class="r-in">    text<span class="op">=</span><span class="st">"Hello from emayili"</span>,</span>
-<span class="r-in">    to<span class="op">=</span><span class="st">"user@example.com"</span>,</span>
-<span class="r-in">    subject<span class="op">=</span><span class="st">"example emayili email"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/blastula/man/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">emayili</span><span class="fu">::</span><span class="fu"><a href="https://datawookie.github.io/emayili/reference/attachment.html" class="external-link">attachment</a></span><span class="op">(</span><span class="st">"mydocument.docx"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/blastula/man/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">    <span class="fu">emayili</span><span class="fu">::</span><span class="fu"><a href="https://datawookie.github.io/emayili/reference/attachment.html" class="external-link">attachment</a></span><span class="op">(</span><span class="st">"mydata.xlsx"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">folder</span><span class="op">$</span><span class="fu">create_email</span><span class="op">(</span><span class="va">ey_email</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">outl</span> <span class="op">&lt;-</span> <span class="fu"><a href="client.html">get_personal_outlook</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">folder</span> <span class="op">&lt;-</span> <span class="va">outl</span><span class="op">$</span><span class="fu">get_folder</span><span class="op">(</span><span class="st">"My folder"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">##</span></span></span>
+<span class="r-in"><span><span class="co">## listing emails</span></span></span>
+<span class="r-in"><span><span class="co">##</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># the default: 100 most recent messages</span></span></span>
+<span class="r-in"><span><span class="va">folder</span><span class="op">$</span><span class="fu">list_emails</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># sorted by subject, then by most recent received date</span></span></span>
+<span class="r-in"><span><span class="va">folder</span><span class="op">$</span><span class="fu">list_emails</span><span class="op">(</span>by<span class="op">=</span><span class="st">"subject"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># sorted by from name in descending order, then by most recent received date</span></span></span>
+<span class="r-in"><span><span class="va">folder</span><span class="op">$</span><span class="fu">list_emails</span><span class="op">(</span>by<span class="op">=</span><span class="st">"from desc"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># searching the list</span></span></span>
+<span class="r-in"><span><span class="va">folder</span><span class="op">$</span><span class="fu">list_emails</span><span class="op">(</span>search<span class="op">=</span><span class="st">"important information"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># retrieve a specific email:</span></span></span>
+<span class="r-in"><span><span class="co"># note the Outlook ID is NOT the same as the Internet message-id</span></span></span>
+<span class="r-in"><span><span class="va">email_id</span> <span class="op">&lt;-</span> <span class="va">folder</span><span class="op">$</span><span class="fu">list_emails</span><span class="op">(</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">properties</span><span class="op">$</span><span class="va">id</span></span></span>
+<span class="r-in"><span><span class="va">folder</span><span class="op">$</span><span class="fu">get_email</span><span class="op">(</span><span class="va">email_id</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">##</span></span></span>
+<span class="r-in"><span><span class="co">## creating/sending emails</span></span></span>
+<span class="r-in"><span><span class="co">##</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># a simple text email with just a body:</span></span></span>
+<span class="r-in"><span><span class="co"># you can add other properties by calling the returned object's methods</span></span></span>
+<span class="r-in"><span><span class="va">folder</span><span class="op">$</span><span class="fu">create_email</span><span class="op">(</span><span class="st">"Hello from R"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># HTML-formatted email with all necessary fields, sent immediately</span></span></span>
+<span class="r-in"><span><span class="va">folder</span><span class="op">$</span><span class="fu">create_email</span><span class="op">(</span><span class="st">"&lt;emph&gt;Emphatic hello&lt;/emph&gt; from R"</span>,</span></span>
+<span class="r-in"><span>    content_type<span class="op">=</span><span class="st">"html"</span>,</span></span>
+<span class="r-in"><span>    to<span class="op">=</span><span class="st">"user@example.com"</span>,</span></span>
+<span class="r-in"><span>    subject<span class="op">=</span><span class="st">"example email"</span>,</span></span>
+<span class="r-in"><span>    send_now<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># using blastula to create a HTML email with Markdown</span></span></span>
+<span class="r-in"><span><span class="va">bl_msg</span> <span class="op">&lt;-</span> <span class="fu">blastula</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/blastula/man/compose_email.html" class="external-link">compose_email</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/blastula/man/md.html" class="external-link">md</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span><span class="st">"</span></span></span>
+<span class="r-in"><span><span class="st">## Hello!</span></span></span>
+<span class="r-in"><span><span class="st"></span></span></span>
+<span class="r-in"><span><span class="st">This is an email message that was generated by the blastula package.</span></span></span>
+<span class="r-in"><span><span class="st"></span></span></span>
+<span class="r-in"><span><span class="st">We can use **Markdown** formatting with the `md()` function.</span></span></span>
+<span class="r-in"><span><span class="st"></span></span></span>
+<span class="r-in"><span><span class="st">Cheers,</span></span></span>
+<span class="r-in"><span><span class="st"></span></span></span>
+<span class="r-in"><span><span class="st">The blastula team</span></span></span>
+<span class="r-in"><span><span class="st">"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    footer<span class="op">=</span><span class="fu"><a href="https://rdrr.io/pkg/blastula/man/md.html" class="external-link">md</a></span><span class="op">(</span><span class="st">"Sent via Microsoft365R"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">folder</span><span class="op">$</span><span class="fu">create_email</span><span class="op">(</span><span class="va">bl_msg</span>, subject<span class="op">=</span><span class="st">"example blastula email"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># using emayili to create an email with attachments</span></span></span>
+<span class="r-in"><span><span class="va">ey_email</span> <span class="op">&lt;-</span> <span class="fu">emayili</span><span class="fu">::</span><span class="fu"><a href="https://datawookie.github.io/emayili/reference/envelope.html" class="external-link">envelope</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    text<span class="op">=</span><span class="st">"Hello from emayili"</span>,</span></span>
+<span class="r-in"><span>    to<span class="op">=</span><span class="st">"user@example.com"</span>,</span></span>
+<span class="r-in"><span>    subject<span class="op">=</span><span class="st">"example emayili email"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">emayili</span><span class="fu">::</span><span class="fu"><a href="https://datawookie.github.io/emayili/reference/attachment.html" class="external-link">attachment</a></span><span class="op">(</span><span class="st">"mydocument.docx"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>    <span class="fu">emayili</span><span class="fu">::</span><span class="fu"><a href="https://datawookie.github.io/emayili/reference/attachment.html" class="external-link">attachment</a></span><span class="op">(</span><span class="st">"mydata.xlsx"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">folder</span><span class="op">$</span><span class="fu">create_email</span><span class="op">(</span><span class="va">ey_email</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -242,7 +242,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

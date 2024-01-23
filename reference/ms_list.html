@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Microsoft365R</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.3.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.0.9000</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -118,7 +118,7 @@
     <h2>List querying</h2>
     
 
-<p><code>list_items</code> supports the following arguments to customise results returned by the query.</p><ul><li><p><code>filter</code>: A string giving an <a href="https://docs.microsoft.com/en-us/graph/query-parameters#filter-parameter" class="external-link">OData expression</a> to filter the rows to return. Note that column names used in the expression must be prefixed with <code>fields/</code> to distinguish them from item metadata.</p></li>
+<p><code>list_items</code> supports the following arguments to customise results returned by the query.</p><ul><li><p><code>filter</code>: A string giving an <a href="https://learn.microsoft.com/en-us/graph/query-parameters#filter-parameter" class="external-link">OData expression</a> to filter the rows to return. Note that column names used in the expression must be prefixed with <code>fields/</code> to distinguish them from item metadata.</p></li>
 <li><p><code>n</code>: The maximum number of (filtered) results to return. If this is NULL, the <code>ms_graph_pager</code> iterator object is returned instead to allow manual iteration over the results.</p></li>
 <li><p><code>select</code>: A string containing comma-separated column names to include in the returned data frame. If not supplied, includes all columns.</p></li>
 <li><p><code>all_metadata</code>: If TRUE, the returned data frame will contain extended metadata as separate columns, while the data fields will be in a nested data frame named <code>fields</code>. This is always set to FALSE if <code>n=NULL</code> or <code>as_data_frame=FALSE</code>.</p></li>
@@ -129,34 +129,34 @@
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p><code><a href="client.html">get_sharepoint_site</a></code>, <code><a href="ms_site.html">ms_site</a></code>, <code><a href="ms_list_item.html">ms_list_item</a></code></p>
-<p><a href="https://docs.microsoft.com/en-us/graph/overview" class="external-link">Microsoft Graph overview</a>,
-<a href="https://docs.microsoft.com/en-us/graph/api/resources/sharepoint?view=graph-rest-1.0" class="external-link">SharePoint sites API reference</a></p></div>
+<p><a href="https://learn.microsoft.com/en-us/graph/overview" class="external-link">Microsoft Graph overview</a>,
+<a href="https://learn.microsoft.com/en-us/graph/api/resources/sharepoint?view=graph-rest-1.0" class="external-link">SharePoint sites API reference</a></p></div>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">site</span> <span class="op">&lt;-</span> <span class="fu"><a href="client.html">get_sharepoint_site</a></span><span class="op">(</span><span class="st">"My site"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">lst</span> <span class="op">&lt;-</span> <span class="va">site</span><span class="op">$</span><span class="fu">get_list</span><span class="op">(</span><span class="st">"mylist"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">lst</span><span class="op">$</span><span class="fu">get_column_info</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">lst</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">lst</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span>filter<span class="op">=</span><span class="st">"startswith(fields/firstname, 'John')"</span>, select<span class="op">=</span><span class="st">"firstname,lastname"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">lst</span><span class="op">$</span><span class="fu">create_item</span><span class="op">(</span>firstname<span class="op">=</span><span class="st">"Mary"</span>, lastname<span class="op">=</span><span class="st">"Smith"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">lst</span><span class="op">$</span><span class="fu">get_item</span><span class="op">(</span><span class="st">"item-id"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">lst</span><span class="op">$</span><span class="fu">update_item</span><span class="op">(</span><span class="st">"item_id"</span>, firstname<span class="op">=</span><span class="st">"Eliza"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">lst</span><span class="op">$</span><span class="fu">delete_item</span><span class="op">(</span><span class="st">"item_id"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span class="r-in">    firstname<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Satya"</span>, <span class="st">"Mark"</span>, <span class="st">"Tim"</span>, <span class="st">"Jeff"</span>, <span class="st">"Sundar"</span><span class="op">)</span>,</span>
-<span class="r-in">    lastname<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Nadella"</span>, <span class="st">"Zuckerberg"</span>, <span class="st">"Cook"</span>, <span class="st">"Bezos"</span>, <span class="st">"Pichai"</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="va">lst</span><span class="op">$</span><span class="fu">bulk_import</span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">site</span> <span class="op">&lt;-</span> <span class="fu"><a href="client.html">get_sharepoint_site</a></span><span class="op">(</span><span class="st">"My site"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">lst</span> <span class="op">&lt;-</span> <span class="va">site</span><span class="op">$</span><span class="fu">get_list</span><span class="op">(</span><span class="st">"mylist"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">lst</span><span class="op">$</span><span class="fu">get_column_info</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">lst</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">lst</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span>filter<span class="op">=</span><span class="st">"startswith(fields/firstname, 'John')"</span>, select<span class="op">=</span><span class="st">"firstname,lastname"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">lst</span><span class="op">$</span><span class="fu">create_item</span><span class="op">(</span>firstname<span class="op">=</span><span class="st">"Mary"</span>, lastname<span class="op">=</span><span class="st">"Smith"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">lst</span><span class="op">$</span><span class="fu">get_item</span><span class="op">(</span><span class="st">"item-id"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">lst</span><span class="op">$</span><span class="fu">update_item</span><span class="op">(</span><span class="st">"item_id"</span>, firstname<span class="op">=</span><span class="st">"Eliza"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">lst</span><span class="op">$</span><span class="fu">delete_item</span><span class="op">(</span><span class="st">"item_id"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    firstname<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Satya"</span>, <span class="st">"Mark"</span>, <span class="st">"Tim"</span>, <span class="st">"Jeff"</span>, <span class="st">"Sundar"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>    lastname<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Nadella"</span>, <span class="st">"Zuckerberg"</span>, <span class="st">"Cook"</span>, <span class="st">"Bezos"</span>, <span class="st">"Pichai"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">lst</span><span class="op">$</span><span class="fu">bulk_import</span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -171,7 +171,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

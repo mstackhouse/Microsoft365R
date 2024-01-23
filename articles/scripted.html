@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Microsoft365R</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.3.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.0.9000</span>
       </span>
     </div>
 
@@ -50,7 +50,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -97,7 +97,7 @@
 
       
 
-      </header><script src="scripted_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Using Microsoft365R in an unattended script</h1>
@@ -111,157 +111,230 @@
 
     
     
-<p>This vignette describes how to incorporate Microsoft365R into an automated (unattended) script, such as for a GitHub Actions workflow or other CI/CD process. There are two ways of achieving this: with a service principal, and with a service account.</p>
+<p>This vignette describes how to incorporate Microsoft365R into an
+automated (unattended) script, such as for a GitHub Actions workflow or
+other CI/CD process. There are two ways of achieving this: with a
+service principal, and with a service account.</p>
 <div class="section level2">
 <h2 id="service-principal">Service principal<a class="anchor" aria-label="anchor" href="#service-principal"></a>
 </h2>
-<p>This approach involves creating a new app registration that has application permissions, and using it to work with the Microsoft Graph API. Note that working with application permissions requires admin consent, so you won’t be able to run this workflow on your own unless you’re an admin.</p>
+<p>This approach involves creating a new app registration that has
+application permissions, and using it to work with the Microsoft Graph
+API. Note that working with application permissions requires admin
+consent, so you won’t be able to run this workflow on your own unless
+you’re an admin.</p>
 <div class="section level3">
 <h3 id="app-registration">App registration<a class="anchor" aria-label="anchor" href="#app-registration"></a>
 </h3>
-<p>The default Microsoft365R app registration only has <em>delegated</em> permissions. This means that it requires you to authenticate with Azure Active Directory (AAD) to obtain an OAuth token, after which it will use your credentials to perform tasks. This doesn’t work if you want to use the package in an automated script, ie one that is meant to run without user intervention.</p>
-<p>In this situation, you must create a new app registration in AAD that has <em>application</em> permissions. This means that, rather than using the credentials of a logged-in user, Microsoft365R has its own, custom set of permissions that determine what it can do.</p>
-<p>The app registration for an unattended script looks slightly different to that for a user-facing application.</p>
+<p>The default Microsoft365R app registration only has
+<em>delegated</em> permissions. This means that it requires you to
+authenticate with Azure Active Directory (AAD) to obtain an OAuth token,
+after which it will use your credentials to perform tasks. This doesn’t
+work if you want to use the package in an automated script, ie one that
+is meant to run without user intervention.</p>
+<p>In this situation, you must create a new app registration in AAD that
+has <em>application</em> permissions. This means that, rather than using
+the credentials of a logged-in user, Microsoft365R has its own, custom
+set of permissions that determine what it can do.</p>
+<p>The app registration for an unattended script looks slightly
+different to that for a user-facing application.</p>
 <ul>
-<li><p>There is no redirect URI, since we don’t need a user to authenticate in a browser.</p></li>
-<li><p>You must set the <strong>client secret</strong>, which is like a password that serves to verify to AAD the identity of the workflow calling the script. Alternatively, you can use a certificate instead of a secret; this is more secure but also more complicated to setup and use.</p></li>
-<li><p>In nearly all cases, the <strong>intended audience</strong> of your app registration should be only members of your AAD tenant.</p></li>
-<li><p>Ensure that you give your app <strong>application permissions</strong> instead of delegated permissions. Refer to the complete <a href="https://docs.microsoft.com/en-us/graph/permissions-reference?context=graph%2Fapi%2Fbeta&amp;view=graph-rest-beta" class="external-link">list of Graph permissions</a> to determine which ones you need.</p></li>
+<li><p>There is no redirect URI, since we don’t need a user to
+authenticate in a browser.</p></li>
+<li><p>You must set the <strong>client secret</strong>, which is like a
+password that serves to verify to AAD the identity of the workflow
+calling the script. Alternatively, you can use a certificate instead of
+a secret; this is more secure but also more complicated to setup and
+use.</p></li>
+<li><p>In nearly all cases, the <strong>intended audience</strong> of
+your app registration should be only members of your AAD
+tenant.</p></li>
+<li><p>Ensure that you give your app <strong>application
+permissions</strong> instead of delegated permissions. Refer to the
+complete <a href="https://learn.microsoft.com/en-us/graph/permissions-reference?context=graph%2Fapi%2Fbeta&amp;view=graph-rest-beta" class="external-link">list
+of Graph permissions</a> to determine which ones you need.</p></li>
 </ul>
 <p>The following pages at the AAD documentation will be helpful:</p>
 <ul>
-<li><p><a href="https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app" class="external-link">A step-by-step guide</a> to registering an app in the Azure portal.</p></li>
-<li><p><a href="https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-access-web-apis" class="external-link">How to set permissions for an app</a>.</p></li>
-<li><p><a href="https://docs.microsoft.com/en-us/graph/auth/auth-concepts#microsoft-graph-permissions" class="external-link">Authentication and authorization basics for Microsoft Graph</a>.</p></li>
+<li><p><a href="https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app" class="external-link">A
+step-by-step guide</a> to registering an app in the Azure
+portal.</p></li>
+<li><p><a href="https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-access-web-apis" class="external-link">How
+to set permissions for an app</a>.</p></li>
+<li><p><a href="https://learn.microsoft.com/en-us/graph/auth/auth-concepts#microsoft-graph-permissions" class="external-link">Authentication
+and authorization basics for Microsoft Graph</a>.</p></li>
 </ul>
 </div>
 <div class="section level3">
 <h3 id="application-permissions-and-security">Application permissions and security<a class="anchor" aria-label="anchor" href="#application-permissions-and-security"></a>
 </h3>
-<p>Application permissions are <em>much more powerful</em> than delegated permissions. From the “Authentication and authorization basics” link above:</p>
+<p>Application permissions are <em>much more powerful</em> than
+delegated permissions. From the “Authentication and authorization
+basics” link above:</p>
 <blockquote>
-<p>For application permissions, the effective permissions of your app will be the full level of privileges implied by the permission. For example, an app that has the User.ReadWrite.All application permission can update the profile of every user in the organization.</p>
+<p>For application permissions, the effective permissions of your app
+will be the full level of privileges implied by the permission. For
+example, an app that has the User.ReadWrite.All application permission
+can update the profile of every user in the organization.</p>
 </blockquote>
-<p>This is why granting application permissions always requires admin consent. Similarly, you should only give your app registration the minimum permissions it needs to get the job done. In particular, avoid giving your app read/write permissions if it only needs to read data.</p>
+<p>This is why granting application permissions always requires admin
+consent. Similarly, you should only give your app registration the
+minimum permissions it needs to get the job done. In particular, avoid
+giving your app read/write permissions if it only needs to read
+data.</p>
 </div>
 <div class="section level3">
 <h3 id="sample-code-skeleton">Sample code skeleton<a class="anchor" aria-label="anchor" href="#sample-code-skeleton"></a>
 </h3>
-<p>Here is a simple script that retrieves a given user’s OneDrive and lists the contents of the root directory. We cannot use <code>get_personal/business_onedrive</code>, because these client functions assume that a user is logged in. Instead, we call the underlying R6 methods directly.</p>
+<p>Here is a simple script that retrieves a given user’s OneDrive and
+lists the contents of the root directory. We cannot use
+<code>get_personal/business_onedrive</code>, because these client
+functions assume that a user is logged in. Instead, we call the
+underlying R6 methods directly.</p>
 <p>For this script, the application permissions needed are:</p>
 <ul>
 <li>Get a user’s details: User.Read</li>
 <li>Read from OneDrive: Files.Read</li>
 </ul>
-<p>Observe that this script can potentially read <em>every user’s OneDrive</em> in your organisation, given their username. This shows why client secrets and application permissions are not to be handed out lightly!</p>
+<p>Observe that this script can potentially read <em>every user’s
+OneDrive</em> in your organisation, given their username. This shows why
+client secrets and application permissions are not to be handed out
+lightly!</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Azure/AzureGraph" class="external-link">AzureGraph</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Azure/Microsoft365R" class="external-link">Microsoft365R</a></span><span class="op">)</span>
-
-<span class="va">tenant</span> <span class="op">&lt;-</span> <span class="st">"your-tenant-here"</span>
-
-<span class="co"># the application/client ID of the app registration you created in AAD</span>
-<span class="co"># - not to be confused with the 'object ID' or 'service principal ID'</span>
-<span class="va">app</span> <span class="op">&lt;-</span> <span class="st">"your-app-id-here"</span>
-
-<span class="co"># retrieve the client secret (password) from an environment variable</span>
-<span class="va">pwd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"EXAMPLE_MS365R_CLIENT_SECRET"</span><span class="op">)</span>
-
-<span class="co"># retrieve the user whose OneDrive we want to access</span>
-<span class="co"># - this should be their 'userPrincipalName', which is of the form 'name@tenant.com'</span>
-<span class="co"># - note this may be different to their regular email address</span>
-<span class="va">user</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"EXAMPLE_MS365R_TARGET_USER"</span><span class="op">)</span>
-
-<span class="co"># create a Microsoft Graph login</span>
-<span class="va">gr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/AzureGraph/man/graph_login.html" class="external-link">create_graph_login</a></span><span class="op">(</span><span class="va">tenant</span>, <span class="va">app</span>, password<span class="op">=</span><span class="va">pwd</span>, auth_type<span class="op">=</span><span class="st">"client_credentials"</span><span class="op">)</span>
-
-<span class="va">drv</span> <span class="op">&lt;-</span> <span class="va">gr</span><span class="op">$</span><span class="fu">get_user</span><span class="op">(</span><span class="va">user</span><span class="op">)</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span>
-
-<span class="va">drv</span><span class="op">$</span><span class="fu">list_files</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Azure/AzureGraph" class="external-link">AzureGraph</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Azure/Microsoft365R" class="external-link">Microsoft365R</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">tenant</span> <span class="op">&lt;-</span> <span class="st">"your-tenant-here"</span></span>
+<span></span>
+<span><span class="co"># the application/client ID of the app registration you created in AAD</span></span>
+<span><span class="co"># - not to be confused with the 'object ID' or 'service principal ID'</span></span>
+<span><span class="va">app</span> <span class="op">&lt;-</span> <span class="st">"your-app-id-here"</span></span>
+<span></span>
+<span><span class="co"># retrieve the client secret (password) from an environment variable</span></span>
+<span><span class="va">pwd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"EXAMPLE_MS365R_CLIENT_SECRET"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># retrieve the user whose OneDrive we want to access</span></span>
+<span><span class="co"># - this should be their 'userPrincipalName', which is of the form 'name@tenant.com'</span></span>
+<span><span class="co"># - note this may be different to their regular email address</span></span>
+<span><span class="va">user</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"EXAMPLE_MS365R_TARGET_USER"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># create a Microsoft Graph login</span></span>
+<span><span class="va">gr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/AzureGraph/man/graph_login.html" class="external-link">create_graph_login</a></span><span class="op">(</span><span class="va">tenant</span>, <span class="va">app</span>, password<span class="op">=</span><span class="va">pwd</span>, auth_type<span class="op">=</span><span class="st">"client_credentials"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">drv</span> <span class="op">&lt;-</span> <span class="va">gr</span><span class="op">$</span><span class="fu">get_user</span><span class="op">(</span><span class="va">user</span><span class="op">)</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">drv</span><span class="op">$</span><span class="fu">list_files</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="service-account">Service account<a class="anchor" aria-label="anchor" href="#service-account"></a>
 </h2>
-<p>Using a service principal is the Microsoft-recommended approach, but as noted above, is potentially very powerful. For this reason, you may want to consider using a service account instead. This is a normal user account that is not intended for interactive use, but instead authenticates via a script. The advantage is that the account only needs delegated permissions and so won’t have access to all of your tenant’s resources.</p>
-<p>To authenticate a service account with AAD non-interactively, you use the <a href="https://docs.microsoft.com/en-au/azure/active-directory/develop/v2-oauth-ropc" class="external-link">resource owner password grant</a> flow. You can use any app registration that has access to your tenant and has the correct delegated permissions to work with Microsoft Graph; see the “Authenticating to Microsoft 365” vignette for more information on creating an app registration. Note that you (or an admin) must grant consent for the permissions beforehand.</p>
+<p>Using a service principal is the Microsoft-recommended approach, but
+as noted above, is potentially very powerful. For this reason, you may
+want to consider using a service account instead. This is a normal user
+account that is not intended for interactive use, but instead
+authenticates via a script. The advantage is that the account only needs
+delegated permissions and so won’t have access to all of your tenant’s
+resources.</p>
+<p>To authenticate a service account with AAD non-interactively, you use
+the <a href="https://learn.microsoft.com/en-au/azure/active-directory/develop/v2-oauth-ropc" class="external-link">resource
+owner password grant</a> flow. You can use any app registration that has
+access to your tenant and has the correct delegated permissions to work
+with Microsoft Graph; see the “Authenticating to Microsoft 365” vignette
+for more information on creating an app registration. Note that you (or
+an admin) must grant consent for the permissions beforehand.</p>
 <div class="section level3">
 <h3 id="creating-a-service-account">Creating a service account<a class="anchor" aria-label="anchor" href="#creating-a-service-account"></a>
 </h3>
-<p>While any user account can in principle be employed as a service account, you (or an admin) should create a new account specifically for this purpose. This is for the following reasons:</p>
+<p>While any user account can in principle be employed as a service
+account, you (or an admin) should create a new account specifically for
+this purpose. This is for the following reasons:</p>
 <ul>
-<li>There are restrictions on how the ROPC authentication flow works with AAD. In particular a service account can’t make use of multifactor authentication, and it also can’t be a personal account that is a guest in a tenant.</li>
-<li>Creating a new account allows you to assign it a strong random password, which means it can’t be easily guessed, phished or brute-forced. For example, you can use the <code><a href="https://rdrr.io/pkg/openssl/man/rand_bytes.html" class="external-link">openssl::rand_bytes()</a></code> function to generate the password.</li>
-<li>You can limit the account to only the roles and group memberships it needs for its specific task.</li>
+<li>There are restrictions on how the ROPC authentication flow works
+with AAD. In particular a service account can’t make use of multifactor
+authentication, and it also can’t be a personal account that is a guest
+in a tenant.</li>
+<li>Creating a new account allows you to assign it a strong random
+password, which means it can’t be easily guessed, phished or
+brute-forced. For example, you can use the
+<code><a href="https://rdrr.io/pkg/openssl/man/rand_bytes.html" class="external-link">openssl::rand_bytes()</a></code> function to generate the
+password.</li>
+<li>You can limit the account to only the roles and group memberships it
+needs for its specific task.</li>
 </ul>
 </div>
 <div class="section level3">
 <h3 id="sample-code">Sample code<a class="anchor" aria-label="anchor" href="#sample-code"></a>
 </h3>
-<p>Here is a simple example of a script that logs in and accesses a folder in SharePoint. We assume that the service account has been granted access to the SharePoint site beforehand.</p>
+<p>Here is a simple example of a script that logs in and accesses a
+folder in SharePoint. We assume that the service account has been
+granted access to the SharePoint site beforehand.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Azure/Microsoft365R" class="external-link">Microsoft365R</a></span><span class="op">)</span>
-
-<span class="va">tenant</span> <span class="op">&lt;-</span> <span class="st">"your-tenant-here"</span>
-
-<span class="co"># the application/client ID of the app registration to use</span>
-<span class="va">app</span> <span class="op">&lt;-</span> <span class="st">"your-app-id-here"</span>
-
-<span class="co"># get the service account username and password</span>
-<span class="va">user</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"EXAMPLE_MS365R_SERVICE_USER"</span><span class="op">)</span>
-<span class="va">pwd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"EXAMPLE_MS365R_SERVICE_PASSWORD"</span><span class="op">)</span>
-
-<span class="co"># SharePoint site and path to folder</span>
-<span class="va">sitename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"EXAMPLE_MS365R_SPO_SITENAME"</span><span class="op">)</span>
-<span class="va">folderpath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"EXAMPLE_MS365R_SPO_FOLDERPATH"</span><span class="op">)</span>
-
-<span class="co"># use the 'resource_owner' auth type for a non-interactive login</span>
-<span class="va">site</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/client.html">get_sharepoint_site</a></span><span class="op">(</span><span class="va">sitename</span>, tenant<span class="op">=</span><span class="va">tenant</span>, app<span class="op">=</span><span class="va">app</span>, username<span class="op">=</span><span class="va">user</span>, password<span class="op">=</span><span class="va">pwd</span>,
-    auth_type<span class="op">=</span><span class="st">"resource_owner"</span><span class="op">)</span>
-
-<span class="va">folder</span> <span class="op">&lt;-</span> <span class="va">site</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">get_item</span><span class="op">(</span><span class="va">folderpath</span><span class="op">)</span>
-<span class="va">folder</span><span class="op">$</span><span class="fu">list_files</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p>Here is a slightly more complex example: a script that downloads a shared file in OneDrive. The file must have been shared with the service account beforehand, but could be sourced from either another user’s OneDrive or from a SharePoint document library.</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Azure/Microsoft365R" class="external-link">Microsoft365R</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">tenant</span> <span class="op">&lt;-</span> <span class="st">"your-tenant-here"</span></span>
+<span></span>
+<span><span class="co"># the application/client ID of the app registration to use</span></span>
+<span><span class="va">app</span> <span class="op">&lt;-</span> <span class="st">"your-app-id-here"</span></span>
+<span></span>
+<span><span class="co"># get the service account username and password</span></span>
+<span><span class="va">user</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"EXAMPLE_MS365R_SERVICE_USER"</span><span class="op">)</span></span>
+<span><span class="va">pwd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"EXAMPLE_MS365R_SERVICE_PASSWORD"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># SharePoint site and path to folder</span></span>
+<span><span class="va">sitename</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"EXAMPLE_MS365R_SPO_SITENAME"</span><span class="op">)</span></span>
+<span><span class="va">folderpath</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"EXAMPLE_MS365R_SPO_FOLDERPATH"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># use the 'resource_owner' auth type for a non-interactive login</span></span>
+<span><span class="va">site</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/client.html">get_sharepoint_site</a></span><span class="op">(</span><span class="va">sitename</span>, tenant<span class="op">=</span><span class="va">tenant</span>, app<span class="op">=</span><span class="va">app</span>, username<span class="op">=</span><span class="va">user</span>, password<span class="op">=</span><span class="va">pwd</span>,</span>
+<span>    auth_type<span class="op">=</span><span class="st">"resource_owner"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">folder</span> <span class="op">&lt;-</span> <span class="va">site</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">get_item</span><span class="op">(</span><span class="va">folderpath</span><span class="op">)</span></span>
+<span><span class="va">folder</span><span class="op">$</span><span class="fu">list_files</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Here is a slightly more complex example: a script that downloads a
+shared file in OneDrive. The file must have been shared with the service
+account beforehand, but could be sourced from either another user’s
+OneDrive or from a SharePoint document library.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Azure/Microsoft365R" class="external-link">Microsoft365R</a></span><span class="op">)</span>
-
-<span class="va">tenant</span> <span class="op">&lt;-</span> <span class="st">"your-tenant-here"</span>
-
-<span class="co"># the application/client ID of the app registration to use</span>
-<span class="va">app</span> <span class="op">&lt;-</span> <span class="st">"your-app-id-here"</span>
-
-<span class="co"># get the service account username and password</span>
-<span class="va">user</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"EXAMPLE_MS365R_SERVICE_USER"</span><span class="op">)</span>
-<span class="va">pwd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"EXAMPLE_MS365R_SERVICE_PASSWORD"</span><span class="op">)</span>
-
-<span class="co"># the drive ID and file we want to access</span>
-<span class="va">target_drive</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"EXAMPLE_MS365R_TARGET_DRIVE"</span><span class="op">)</span>
-<span class="va">target_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"EXAMPLE_MS365R_TARGET_PATH"</span><span class="op">)</span>
-
-<span class="va">drv</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/client.html">get_business_onedrive</a></span><span class="op">(</span>tenant<span class="op">=</span><span class="va">tenant</span>, app<span class="op">=</span><span class="va">app</span>, username<span class="op">=</span><span class="va">user</span>, password<span class="op">=</span><span class="va">pwd</span>,
-    auth_type<span class="op">=</span><span class="st">"resource_owner"</span><span class="op">)</span>
-
-<span class="co"># search for the desired item in the list of shared items</span>
-<span class="va">shared</span> <span class="op">&lt;-</span> <span class="va">drv</span><span class="op">$</span><span class="fu">list_shared_files</span><span class="op">(</span>info<span class="op">=</span><span class="st">"items"</span><span class="op">)</span>
-<span class="va">target_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">dirname</a></span><span class="op">(</span><span class="va">target_path</span><span class="op">)</span>
-<span class="va">target_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">target_path</span><span class="op">)</span>
-<span class="va">item</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>
-
-<span class="kw">for</span><span class="op">(</span><span class="va">shared_item</span> <span class="kw">in</span> <span class="va">shared</span><span class="op">)</span>
-<span class="op">{</span>
-    <span class="va">remote_drive</span> <span class="op">&lt;-</span> <span class="va">shared_item</span><span class="op">$</span><span class="va">properties</span><span class="op">$</span><span class="va">parentReference</span><span class="op">$</span><span class="va">driveId</span>
-    <span class="va">path</span> <span class="op">&lt;-</span> <span class="va">shared_item</span><span class="op">$</span><span class="fu">get_parent_path</span><span class="op">(</span><span class="op">)</span>
-    <span class="va">name</span> <span class="op">&lt;-</span> <span class="va">shared_item</span><span class="op">$</span><span class="va">properties</span><span class="op">$</span><span class="va">name</span>
-
-    <span class="kw">if</span><span class="op">(</span><span class="va">remote_drive</span> <span class="op">==</span> <span class="va">target_drive</span> <span class="op">&amp;&amp;</span> <span class="va">path</span> <span class="op">==</span> <span class="va">target_dir</span> <span class="op">&amp;&amp;</span> <span class="va">name</span> <span class="op">==</span> <span class="va">target_name</span><span class="op">)</span>
-    <span class="op">{</span>
-        <span class="va">item</span> <span class="op">&lt;-</span> <span class="va">shared_item</span>
-        <span class="kw">break</span>
-    <span class="op">}</span>
-<span class="op">}</span>
-<span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">item</span><span class="op">)</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop</a></span><span class="op">(</span><span class="st">"Item not found!"</span><span class="op">)</span>
-
-<span class="va">item</span><span class="op">$</span><span class="fu">download</span><span class="op">(</span>overwrite<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Azure/Microsoft365R" class="external-link">Microsoft365R</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">tenant</span> <span class="op">&lt;-</span> <span class="st">"your-tenant-here"</span></span>
+<span></span>
+<span><span class="co"># the application/client ID of the app registration to use</span></span>
+<span><span class="va">app</span> <span class="op">&lt;-</span> <span class="st">"your-app-id-here"</span></span>
+<span></span>
+<span><span class="co"># get the service account username and password</span></span>
+<span><span class="va">user</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"EXAMPLE_MS365R_SERVICE_USER"</span><span class="op">)</span></span>
+<span><span class="va">pwd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"EXAMPLE_MS365R_SERVICE_PASSWORD"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># the drive ID and file we want to access</span></span>
+<span><span class="va">target_drive</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"EXAMPLE_MS365R_TARGET_DRIVE"</span><span class="op">)</span></span>
+<span><span class="va">target_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"EXAMPLE_MS365R_TARGET_PATH"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">drv</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/client.html">get_business_onedrive</a></span><span class="op">(</span>tenant<span class="op">=</span><span class="va">tenant</span>, app<span class="op">=</span><span class="va">app</span>, username<span class="op">=</span><span class="va">user</span>, password<span class="op">=</span><span class="va">pwd</span>,</span>
+<span>    auth_type<span class="op">=</span><span class="st">"resource_owner"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># search for the desired item in the list of shared items</span></span>
+<span><span class="va">shared</span> <span class="op">&lt;-</span> <span class="va">drv</span><span class="op">$</span><span class="fu">list_shared_files</span><span class="op">(</span>info<span class="op">=</span><span class="st">"items"</span><span class="op">)</span></span>
+<span><span class="va">target_dir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">dirname</a></span><span class="op">(</span><span class="va">target_path</span><span class="op">)</span></span>
+<span><span class="va">target_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/basename.html" class="external-link">basename</a></span><span class="op">(</span><span class="va">target_path</span><span class="op">)</span></span>
+<span><span class="va">item</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span></span>
+<span><span class="kw">for</span><span class="op">(</span><span class="va">shared_item</span> <span class="kw">in</span> <span class="va">shared</span><span class="op">)</span></span>
+<span><span class="op">{</span></span>
+<span>    <span class="va">remote_drive</span> <span class="op">&lt;-</span> <span class="va">shared_item</span><span class="op">$</span><span class="va">properties</span><span class="op">$</span><span class="va">parentReference</span><span class="op">$</span><span class="va">driveId</span></span>
+<span>    <span class="va">path</span> <span class="op">&lt;-</span> <span class="va">shared_item</span><span class="op">$</span><span class="fu">get_parent_path</span><span class="op">(</span><span class="op">)</span></span>
+<span>    <span class="va">name</span> <span class="op">&lt;-</span> <span class="va">shared_item</span><span class="op">$</span><span class="va">properties</span><span class="op">$</span><span class="va">name</span></span>
+<span></span>
+<span>    <span class="kw">if</span><span class="op">(</span><span class="va">remote_drive</span> <span class="op">==</span> <span class="va">target_drive</span> <span class="op">&amp;&amp;</span> <span class="va">path</span> <span class="op">==</span> <span class="va">target_dir</span> <span class="op">&amp;&amp;</span> <span class="va">name</span> <span class="op">==</span> <span class="va">target_name</span><span class="op">)</span></span>
+<span>    <span class="op">{</span></span>
+<span>        <span class="va">item</span> <span class="op">&lt;-</span> <span class="va">shared_item</span></span>
+<span>        <span class="kw">break</span></span>
+<span>    <span class="op">}</span></span>
+<span><span class="op">}</span></span>
+<span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">item</span><span class="op">)</span><span class="op">)</span> <span class="kw"><a href="https://rdrr.io/r/base/stop.html" class="external-link">stop</a></span><span class="op">(</span><span class="st">"Item not found!"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">item</span><span class="op">$</span><span class="fu">download</span><span class="op">(</span>overwrite<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
   </div>
@@ -283,7 +356,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

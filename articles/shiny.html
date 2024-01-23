@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Microsoft365R</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.3.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.0.9000</span>
       </span>
     </div>
 
@@ -50,7 +50,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -97,7 +97,7 @@
 
       
 
-      </header><script src="shiny_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Using Microsoft365R in a Shiny app</h1>
@@ -111,7 +111,9 @@
 
     
     
-<p>This vignette describes how to incorporate Microsoft365R and interactive authentication with Azure Active Directory (AAD) into a Shiny web app. There are a few steps involved:</p>
+<p>This vignette describes how to incorporate Microsoft365R and
+interactive authentication with Azure Active Directory (AAD) into a
+Shiny web app. There are a few steps involved:</p>
 <ul>
 <li>Register your app with AAD</li>
 <li>Use the app ID to authenticate and get an OAuth token</li>
@@ -120,89 +122,130 @@
 <div class="section level2">
 <h2 id="app-registration">App registration<a class="anchor" aria-label="anchor" href="#app-registration"></a>
 </h2>
-<p>The default Microsoft365R app registration only works when the package is used on a local machine; it does not support running in a remote server. Because of this, when you use Microsoft365R inside a Shiny app, you (or your friendly local sysadmin) must register that app in AAD.</p>
+<p>The default Microsoft365R app registration only works when the
+package is used on a local machine; it does not support running in a
+remote server. Because of this, when you use Microsoft365R inside a
+Shiny app, you (or your friendly local sysadmin) must register that app
+in AAD.</p>
 <p>The main things to set in your app registration are:</p>
 <ul>
-<li><p>The <strong>redirect URI</strong> of your app, ie, your user-facing site address. For example if your app is hosted in shinyapps.io, this would be a URL of the form <code>https://youraccount.shinyapps.io/appname</code>. If your app uses a special port number rather than the default port 443 for HTTPS, don’t forget to include that as well. It’s possible to set more than one redirect, so you can reuse a single app registration for multiple Shiny apps.</p></li>
-<li><p>The <strong>type of redirect</strong>, either native (mobile &amp; desktop) or webapp. There are also other types of redirects, but these are the only ones relevant to R. The difference between a mobile &amp; desktop and a webapp redirect is that you supply a client secret when authenticating with the latter, but not the former. It’s recommended to use a webapp redirect for a Shiny app, as the client secret helps prevent third parties from hijacking your app registration. The client secret is also set as part of the app registration.</p></li>
-<li><p>The <strong>intended audience</strong> of your app, ie, who is allowed to use it. This can be only members of your AAD tenant; members of any AAD tenant; or anyone with a Microsoft account (including personal accounts).</p></li>
-<li><p>The <strong>permissions required</strong> by your app. Refer to the <a href="https://github.com/Azure/Microsoft365R/blob/master/inst/app_registration.md" class="external-link">app_registration.md</a> file for the list of permissions Microsoft365R uses. You can omit any permissions that you don’t need if your app doesn’t use all of Microsoft365R’s functionality, eg if you don’t handle emails you can omit Mail.Send and Mail.ReadWrite.</p></li>
+<li><p>The <strong>redirect URI</strong> of your app, ie, your
+user-facing site address. For example if your app is hosted in
+shinyapps.io, this would be a URL of the form
+<code>https://youraccount.shinyapps.io/appname</code>. If your app uses
+a special port number rather than the default port 443 for HTTPS, don’t
+forget to include that as well. It’s possible to set more than one
+redirect, so you can reuse a single app registration for multiple Shiny
+apps.</p></li>
+<li><p>The <strong>type of redirect</strong>, either native (mobile
+&amp; desktop) or webapp. There are also other types of redirects, but
+these are the only ones relevant to R. The difference between a mobile
+&amp; desktop and a webapp redirect is that you supply a client secret
+when authenticating with the latter, but not the former. It’s
+recommended to use a webapp redirect for a Shiny app, as the client
+secret helps prevent third parties from hijacking your app registration.
+The client secret is also set as part of the app registration.</p></li>
+<li><p>The <strong>intended audience</strong> of your app, ie, who is
+allowed to use it. This can be only members of your AAD tenant; members
+of any AAD tenant; or anyone with a Microsoft account (including
+personal accounts).</p></li>
+<li><p>The <strong>permissions required</strong> by your app. Refer to
+the <a href="https://github.com/Azure/Microsoft365R/blob/master/inst/app_registration.md" class="external-link">app_registration.md</a>
+file for the list of permissions Microsoft365R uses. You can omit any
+permissions that you don’t need if your app doesn’t use all of
+Microsoft365R’s functionality, eg if you don’t handle emails you can
+omit Mail.Send and Mail.ReadWrite.</p></li>
 </ul>
 <p>The following pages at the AAD documentation will be helpful:</p>
 <ul>
-<li><p><a href="https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app" class="external-link">A step-by-step guide</a> to registering an app in the Azure portal.</p></li>
-<li><p><a href="https://docs.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-access-web-apis" class="external-link">How to set permissions for an app</a>. For a Shiny app, note that you want <em>delegated</em> permissions from the Microsoft Graph API, not application permissions.</p></li>
+<li><p><a href="https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app" class="external-link">A
+step-by-step guide</a> to registering an app in the Azure
+portal.</p></li>
+<li><p><a href="https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-access-web-apis" class="external-link">How
+to set permissions for an app</a>. For a Shiny app, note that you want
+<em>delegated</em> permissions from the Microsoft Graph API, not
+application permissions.</p></li>
 </ul>
 </div>
 <div class="section level2">
 <h2 id="shiny-code-skeleton">Shiny code skeleton<a class="anchor" aria-label="anchor" href="#shiny-code-skeleton"></a>
 </h2>
-<p>Below is a basic app that logs the user in, retrieves their OneDrive, and lists the contents of the root folder.</p>
-<p>One thing to note is that the regular Microsoft365R client functions like <code>get_sharepoint_site</code>, <code>get_team</code> etc are intended for use on a local machine. While they will still work when called in a web app, it’s a better idea to call the underlying R6 methods directly: Microsoft365R extends AzureGraph with several R6 classes and methods, which do the actual work of interacting with the Microsoft 365 REST API.</p>
-<p>Here, we call the <code>get_drive()</code> method for the <code><a href="https://rdrr.io/pkg/AzureGraph/man/az_user.html" class="external-link">AzureGraph::az_user</a></code> class, which retrieves the OneDrive for a user. For more information, see the online help page in R for the Microsoft365R “add_methods” topic: <code><a href="../reference/add_methods.html">?add_methods</a></code>.</p>
+<p>Below is a basic app that logs the user in, retrieves their OneDrive,
+and lists the contents of the root folder.</p>
+<p>One thing to note is that the regular Microsoft365R client functions
+like <code>get_sharepoint_site</code>, <code>get_team</code> etc are
+intended for use on a local machine. While they will still work when
+called in a web app, it’s a better idea to call the underlying R6
+methods directly: Microsoft365R extends AzureGraph with several R6
+classes and methods, which do the actual work of interacting with the
+Microsoft 365 REST API.</p>
+<p>Here, we call the <code>get_drive()</code> method for the
+<code><a href="https://rdrr.io/pkg/AzureGraph/man/az_user.html" class="external-link">AzureGraph::az_user</a></code> class, which retrieves the OneDrive for
+a user. For more information, see the online help page in R for the
+Microsoft365R “add_methods” topic: <code><a href="../reference/add_methods.html">?add_methods</a></code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Azure/AzureAuth" class="external-link">AzureAuth</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Azure/AzureGraph" class="external-link">AzureGraph</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Azure/Microsoft365R" class="external-link">Microsoft365R</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span>
-
-<span class="va">tenant</span> <span class="op">&lt;-</span> <span class="st">"your-tenant-here"</span>
-
-<span class="co"># the application/client ID of the app registration you created in AAD</span>
-<span class="co"># - not to be confused with the 'object ID' or 'service principal ID'</span>
-<span class="va">app</span> <span class="op">&lt;-</span> <span class="st">"your-app-id-here"</span>
-
-<span class="co"># the address of your app: also the redirect URI of your app registration</span>
-<span class="co"># - AAD allows only HTTPS for non-localhost redirects, not HTTP</span>
-<span class="va">redirect</span> <span class="op">&lt;-</span> <span class="st">"https://example.com/mysite"</span>
-<span class="va">port</span> <span class="op">&lt;-</span> <span class="fu">httr</span><span class="fu">::</span><span class="fu"><a href="https://httr.r-lib.org/reference/parse_url.html" class="external-link">parse_url</a></span><span class="op">(</span><span class="va">redirect</span><span class="op">)</span><span class="op">$</span><span class="va">port</span>
-<span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>shiny.port<span class="op">=</span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">port</span><span class="op">)</span><span class="op">)</span> <span class="fl">443</span> <span class="kw">else</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">port</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># if your app reg has a 'webapp' redirect, it requires a client secret (password)</span>
-<span class="co"># - you should NEVER put secrets in code: here we get it from an environment variable</span>
-<span class="co"># - leave the environment variable unset if you have a 'desktop &amp; mobile' redirect</span>
-<span class="va">pwd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"EXAMPLE_SHINY_CLIENT_SECRET"</span>, <span class="st">""</span><span class="op">)</span>
-<span class="kw">if</span><span class="op">(</span><span class="va">pwd</span> <span class="op">==</span> <span class="st">""</span><span class="op">)</span> <span class="va">pwd</span> <span class="op">&lt;-</span> <span class="cn">NULL</span>
-
-<span class="co"># get the Graph permissions listed for the app, plus an ID token</span>
-<span class="va">resource</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://graph.microsoft.com/.default"</span>, <span class="st">"openid"</span><span class="op">)</span>
-
-<span class="co"># a simple UI: display the user's OneDrive</span>
-<span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu">fluidPage</span><span class="op">(</span>
-    <span class="fu">verbatimTextOutput</span><span class="op">(</span><span class="st">"drv"</span><span class="op">)</span>
-<span class="op">)</span>
-
-<span class="va">ui_func</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">req</span><span class="op">)</span>
-<span class="op">{</span>
-    <span class="va">opts</span> <span class="op">&lt;-</span> <span class="fu">parseQueryString</span><span class="op">(</span><span class="va">req</span><span class="op">$</span><span class="va">QUERY_STRING</span><span class="op">)</span>
-    <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">opts</span><span class="op">$</span><span class="va">code</span><span class="op">)</span><span class="op">)</span>
-    <span class="op">{</span>
-        <span class="va">auth_uri</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/AzureAuth/man/authorization.html" class="external-link">build_authorization_uri</a></span><span class="op">(</span><span class="va">resource</span>, <span class="va">tenant</span>, <span class="va">app</span>, redirect_uri<span class="op">=</span><span class="va">redirect</span>, version<span class="op">=</span><span class="fl">2</span><span class="op">)</span>
-        <span class="va">redir_js</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"location.replace(\"%s\");"</span>, <span class="va">auth_uri</span><span class="op">)</span>
-        <span class="va">tags</span><span class="op">$</span><span class="fu">script</span><span class="op">(</span><span class="fu">HTML</span><span class="op">(</span><span class="va">redir_js</span><span class="op">)</span><span class="op">)</span>
-    <span class="op">}</span>
-    <span class="kw">else</span> <span class="va">ui</span>
-<span class="op">}</span>
-
-<span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span>
-<span class="op">{</span>
-    <span class="va">opts</span> <span class="op">&lt;-</span> <span class="fu">parseQueryString</span><span class="op">(</span><span class="fu">isolate</span><span class="op">(</span><span class="va">session</span><span class="op">$</span><span class="va">clientData</span><span class="op">$</span><span class="va">url_search</span><span class="op">)</span><span class="op">)</span>
-    <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">opts</span><span class="op">$</span><span class="va">code</span><span class="op">)</span><span class="op">)</span>
-        <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="op">)</span>
-
-    <span class="va">token</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/AzureAuth/man/get_azure_token.html" class="external-link">get_azure_token</a></span><span class="op">(</span><span class="va">resource</span>, <span class="va">tenant</span>, <span class="va">app</span>, password<span class="op">=</span><span class="va">pwd</span>, auth_type<span class="op">=</span><span class="st">"authorization_code"</span>,
-                             authorize_args<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>redirect_uri<span class="op">=</span><span class="va">redirect</span><span class="op">)</span>, version<span class="op">=</span><span class="fl">2</span>,
-                             use_cache<span class="op">=</span><span class="cn">FALSE</span>, auth_code<span class="op">=</span><span class="va">opts</span><span class="op">$</span><span class="va">code</span><span class="op">)</span>
-
-    <span class="co"># display the contents of the user's OneDrive root folder</span>
-    <span class="va">drv</span> <span class="op">&lt;-</span> <span class="va"><a href="https://rdrr.io/pkg/AzureGraph/man/ms_graph.html" class="external-link">ms_graph</a></span><span class="op">$</span>
-        <span class="fu">new</span><span class="op">(</span>token<span class="op">=</span><span class="va">token</span><span class="op">)</span><span class="op">$</span>
-        <span class="fu">get_user</span><span class="op">(</span><span class="op">)</span><span class="op">$</span>
-        <span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span>
-    <span class="va">output</span><span class="op">$</span><span class="va">drv</span> <span class="op">&lt;-</span> <span class="fu">renderPrint</span><span class="op">(</span><span class="va">drv</span><span class="op">$</span><span class="fu">list_files</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-<span class="op">}</span>
-
-<span class="fu">shinyApp</span><span class="op">(</span><span class="va">ui_func</span>, <span class="va">server</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Azure/AzureAuth" class="external-link">AzureAuth</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Azure/AzureGraph" class="external-link">AzureGraph</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Azure/Microsoft365R" class="external-link">Microsoft365R</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.posit.co/" class="external-link">shiny</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">tenant</span> <span class="op">&lt;-</span> <span class="st">"your-tenant-here"</span></span>
+<span></span>
+<span><span class="co"># the application/client ID of the app registration you created in AAD</span></span>
+<span><span class="co"># - not to be confused with the 'object ID' or 'service principal ID'</span></span>
+<span><span class="va">app</span> <span class="op">&lt;-</span> <span class="st">"your-app-id-here"</span></span>
+<span></span>
+<span><span class="co"># the address of your app: also the redirect URI of your app registration</span></span>
+<span><span class="co"># - AAD allows only HTTPS for non-localhost redirects, not HTTP</span></span>
+<span><span class="va">redirect</span> <span class="op">&lt;-</span> <span class="st">"https://example.com/mysite"</span></span>
+<span><span class="va">port</span> <span class="op">&lt;-</span> <span class="fu">httr</span><span class="fu">::</span><span class="fu"><a href="https://httr.r-lib.org/reference/parse_url.html" class="external-link">parse_url</a></span><span class="op">(</span><span class="va">redirect</span><span class="op">)</span><span class="op">$</span><span class="va">port</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>shiny.port<span class="op">=</span><span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">port</span><span class="op">)</span><span class="op">)</span> <span class="fl">443</span> <span class="kw">else</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">port</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># if your app reg has a 'webapp' redirect, it requires a client secret (password)</span></span>
+<span><span class="co"># - you should NEVER put secrets in code: here we get it from an environment variable</span></span>
+<span><span class="co"># - leave the environment variable unset if you have a 'desktop &amp; mobile' redirect</span></span>
+<span><span class="va">pwd</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"EXAMPLE_SHINY_CLIENT_SECRET"</span>, <span class="st">""</span><span class="op">)</span></span>
+<span><span class="kw">if</span><span class="op">(</span><span class="va">pwd</span> <span class="op">==</span> <span class="st">""</span><span class="op">)</span> <span class="va">pwd</span> <span class="op">&lt;-</span> <span class="cn">NULL</span></span>
+<span></span>
+<span><span class="co"># get the Graph permissions listed for the app, plus an ID token</span></span>
+<span><span class="va">resource</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://graph.microsoft.com/.default"</span>, <span class="st">"openid"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># a simple UI: display the user's OneDrive</span></span>
+<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu">fluidPage</span><span class="op">(</span></span>
+<span>    <span class="fu">verbatimTextOutput</span><span class="op">(</span><span class="st">"drv"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ui_func</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">req</span><span class="op">)</span></span>
+<span><span class="op">{</span></span>
+<span>    <span class="va">opts</span> <span class="op">&lt;-</span> <span class="fu">parseQueryString</span><span class="op">(</span><span class="va">req</span><span class="op">$</span><span class="va">QUERY_STRING</span><span class="op">)</span></span>
+<span>    <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">opts</span><span class="op">$</span><span class="va">code</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">{</span></span>
+<span>        <span class="va">auth_uri</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/AzureAuth/man/authorization.html" class="external-link">build_authorization_uri</a></span><span class="op">(</span><span class="va">resource</span>, <span class="va">tenant</span>, <span class="va">app</span>, redirect_uri<span class="op">=</span><span class="va">redirect</span>, version<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
+<span>        <span class="va">redir_js</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sprintf.html" class="external-link">sprintf</a></span><span class="op">(</span><span class="st">"location.replace(\"%s\");"</span>, <span class="va">auth_uri</span><span class="op">)</span></span>
+<span>        <span class="va">tags</span><span class="op">$</span><span class="fu">script</span><span class="op">(</span><span class="fu">HTML</span><span class="op">(</span><span class="va">redir_js</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="op">}</span></span>
+<span>    <span class="kw">else</span> <span class="va">ui</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span></span>
+<span><span class="op">{</span></span>
+<span>    <span class="va">opts</span> <span class="op">&lt;-</span> <span class="fu">parseQueryString</span><span class="op">(</span><span class="fu">isolate</span><span class="op">(</span><span class="va">session</span><span class="op">$</span><span class="va">clientData</span><span class="op">$</span><span class="va">url_search</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="kw">if</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NULL.html" class="external-link">is.null</a></span><span class="op">(</span><span class="va">opts</span><span class="op">$</span><span class="va">code</span><span class="op">)</span><span class="op">)</span></span>
+<span>        <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="va">token</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/AzureAuth/man/get_azure_token.html" class="external-link">get_azure_token</a></span><span class="op">(</span><span class="va">resource</span>, <span class="va">tenant</span>, <span class="va">app</span>, password<span class="op">=</span><span class="va">pwd</span>, auth_type<span class="op">=</span><span class="st">"authorization_code"</span>,</span>
+<span>                             authorize_args<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>redirect_uri<span class="op">=</span><span class="va">redirect</span><span class="op">)</span>, version<span class="op">=</span><span class="fl">2</span>,</span>
+<span>                             use_cache<span class="op">=</span><span class="cn">FALSE</span>, auth_code<span class="op">=</span><span class="va">opts</span><span class="op">$</span><span class="va">code</span><span class="op">)</span></span>
+<span></span>
+<span>    <span class="co"># display the contents of the user's OneDrive root folder</span></span>
+<span>    <span class="va">drv</span> <span class="op">&lt;-</span> <span class="va"><a href="https://rdrr.io/pkg/AzureGraph/man/ms_graph.html" class="external-link">ms_graph</a></span><span class="op">$</span></span>
+<span>        <span class="fu">new</span><span class="op">(</span>token<span class="op">=</span><span class="va">token</span><span class="op">)</span><span class="op">$</span></span>
+<span>        <span class="fu">get_user</span><span class="op">(</span><span class="op">)</span><span class="op">$</span></span>
+<span>        <span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span></span>
+<span>    <span class="va">output</span><span class="op">$</span><span class="va">drv</span> <span class="op">&lt;-</span> <span class="fu">renderPrint</span><span class="op">(</span><span class="va">drv</span><span class="op">$</span><span class="fu">list_files</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu">shinyApp</span><span class="op">(</span><span class="va">ui_func</span>, <span class="va">server</span><span class="op">)</span></span></code></pre></div>
 </div>
   </div>
 
@@ -223,7 +266,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

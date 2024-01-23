@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Microsoft365R</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.3.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.0.9000</span>
       </span>
     </div>
 
@@ -50,7 +50,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -97,7 +97,7 @@
 
       
 
-      </header><script src="od_sp_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>OneDrive and SharePoint</h1>
@@ -111,114 +111,177 @@
 
     
     
-<p>Microsoft365R is a simple yet powerful R interface to <a href="https://www.microsoft.com/en-us/microsoft-365" class="external-link">Microsoft 365</a> (formerly known as Office 365), leveraging the facilities provided by the <a href="https://cran.r-project.org/package=AzureGraph" class="external-link">AzureGraph</a> package. This vignette describes how to access data stored in <a href="https://www.microsoft.com/en-au/microsoft-365/sharepoint/collaboration" class="external-link">SharePoint Online</a> sites and <a href="https://www.microsoft.com/en-au/microsoft-365/onedrive/online-cloud-storage" class="external-link">OneDrive</a>. Both personal OneDrive and OneDrive for Business are supported.</p>
-<p>See the “Authenticating to Microsoft 365” vignette for more details on authentication if required.</p>
+<p>Microsoft365R is a simple yet powerful R interface to <a href="https://www.microsoft.com/en-us/microsoft-365" class="external-link">Microsoft 365</a>
+(formerly known as Office 365), leveraging the facilities provided by
+the <a href="https://cran.r-project.org/package=AzureGraph" class="external-link">AzureGraph</a>
+package. This vignette describes how to access data stored in <a href="https://www.microsoft.com/en-au/microsoft-365/sharepoint/collaboration" class="external-link">SharePoint
+Online</a> sites and <a href="https://www.microsoft.com/en-au/microsoft-365/onedrive/online-cloud-storage" class="external-link">OneDrive</a>.
+Both personal OneDrive and OneDrive for Business are supported.</p>
+<p>See the “Authenticating to Microsoft 365” vignette for more details
+on authentication if required.</p>
 <div class="section level2">
 <h2 id="onedrive">OneDrive<a class="anchor" aria-label="anchor" href="#onedrive"></a>
 </h2>
-<p>To access your personal OneDrive, call the <code><a href="../reference/client.html">get_personal_onedrive()</a></code> function. This returns an R6 client object of class <code>ms_drive</code>, which has methods for working with files and folders.</p>
+<p>To access your personal OneDrive, call the
+<code><a href="../reference/client.html">get_personal_onedrive()</a></code> function. This returns an R6 client
+object of class <code>ms_drive</code>, which has methods for working
+with files and folders.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">od</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/client.html">get_personal_onedrive</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># list files and folders</span>
-<span class="va">od</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># same as list_items()</span>
-<span class="va">od</span><span class="op">$</span><span class="fu">list_files</span><span class="op">(</span><span class="op">)</span>
-<span class="va">od</span><span class="op">$</span><span class="fu">list_files</span><span class="op">(</span><span class="st">"Documents"</span><span class="op">)</span>
-
-<span class="co"># upload and download files</span>
-<span class="va">od</span><span class="op">$</span><span class="fu">download_file</span><span class="op">(</span><span class="st">"Documents/myfile.docx"</span><span class="op">)</span>
-<span class="va">od</span><span class="op">$</span><span class="fu">upload_file</span><span class="op">(</span><span class="st">"somedata.xlsx"</span><span class="op">)</span>
-
-<span class="co"># create a folder</span>
-<span class="va">od</span><span class="op">$</span><span class="fu">create_folder</span><span class="op">(</span><span class="st">"Documents/newfolder"</span><span class="op">)</span></code></pre></div>
-<p>To access OneDrive for Business call <code><a href="../reference/client.html">get_business_onedrive()</a></code>. This also returns an object of class <code>ms_drive</code>, so the exact same methods are available as for personal OneDrive.</p>
+<code class="sourceCode R"><span><span class="va">od</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/client.html">get_personal_onedrive</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># list files and folders</span></span>
+<span><span class="va">od</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># same as list_items()</span></span>
+<span><span class="va">od</span><span class="op">$</span><span class="fu">list_files</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">od</span><span class="op">$</span><span class="fu">list_files</span><span class="op">(</span><span class="st">"Documents"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># upload and download files</span></span>
+<span><span class="va">od</span><span class="op">$</span><span class="fu">download_file</span><span class="op">(</span><span class="st">"Documents/myfile.docx"</span><span class="op">)</span></span>
+<span><span class="va">od</span><span class="op">$</span><span class="fu">upload_file</span><span class="op">(</span><span class="st">"somedata.xlsx"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># create a folder</span></span>
+<span><span class="va">od</span><span class="op">$</span><span class="fu">create_folder</span><span class="op">(</span><span class="st">"Documents/newfolder"</span><span class="op">)</span></span></code></pre></div>
+<p>To access OneDrive for Business call
+<code><a href="../reference/client.html">get_business_onedrive()</a></code>. This also returns an object of
+class <code>ms_drive</code>, so the exact same methods are available as
+for personal OneDrive.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># by default, authenticate with the Microsoft365R internal app ID</span>
-<span class="va">odb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/client.html">get_business_onedrive</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="va">odb</span><span class="op">$</span><span class="fu">list_files</span><span class="op">(</span><span class="op">)</span>
-<span class="va">odb</span><span class="op">$</span><span class="fu">open_files</span><span class="op">(</span><span class="st">"myproject/demo.pptx"</span><span class="op">)</span></code></pre></div>
-<p>You can open a file or folder in your browser with the <code>open_item()</code> method. For example, a Word document or Excel spreadsheet will open in Word or Excel Online, and a folder will be shown in OneDrive.</p>
+<code class="sourceCode R"><span><span class="co"># by default, authenticate with the Microsoft365R internal app ID</span></span>
+<span><span class="va">odb</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/client.html">get_business_onedrive</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">odb</span><span class="op">$</span><span class="fu">list_files</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">odb</span><span class="op">$</span><span class="fu">open_files</span><span class="op">(</span><span class="st">"myproject/demo.pptx"</span><span class="op">)</span></span></code></pre></div>
+<p>You can open a file or folder in your browser with the
+<code>open_item()</code> method. For example, a Word document or Excel
+spreadsheet will open in Word or Excel Online, and a folder will be
+shown in OneDrive.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">od</span><span class="op">$</span><span class="fu">open_item</span><span class="op">(</span><span class="st">"Documents/myfile.docx"</span><span class="op">)</span></code></pre></div>
-<p>To obtain a shareable link for a file or folder, use <code>create_share_link()</code>:</p>
+<code class="sourceCode R"><span><span class="va">od</span><span class="op">$</span><span class="fu">open_item</span><span class="op">(</span><span class="st">"Documents/myfile.docx"</span><span class="op">)</span></span></code></pre></div>
+<p>To obtain a shareable link for a file or folder, use
+<code>create_share_link()</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># default: viewable link, expires in 7 days</span>
-<span class="va">od</span><span class="op">$</span><span class="fu">create_share_link</span><span class="op">(</span><span class="st">"Documents/myfile.docx"</span>, type<span class="op">=</span><span class="st">"view"</span><span class="op">)</span>
-
-<span class="co"># editable link, expires in 24 hours</span>
-<span class="va">od</span><span class="op">$</span><span class="fu">create_share_link</span><span class="op">(</span><span class="st">"Documents/myfile.docx"</span>, type<span class="op">=</span><span class="st">"edit"</span>, expiry<span class="op">=</span><span class="st">"24 hours"</span><span class="op">)</span>
-
-<span class="co"># setting a password</span>
-<span class="va">od</span><span class="op">$</span><span class="fu">create_share_link</span><span class="op">(</span><span class="st">"Documents/myfile.docx"</span>, password<span class="op">=</span><span class="st">"Use-strong-passwords!"</span><span class="op">)</span></code></pre></div>
-<p>You can get and set the metadata properties for a file or folder with <code>get_item_properties()</code> and <code>set_item_properties()</code>. For the latter, provide the new properties as named arguments to the method. Not all properties can be changed; some, like the file size and last modified date, are read-only.</p>
+<code class="sourceCode R"><span><span class="co"># default: viewable link, expires in 7 days</span></span>
+<span><span class="va">od</span><span class="op">$</span><span class="fu">create_share_link</span><span class="op">(</span><span class="st">"Documents/myfile.docx"</span>, type<span class="op">=</span><span class="st">"view"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># editable link, expires in 24 hours</span></span>
+<span><span class="va">od</span><span class="op">$</span><span class="fu">create_share_link</span><span class="op">(</span><span class="st">"Documents/myfile.docx"</span>, type<span class="op">=</span><span class="st">"edit"</span>, expiry<span class="op">=</span><span class="st">"24 hours"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># setting a password</span></span>
+<span><span class="va">od</span><span class="op">$</span><span class="fu">create_share_link</span><span class="op">(</span><span class="st">"Documents/myfile.docx"</span>, password<span class="op">=</span><span class="st">"Use-strong-passwords!"</span><span class="op">)</span></span></code></pre></div>
+<p>You can get and set the metadata properties for a file or folder with
+<code>get_item_properties()</code> and
+<code>set_item_properties()</code>. For the latter, provide the new
+properties as named arguments to the method. Not all properties can be
+changed; some, like the file size and last modified date, are
+read-only.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">od</span><span class="op">$</span><span class="fu">get_item_properties</span><span class="op">(</span><span class="st">"Documents/myfile.docx"</span><span class="op">)</span>
-
-<span class="co"># rename a file -- version control via filename is bad, mmkay</span>
-<span class="va">od</span><span class="op">$</span><span class="fu">set_item_properties</span><span class="op">(</span><span class="st">"Documents/myfile.docx"</span>, name<span class="op">=</span><span class="st">"myfile version 2.docx"</span><span class="op">)</span></code></pre></div>
-<p>You can also retrieve an object of class <code>ms_drive_item</code> representing the file or folder, with <code>get_item()</code>. This has methods appropriate for drive items. Many of the drive methods are actually implemented by calling down to corresponding methods for the <code>ms_drive_item</code> class, with default paths set appropriately.</p>
+<code class="sourceCode R"><span><span class="va">od</span><span class="op">$</span><span class="fu">get_item_properties</span><span class="op">(</span><span class="st">"Documents/myfile.docx"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># rename a file -- version control via filename is bad, mmkay</span></span>
+<span><span class="va">od</span><span class="op">$</span><span class="fu">set_item_properties</span><span class="op">(</span><span class="st">"Documents/myfile.docx"</span>, name<span class="op">=</span><span class="st">"myfile version 2.docx"</span><span class="op">)</span></span></code></pre></div>
+<p>You can also retrieve an object of class <code>ms_drive_item</code>
+representing the file or folder, with <code>get_item()</code>. This has
+methods appropriate for drive items. Many of the drive methods are
+actually implemented by calling down to corresponding methods for the
+<code>ms_drive_item</code> class, with default paths set
+appropriately.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># rename a file by retrieving it as a drive item and calling its update() method</span>
-<span class="va">item</span> <span class="op">&lt;-</span> <span class="va">od</span><span class="op">$</span><span class="fu">get_item</span><span class="op">(</span><span class="st">"Documents/myfile.docx"</span><span class="op">)</span>
-<span class="va">item</span><span class="op">$</span><span class="fu">update</span><span class="op">(</span>name<span class="op">=</span><span class="st">"myfile version 2.docx"</span><span class="op">)</span>
-
-<span class="co"># methods appropriate for a folder</span>
-<span class="va">docs_folder</span> <span class="op">&lt;-</span> <span class="va">od</span><span class="op">$</span><span class="fu">get_item</span><span class="op">(</span><span class="st">"Documents"</span><span class="op">)</span>
-<span class="va">docs_folder</span><span class="op">$</span><span class="fu">list_files</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># upload a file to the "Documents/New folder" folder</span>
-<span class="va">docs_folder</span><span class="op">$</span><span class="fu">create_folder</span><span class="op">(</span><span class="st">"New folder"</span><span class="op">)</span>
-<span class="va">docs_folder</span><span class="op">$</span><span class="fu">upload</span><span class="op">(</span><span class="st">"New folder/newdocument.docx"</span><span class="op">)</span>
-<span class="va">newfile</span> <span class="op">&lt;-</span> <span class="va">docs_folder</span><span class="op">$</span><span class="fu">get_item</span><span class="op">(</span><span class="st">"New folder/newdocument.docx"</span><span class="op">)</span>
-
-<span class="co"># methods appropriate for a file</span>
-<span class="va">newfile</span><span class="op">$</span><span class="fu">open</span><span class="op">(</span><span class="op">)</span>
-<span class="va">newfile</span><span class="op">$</span><span class="fu">download</span><span class="op">(</span><span class="st">"newdocument modified.docx"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># rename a file by retrieving it as a drive item and calling its update() method</span></span>
+<span><span class="va">item</span> <span class="op">&lt;-</span> <span class="va">od</span><span class="op">$</span><span class="fu">get_item</span><span class="op">(</span><span class="st">"Documents/myfile.docx"</span><span class="op">)</span></span>
+<span><span class="va">item</span><span class="op">$</span><span class="fu">update</span><span class="op">(</span>name<span class="op">=</span><span class="st">"myfile version 2.docx"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># methods appropriate for a folder</span></span>
+<span><span class="va">docs_folder</span> <span class="op">&lt;-</span> <span class="va">od</span><span class="op">$</span><span class="fu">get_item</span><span class="op">(</span><span class="st">"Documents"</span><span class="op">)</span></span>
+<span><span class="va">docs_folder</span><span class="op">$</span><span class="fu">list_files</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># upload a file to the "Documents/New folder" folder</span></span>
+<span><span class="va">docs_folder</span><span class="op">$</span><span class="fu">create_folder</span><span class="op">(</span><span class="st">"New folder"</span><span class="op">)</span></span>
+<span><span class="va">docs_folder</span><span class="op">$</span><span class="fu">upload</span><span class="op">(</span><span class="st">"New folder/newdocument.docx"</span><span class="op">)</span></span>
+<span><span class="va">newfile</span> <span class="op">&lt;-</span> <span class="va">docs_folder</span><span class="op">$</span><span class="fu">get_item</span><span class="op">(</span><span class="st">"New folder/newdocument.docx"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># methods appropriate for a file</span></span>
+<span><span class="va">newfile</span><span class="op">$</span><span class="fu">open</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">newfile</span><span class="op">$</span><span class="fu">download</span><span class="op">(</span><span class="st">"newdocument modified.docx"</span><span class="op">)</span></span></code></pre></div>
+<p>There are also convenience methods for working with data frames and
+other R objects.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># saving and loading data to a csv file</span></span>
+<span><span class="va">od</span><span class="op">$</span><span class="fu">save_dataframe</span><span class="op">(</span><span class="va">iris</span>, <span class="st">"Documents/iris.csv"</span><span class="op">)</span></span>
+<span><span class="va">iris2</span> <span class="op">&lt;-</span> <span class="va">od</span><span class="op">$</span><span class="fu">load_dataframe</span><span class="op">(</span><span class="st">"Documents/iris.csv"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># saving and loading an R object</span></span>
+<span><span class="va">wtmod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html" class="external-link">lm</a></span><span class="op">(</span><span class="va">wt</span> <span class="op">~</span> <span class="va">.</span>, data<span class="op">=</span><span class="va">mtcars</span><span class="op">)</span></span>
+<span><span class="va">od</span><span class="op">$</span><span class="fu">save_rds</span><span class="op">(</span><span class="va">wtmod</span>, <span class="st">"Documents/wtmod.rds"</span><span class="op">)</span></span>
+<span><span class="va">wtmod2</span> <span class="op">&lt;-</span> <span class="va">od</span><span class="op">$</span><span class="fu">load_rds</span><span class="op">(</span><span class="st">"Documents/wtmod.rds"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># saving and loading multiple objects</span></span>
+<span><span class="va">od</span><span class="op">$</span><span class="fu">save_rdata</span><span class="op">(</span><span class="va">iris</span>, <span class="va">wtmod</span>, file<span class="op">=</span><span class="st">"Documents/objects.rdata"</span><span class="op">)</span></span>
+<span><span class="va">od</span><span class="op">$</span><span class="fu">load_rdata</span><span class="op">(</span><span class="st">"Documents/objects.rdata"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="sharepoint">SharePoint<a class="anchor" aria-label="anchor" href="#sharepoint"></a>
 </h2>
-<p>To access a SharePoint site, use the <code><a href="../reference/client.html">get_sharepoint_site()</a></code> function and provide the site name, URL or ID. You can also list the sites you’re following with <code><a href="../reference/client.html">list_sharepoint_sites()</a></code>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/client.html">list_sharepoint_sites</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">site</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/client.html">get_sharepoint_site</a></span><span class="op">(</span><span class="st">"My site"</span><span class="op">)</span></code></pre></div>
-<p>The client object has methods to retrieve drives (document libraries) and lists. To show all drives in a site, use the <code>list_drives()</code> method, and to retrieve a specific drive, use <code>get_drive()</code>. Each drive is an object of class <code>ms_drive</code>, just like the OneDrive clients above.</p>
+<p>To access a SharePoint site, use the
+<code><a href="../reference/client.html">get_sharepoint_site()</a></code> function and provide the site name,
+URL or ID. You can also list the sites you’re following with
+<code><a href="../reference/client.html">list_sharepoint_sites()</a></code>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># list of all document libraries under this site</span>
-<span class="va">site</span><span class="op">$</span><span class="fu">list_drives</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># default document library</span>
-<span class="va">drv</span> <span class="op">&lt;-</span> <span class="va">site</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># same methods as for OneDrive</span>
-<span class="va">drv</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span><span class="op">)</span>
-<span class="va">drv</span><span class="op">$</span><span class="fu">open_item</span><span class="op">(</span><span class="st">"teamproject/plan.xlsx"</span><span class="op">)</span></code></pre></div>
-<p>To show all lists in a site, use the <code>get_lists()</code> method, and to retrieve a specific list, use <code>get_list()</code> and supply either the list name or ID.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/client.html">list_sharepoint_sites</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">site</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/client.html">get_sharepoint_site</a></span><span class="op">(</span><span class="st">"My site"</span><span class="op">)</span></span></code></pre></div>
+<p>The client object has methods to retrieve drives (document libraries)
+and lists. To show all drives in a site, use the
+<code>list_drives()</code> method, and to retrieve a specific drive, use
+<code>get_drive()</code>. Each drive is an object of class
+<code>ms_drive</code>, just like the OneDrive clients above.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">site</span><span class="op">$</span><span class="fu">get_lists</span><span class="op">(</span><span class="op">)</span>
-
-<span class="va">lst</span> <span class="op">&lt;-</span> <span class="va">site</span><span class="op">$</span><span class="fu">get_list</span><span class="op">(</span><span class="st">"my-list"</span><span class="op">)</span></code></pre></div>
-<p>You can retrieve the items in a list as a data frame, with <code>list_items()</code>. This has arguments <code>filter</code> and <code>select</code> to do row and column subsetting respectively. <code>filter</code> should be an OData expression provided as a string, and <code>select</code> should be a string containing a comma-separated list of columns. Any column names in the <code>filter</code> expression must be prefixed with <code>fields/</code> to distinguish them from item metadata.</p>
+<code class="sourceCode R"><span><span class="co"># list of all document libraries under this site</span></span>
+<span><span class="va">site</span><span class="op">$</span><span class="fu">list_drives</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># default document library</span></span>
+<span><span class="va">drv</span> <span class="op">&lt;-</span> <span class="va">site</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># same methods as for OneDrive</span></span>
+<span><span class="va">drv</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">drv</span><span class="op">$</span><span class="fu">open_item</span><span class="op">(</span><span class="st">"teamproject/plan.xlsx"</span><span class="op">)</span></span></code></pre></div>
+<p>To show all lists in a site, use the <code>get_lists()</code> method,
+and to retrieve a specific list, use <code>get_list()</code> and supply
+either the list name or ID.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># return a data frame containing all list items</span>
-<span class="va">lst</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># get subset of rows and columns</span>
-<span class="va">lst</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span>
-    filter<span class="op">=</span><span class="st">"startsWith(fields/firstname, 'John')"</span>,
-    select<span class="op">=</span><span class="st">"firstname,lastname,title"</span>
-<span class="op">)</span></code></pre></div>
-<p>There are also <code>get_item()</code>, <code>create_item()</code>, <code>update_item()</code> and <code>delete_item()</code> methods for working directly with individual items.</p>
+<code class="sourceCode R"><span><span class="va">site</span><span class="op">$</span><span class="fu">get_lists</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">lst</span> <span class="op">&lt;-</span> <span class="va">site</span><span class="op">$</span><span class="fu">get_list</span><span class="op">(</span><span class="st">"my-list"</span><span class="op">)</span></span></code></pre></div>
+<p>You can retrieve the items in a list as a data frame, with
+<code>list_items()</code>. This has arguments <code>filter</code> and
+<code>select</code> to do row and column subsetting respectively.
+<code>filter</code> should be an OData expression provided as a string,
+and <code>select</code> should be a string containing a comma-separated
+list of columns. Any column names in the <code>filter</code> expression
+must be prefixed with <code>fields/</code> to distinguish them from item
+metadata.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">item</span> <span class="op">&lt;-</span> <span class="va">list</span><span class="op">$</span><span class="fu">create_item</span><span class="op">(</span>firstname<span class="op">=</span><span class="st">"Mary"</span>, lastname<span class="op">=</span><span class="st">"Smith"</span><span class="op">)</span>
-<span class="va">iid</span> <span class="op">&lt;-</span> <span class="va">item</span><span class="op">$</span><span class="va">properties</span><span class="op">$</span><span class="va">id</span>
-<span class="va">list</span><span class="op">$</span><span class="fu">update_item</span><span class="op">(</span><span class="va">iid</span>, firstname<span class="op">=</span><span class="st">"Eliza"</span><span class="op">)</span>
-<span class="va">list</span><span class="op">$</span><span class="fu">delete_item</span><span class="op">(</span><span class="va">iid</span><span class="op">)</span></code></pre></div>
-<p>Finally, you can retrieve subsites with <code>list_subsites()</code> and <code>get_subsite()</code>. These also return SharePoint site objects, so all the methods above are available for a subsite.</p>
-<p>Currently, Microsoft365R only supports SharePoint Online, the cloud-hosted version of the product. Support for SharePoint Server (the on-premises version) may come at a later stage.</p>
+<code class="sourceCode R"><span><span class="co"># return a data frame containing all list items</span></span>
+<span><span class="va">lst</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># get subset of rows and columns</span></span>
+<span><span class="va">lst</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span></span>
+<span>    filter<span class="op">=</span><span class="st">"startsWith(fields/firstname, 'John')"</span>,</span>
+<span>    select<span class="op">=</span><span class="st">"firstname,lastname,title"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>There are also <code>get_item()</code>, <code>create_item()</code>,
+<code>update_item()</code> and <code>delete_item()</code> methods for
+working directly with individual items.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">item</span> <span class="op">&lt;-</span> <span class="va">list</span><span class="op">$</span><span class="fu">create_item</span><span class="op">(</span>firstname<span class="op">=</span><span class="st">"Mary"</span>, lastname<span class="op">=</span><span class="st">"Smith"</span><span class="op">)</span></span>
+<span><span class="va">iid</span> <span class="op">&lt;-</span> <span class="va">item</span><span class="op">$</span><span class="va">properties</span><span class="op">$</span><span class="va">id</span></span>
+<span><span class="va">list</span><span class="op">$</span><span class="fu">update_item</span><span class="op">(</span><span class="va">iid</span>, firstname<span class="op">=</span><span class="st">"Eliza"</span><span class="op">)</span></span>
+<span><span class="va">list</span><span class="op">$</span><span class="fu">delete_item</span><span class="op">(</span><span class="va">iid</span><span class="op">)</span></span></code></pre></div>
+<p>Finally, you can retrieve subsites with <code>list_subsites()</code>
+and <code>get_subsite()</code>. These also return SharePoint site
+objects, so all the methods above are available for a subsite.</p>
+<p>Currently, Microsoft365R only supports SharePoint Online, the
+cloud-hosted version of the product. Support for SharePoint Server (the
+on-premises version) may come at a later stage.</p>
 </div>
   </div>
 
@@ -239,7 +302,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

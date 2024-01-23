@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Microsoft365R</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.3.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.0.9000</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -78,122 +78,145 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">get_personal_onedrive</span><span class="op">(</span>
-  app <span class="op">=</span> <span class="va">.microsoft365r_app_id</span>,
-  scopes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Files.ReadWrite.All"</span>, <span class="st">"User.Read"</span><span class="op">)</span>,
-  token <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">get_business_onedrive</span><span class="op">(</span>
-  tenant <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"CLIMICROSOFT365_TENANT"</span>, <span class="st">"common"</span><span class="op">)</span>,
-  app <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"CLIMICROSOFT365_AADAPPID"</span><span class="op">)</span>,
-  scopes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Files.ReadWrite.All"</span>, <span class="st">"User.Read"</span><span class="op">)</span>,
-  token <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">get_sharepoint_site</span><span class="op">(</span>
-  site_name <span class="op">=</span> <span class="cn">NULL</span>,
-  site_url <span class="op">=</span> <span class="cn">NULL</span>,
-  site_id <span class="op">=</span> <span class="cn">NULL</span>,
-  tenant <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"CLIMICROSOFT365_TENANT"</span>, <span class="st">"common"</span><span class="op">)</span>,
-  app <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"CLIMICROSOFT365_AADAPPID"</span><span class="op">)</span>,
-  scopes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Group.ReadWrite.All"</span>, <span class="st">"Directory.Read.All"</span>, <span class="st">"Sites.ReadWrite.All"</span>,
-    <span class="st">"Sites.Manage.All"</span><span class="op">)</span>,
-  token <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">list_sharepoint_sites</span><span class="op">(</span>
-  tenant <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"CLIMICROSOFT365_TENANT"</span>, <span class="st">"common"</span><span class="op">)</span>,
-  app <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"CLIMICROSOFT365_AADAPPID"</span><span class="op">)</span>,
-  scopes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Group.ReadWrite.All"</span>, <span class="st">"Directory.Read.All"</span>, <span class="st">"Sites.ReadWrite.All"</span>,
-    <span class="st">"Sites.Manage.All"</span><span class="op">)</span>,
-  token <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">get_team</span><span class="op">(</span>
-  team_name <span class="op">=</span> <span class="cn">NULL</span>,
-  team_id <span class="op">=</span> <span class="cn">NULL</span>,
-  tenant <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"CLIMICROSOFT365_TENANT"</span>, <span class="st">"common"</span><span class="op">)</span>,
-  app <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"CLIMICROSOFT365_AADAPPID"</span><span class="op">)</span>,
-  scopes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Group.ReadWrite.All"</span>, <span class="st">"Directory.Read.All"</span><span class="op">)</span>,
-  token <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">list_teams</span><span class="op">(</span>
-  tenant <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"CLIMICROSOFT365_TENANT"</span>, <span class="st">"common"</span><span class="op">)</span>,
-  app <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"CLIMICROSOFT365_AADAPPID"</span><span class="op">)</span>,
-  scopes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Group.ReadWrite.All"</span>, <span class="st">"Directory.Read.All"</span><span class="op">)</span>,
-  token <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">get_personal_outlook</span><span class="op">(</span>
-  app <span class="op">=</span> <span class="va">.microsoft365r_app_id</span>,
-  scopes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Mail.Send"</span>, <span class="st">"Mail.ReadWrite"</span>, <span class="st">"User.Read"</span><span class="op">)</span>,
-  token <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">get_business_outlook</span><span class="op">(</span>
-  tenant <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"CLIMICROSOFT365_TENANT"</span>, <span class="st">"common"</span><span class="op">)</span>,
-  app <span class="op">=</span> <span class="va">.microsoft365r_app_id</span>,
-  shared_mbox_id <span class="op">=</span> <span class="cn">NULL</span>,
-  shared_mbox_name <span class="op">=</span> <span class="cn">NULL</span>,
-  shared_mbox_email <span class="op">=</span> <span class="cn">NULL</span>,
-  scopes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"User.Read"</span>, <span class="st">"Mail.Send"</span>, <span class="st">"Mail.ReadWrite"</span><span class="op">)</span>,
-  token <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">get_chat</span><span class="op">(</span>
-  <span class="va">chat_id</span>,
-  tenant <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"CLIMICROSOFT365_TENANT"</span>, <span class="st">"common"</span><span class="op">)</span>,
-  app <span class="op">=</span> <span class="va">.microsoft365r_app_id</span>,
-  scopes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"User.Read"</span>, <span class="st">"Directory.Read.All"</span>, <span class="st">"Chat.ReadWrite"</span><span class="op">)</span>,
-  token <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span>
-
-<span class="fu">list_chats</span><span class="op">(</span>
-  tenant <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"CLIMICROSOFT365_TENANT"</span>, <span class="st">"common"</span><span class="op">)</span>,
-  app <span class="op">=</span> <span class="va">.microsoft365r_app_id</span>,
-  scopes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"User.Read"</span>, <span class="st">"Directory.Read.All"</span>, <span class="st">"Chat.ReadWrite"</span><span class="op">)</span>,
-  token <span class="op">=</span> <span class="cn">NULL</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">get_personal_onedrive</span><span class="op">(</span></span>
+<span>  app <span class="op">=</span> <span class="va">.microsoft365r_app_id</span>,</span>
+<span>  scopes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Files.ReadWrite.All"</span>, <span class="st">"User.Read"</span><span class="op">)</span>,</span>
+<span>  token <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">get_business_onedrive</span><span class="op">(</span></span>
+<span>  tenant <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"CLIMICROSOFT365_TENANT"</span>, <span class="st">"common"</span><span class="op">)</span>,</span>
+<span>  app <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"CLIMICROSOFT365_AADAPPID"</span><span class="op">)</span>,</span>
+<span>  scopes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Files.ReadWrite.All"</span>, <span class="st">"User.Read"</span><span class="op">)</span>,</span>
+<span>  token <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">get_sharepoint_site</span><span class="op">(</span></span>
+<span>  site_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  site_url <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  site_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  tenant <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"CLIMICROSOFT365_TENANT"</span>, <span class="st">"common"</span><span class="op">)</span>,</span>
+<span>  app <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"CLIMICROSOFT365_AADAPPID"</span><span class="op">)</span>,</span>
+<span>  scopes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Group.ReadWrite.All"</span>, <span class="st">"Directory.Read.All"</span>, <span class="st">"Sites.ReadWrite.All"</span>,</span>
+<span>    <span class="st">"Sites.Manage.All"</span><span class="op">)</span>,</span>
+<span>  token <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">list_sharepoint_sites</span><span class="op">(</span></span>
+<span>  tenant <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"CLIMICROSOFT365_TENANT"</span>, <span class="st">"common"</span><span class="op">)</span>,</span>
+<span>  app <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"CLIMICROSOFT365_AADAPPID"</span><span class="op">)</span>,</span>
+<span>  scopes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Group.ReadWrite.All"</span>, <span class="st">"Directory.Read.All"</span>, <span class="st">"Sites.ReadWrite.All"</span>,</span>
+<span>    <span class="st">"Sites.Manage.All"</span><span class="op">)</span>,</span>
+<span>  token <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">get_team</span><span class="op">(</span></span>
+<span>  team_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  team_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  tenant <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"CLIMICROSOFT365_TENANT"</span>, <span class="st">"common"</span><span class="op">)</span>,</span>
+<span>  app <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"CLIMICROSOFT365_AADAPPID"</span><span class="op">)</span>,</span>
+<span>  scopes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Group.ReadWrite.All"</span>, <span class="st">"Directory.Read.All"</span><span class="op">)</span>,</span>
+<span>  token <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">list_teams</span><span class="op">(</span></span>
+<span>  tenant <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"CLIMICROSOFT365_TENANT"</span>, <span class="st">"common"</span><span class="op">)</span>,</span>
+<span>  app <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"CLIMICROSOFT365_AADAPPID"</span><span class="op">)</span>,</span>
+<span>  scopes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Group.ReadWrite.All"</span>, <span class="st">"Directory.Read.All"</span><span class="op">)</span>,</span>
+<span>  token <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">get_personal_outlook</span><span class="op">(</span></span>
+<span>  app <span class="op">=</span> <span class="va">.microsoft365r_app_id</span>,</span>
+<span>  scopes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Mail.Send"</span>, <span class="st">"Mail.ReadWrite"</span>, <span class="st">"User.Read"</span><span class="op">)</span>,</span>
+<span>  token <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">get_business_outlook</span><span class="op">(</span></span>
+<span>  tenant <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"CLIMICROSOFT365_TENANT"</span>, <span class="st">"common"</span><span class="op">)</span>,</span>
+<span>  app <span class="op">=</span> <span class="va">.microsoft365r_app_id</span>,</span>
+<span>  shared_mbox_id <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  shared_mbox_name <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  shared_mbox_email <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  scopes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"User.Read"</span>, <span class="st">"Mail.Send"</span>, <span class="st">"Mail.ReadWrite"</span><span class="op">)</span>,</span>
+<span>  token <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">get_chat</span><span class="op">(</span></span>
+<span>  <span class="va">chat_id</span>,</span>
+<span>  tenant <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"CLIMICROSOFT365_TENANT"</span>, <span class="st">"common"</span><span class="op">)</span>,</span>
+<span>  app <span class="op">=</span> <span class="va">.microsoft365r_app_id</span>,</span>
+<span>  scopes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"User.Read"</span>, <span class="st">"Directory.Read.All"</span>, <span class="st">"Chat.ReadWrite"</span><span class="op">)</span>,</span>
+<span>  token <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">list_chats</span><span class="op">(</span></span>
+<span>  tenant <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/Sys.getenv.html" class="external-link">Sys.getenv</a></span><span class="op">(</span><span class="st">"CLIMICROSOFT365_TENANT"</span>, <span class="st">"common"</span><span class="op">)</span>,</span>
+<span>  app <span class="op">=</span> <span class="va">.microsoft365r_app_id</span>,</span>
+<span>  scopes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"User.Read"</span>, <span class="st">"Directory.Read.All"</span>, <span class="st">"Chat.ReadWrite"</span><span class="op">)</span>,</span>
+<span>  token <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>app</dt>
 <dd><p>A custom app registration ID to use for authentication. See below.</p></dd>
+
+
 <dt>scopes</dt>
 <dd><p>The Microsoft Graph scopes (permissions) to obtain. It should never be necessary to change these.</p></dd>
+
+
 <dt>token</dt>
 <dd><p>An AAD OAuth token object, of class <code><a href="https://rdrr.io/pkg/AzureAuth/man/AzureToken.html" class="external-link">AzureAuth::AzureToken</a></code>. If supplied, the <code>tenant</code>, <code>app</code>, <code>scopes</code> and <code>...</code> arguments will be ignored. See "Authenticating with a token" below.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Optional arguments that will ultimately be passed to <code><a href="https://rdrr.io/pkg/AzureAuth/man/get_azure_token.html" class="external-link">AzureAuth::get_azure_token</a></code>.</p></dd>
+
+
 <dt>tenant</dt>
 <dd><p>For <code>get_business_onedrive</code>, <code>get_sharepoint_site</code> and <code>get_team</code>, the name of your Azure Active Directory (AAD) tenant. If not supplied, use the value of the <code>CLIMICROSOFT365_TENANT</code> environment variable, or "common" if that is unset.</p></dd>
+
+
 <dt>site_name, site_url, site_id</dt>
 <dd><p>For <code>get_sharepoint_site</code>, either the name, web URL or ID of the SharePoint site to retrieve. Supply exactly one of these.</p></dd>
+
+
 <dt>team_name, team_id</dt>
 <dd><p>For <code>get_team</code>, either the name or ID of the team to retrieve. Supply exactly one of these.</p></dd>
+
+
 <dt>shared_mbox_id, shared_mbox_name, shared_mbox_email</dt>
 <dd><p>For <code>get_business_outlook</code>, an ID/principal name/email address. Supply exactly one of these to retrieve a shared mailbox. If all are NULL (the default), retrieve your own mailbox.</p></dd>
+
+
 <dt>chat_id</dt>
 <dd><p>For <code>get_chat</code>, the ID of a group, one-on-one or meeting chat in Teams.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>For <code>get_personal_onedrive</code> and <code>get_business_onedrive</code>, an R6 object of class <code>ms_drive</code>.
-For <code>get_sharepoint_site</code>, an R6 object of class <code>ms_site</code>; for <code>list_sharepoint_sites</code>, a list of such objects.
-For <code>get_team</code>, an R6 object of class <code>ms_team</code>; for <code>list_teams</code>, a list of such objects.</p>
+    
+
+<p>For <code>get_personal_onedrive</code> and <code>get_business_onedrive</code>, an R6 object of class <code>ms_drive</code>.</p>
+
+
+<p>For <code>get_sharepoint_site</code>, an R6 object of class <code>ms_site</code>; for <code>list_sharepoint_sites</code>, a list of such objects.</p>
+
+
+<p>For <code>get_team</code>, an R6 object of class <code>ms_team</code>; for <code>list_teams</code>, a list of such objects.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
@@ -227,7 +250,7 @@ For <code>get_team</code>, an R6 object of class <code>ms_team</code>; for <code
     </div>
     <div id="see-also">
     <h2>See also</h2>
-    <div class="dont-index"><p><code><a href="ms_drive.html">ms_drive</a></code>, <code><a href="ms_site.html">ms_site</a></code>, <code><a href="ms_team.html">ms_team</a></code>, <code><a href="ms_chat.html">ms_chat</a></code></p>
+    <div class="dont-index"><p><code><a href="ms_drive.html">ms_drive</a></code>, <code><a href="ms_site.html">ms_site</a></code>, <code><a href="ms_team.html">ms_team</a></code>, <code><a href="ms_chat.html">ms_chat</a></code>, <a href="microsoft365r_options.html">Microsoft365R global options</a></p>
 <p><code><a href="add_methods.html">add_methods</a></code> for the associated methods that this package adds to the base AzureGraph classes.</p>
 <p>The "Authentication" vignette has more details on the authentication process, including troubleshooting and fixes for common problems. The "Using Microsoft365R in a Shiny app" vignette has further Shiny-specific information, including how to configure the necessary app registration in Azure Active Directory.</p>
 <p><a href="https://pnp.github.io/cli-microsoft365/" class="external-link">CLI for Microsoft 365</a> -- a commandline tool for managing Microsoft 365</p></div>
@@ -235,49 +258,49 @@ For <code>get_team</code>, an R6 object of class <code>ms_team</code>; for <code
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">get_personal_onedrive</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># authenticating without a browser</span></span>
-<span class="r-in"><span class="fu">get_personal_onedrive</span><span class="op">(</span>auth_type<span class="op">=</span><span class="st">"device_code"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">odb</span> <span class="op">&lt;-</span> <span class="fu">get_business_onedrive</span><span class="op">(</span><span class="st">"mycompany"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">odb</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">mysite</span> <span class="op">&lt;-</span> <span class="fu">get_sharepoint_site</span><span class="op">(</span><span class="st">"My site"</span>, tenant<span class="op">=</span><span class="st">"mycompany"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mysite</span> <span class="op">&lt;-</span> <span class="fu">get_sharepoint_site</span><span class="op">(</span>site_url<span class="op">=</span><span class="st">"https://mycompany.sharepoint.com/sites/my-site-url"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">mysite</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">myteam</span> <span class="op">&lt;-</span> <span class="fu">get_team</span><span class="op">(</span><span class="st">"My team"</span>, tenant<span class="op">=</span><span class="st">"mycompany"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">myteam</span><span class="op">$</span><span class="fu">list_channels</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">myteam</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># retrieving chats</span></span>
-<span class="r-in"><span class="fu">get_chat</span><span class="op">(</span><span class="st">"chat-id"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">list_chats</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># you can also use your own app registration ID:</span></span>
-<span class="r-in"><span class="fu">get_business_onedrive</span><span class="op">(</span>app<span class="op">=</span><span class="st">"app_id"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">get_sharepoint_site</span><span class="op">(</span><span class="st">"My site"</span>, app<span class="op">=</span><span class="st">"app_id"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># using the app ID for the CLI for Microsoft 365: set a global option</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>microsoft365r_use_cli_app_id<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">get_business_onedrive</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">get_sharepoint_site</span><span class="op">(</span><span class="st">"My site"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">get_team</span><span class="op">(</span><span class="st">"My team"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># authenticating separately to working with the MS365 API</span></span>
-<span class="r-in"><span class="va">scopes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span class="r-in">    <span class="st">"https://graph.microsoft.com/Files.ReadWrite.All"</span>,</span>
-<span class="r-in">    <span class="st">"https://graph.microsoft.com/User.Read"</span>,</span>
-<span class="r-in">    <span class="st">"openid"</span>, <span class="st">"offline_access"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="va">app</span> <span class="op">&lt;-</span> <span class="st">"d44a05d5-c6a5-4bbb-82d2-443123722380"</span> <span class="co"># for local use only</span></span>
-<span class="r-in"><span class="va">token</span> <span class="op">&lt;-</span> <span class="fu">AzureAuth</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/AzureAuth/man/get_azure_token.html" class="external-link">get_azure_token</a></span><span class="op">(</span><span class="va">scopes</span>, <span class="st">"mycompany"</span>, <span class="va">app</span>, version<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">get_business_onedrive</span><span class="op">(</span>token<span class="op">=</span><span class="va">token</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">get_personal_onedrive</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># authenticating without a browser</span></span></span>
+<span class="r-in"><span><span class="fu">get_personal_onedrive</span><span class="op">(</span>auth_type<span class="op">=</span><span class="st">"device_code"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">odb</span> <span class="op">&lt;-</span> <span class="fu">get_business_onedrive</span><span class="op">(</span><span class="st">"mycompany"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">odb</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">mysite</span> <span class="op">&lt;-</span> <span class="fu">get_sharepoint_site</span><span class="op">(</span><span class="st">"My site"</span>, tenant<span class="op">=</span><span class="st">"mycompany"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mysite</span> <span class="op">&lt;-</span> <span class="fu">get_sharepoint_site</span><span class="op">(</span>site_url<span class="op">=</span><span class="st">"https://mycompany.sharepoint.com/sites/my-site-url"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">mysite</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">myteam</span> <span class="op">&lt;-</span> <span class="fu">get_team</span><span class="op">(</span><span class="st">"My team"</span>, tenant<span class="op">=</span><span class="st">"mycompany"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">myteam</span><span class="op">$</span><span class="fu">list_channels</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">myteam</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># retrieving chats</span></span></span>
+<span class="r-in"><span><span class="fu">get_chat</span><span class="op">(</span><span class="st">"chat-id"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">list_chats</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># you can also use your own app registration ID:</span></span></span>
+<span class="r-in"><span><span class="fu">get_business_onedrive</span><span class="op">(</span>app<span class="op">=</span><span class="st">"app_id"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">get_sharepoint_site</span><span class="op">(</span><span class="st">"My site"</span>, app<span class="op">=</span><span class="st">"app_id"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># using the app ID for the CLI for Microsoft 365: set a global option</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>microsoft365r_use_cli_app_id<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">get_business_onedrive</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">get_sharepoint_site</span><span class="op">(</span><span class="st">"My site"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">get_team</span><span class="op">(</span><span class="st">"My team"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># authenticating separately to working with the MS365 API</span></span></span>
+<span class="r-in"><span><span class="va">scopes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    <span class="st">"https://graph.microsoft.com/Files.ReadWrite.All"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"https://graph.microsoft.com/User.Read"</span>,</span></span>
+<span class="r-in"><span>    <span class="st">"openid"</span>, <span class="st">"offline_access"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">app</span> <span class="op">&lt;-</span> <span class="st">"d44a05d5-c6a5-4bbb-82d2-443123722380"</span> <span class="co"># for local use only</span></span></span>
+<span class="r-in"><span><span class="va">token</span> <span class="op">&lt;-</span> <span class="fu">AzureAuth</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/AzureAuth/man/get_azure_token.html" class="external-link">get_azure_token</a></span><span class="op">(</span><span class="va">scopes</span>, <span class="st">"mycompany"</span>, <span class="va">app</span>, version<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">get_business_onedrive</span><span class="op">(</span>token<span class="op">=</span><span class="va">token</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -292,7 +315,7 @@ For <code>get_team</code>, an R6 object of class <code>ms_team</code>; for <code
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

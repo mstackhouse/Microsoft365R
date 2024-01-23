@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Microsoft365R</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.3.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.0.9000</span>
       </span>
     </div>
 
@@ -50,7 +50,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -97,7 +97,7 @@
 
       
 
-      </header><script src="auth_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Authenticating to Microsoft 365</h1>
@@ -114,105 +114,187 @@
 <div class="section level2">
 <h2 id="authentication">Authentication<a class="anchor" aria-label="anchor" href="#authentication"></a>
 </h2>
-<p>To authenticate with Azure Active Directory, simply call one of the Microsoft365R client functions.</p>
+<p>To authenticate with Azure Active Directory, simply call one of the
+Microsoft365R client functions.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/client.html">get_personal_onedrive</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="../reference/client.html">get_business_onedrive</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="../reference/client.html">get_personal_outlook</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="../reference/client.html">get_business_outlook</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="../reference/client.html">get_sharepoint_site</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu"><a href="../reference/client.html">get_team</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p>Notice that you do <em>not</em> provide your username and password in the function call. Instead, Microsoft365R will use your Internet browser to obtain your credentials, in a similar manner to other web apps. You will get a dialog box asking for permission to access your information. Your login information is saved, so you should only have to authenticate once.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/client.html">get_personal_onedrive</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/client.html">get_business_onedrive</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/client.html">get_personal_outlook</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/client.html">get_business_outlook</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/client.html">get_sharepoint_site</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/client.html">get_team</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>Notice that you do <em>not</em> provide your username and password in
+the function call. Instead, Microsoft365R will use your Internet browser
+to obtain your credentials, in a similar manner to other web apps. You
+will get a dialog box asking for permission to access your information.
+Your login information is saved, so you should only have to authenticate
+once.</p>
 <div class="section level3">
 <h3 id="using-the-device-code-flow">Using the device code flow<a class="anchor" aria-label="anchor" href="#using-the-device-code-flow"></a>
 </h3>
-<p>The default authentication method assumes that your R session can access the Internet via a browser. If this is not the case, for example if you are using Databricks or RStudio Server, you can switch to the <em>device code</em> flow by passing the <code>auth_type="device_code"</code> argument:</p>
+<p>The default authentication method assumes that your R session can
+access the Internet via a browser. If this is not the case, for example
+if you are using Databricks or RStudio Server, you can switch to the
+<em>device code</em> flow by passing the
+<code>auth_type="device_code"</code> argument:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/client.html">get_personal_onedrive</a></span><span class="op">(</span>auth_type<span class="op">=</span><span class="st">"device_code"</span><span class="op">)</span></code></pre></div>
-<p>This will print an access code and URL on the screen. You login to the URL using a browser on another device, and type in the code. Once this is done, Microsoft365R will complete the authentication process. Again, you do <em>not</em> provide your username and password in the function call.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/client.html">get_personal_onedrive</a></span><span class="op">(</span>auth_type<span class="op">=</span><span class="st">"device_code"</span><span class="op">)</span></span></code></pre></div>
+<p>This will print an access code and URL on the screen. You login to
+the URL using a browser on another device, and type in the code. Once
+this is done, Microsoft365R will complete the authentication process.
+Again, you do <em>not</em> provide your username and password in the
+function call.</p>
 </div>
 <div class="section level3">
 <h3 id="specifying-the-tenant">Specifying the tenant<a class="anchor" aria-label="anchor" href="#specifying-the-tenant"></a>
 </h3>
-<p>When authenticating to the Microsoft 365 Business services, Microsoft365R will detect your Azure Active Directory tenant from your logged-in credentials in the browser. Sometimes this doesn’t work, in particular if you are logged in with a personal account that is also a guest account in a tenant. To solve this, specify your tenant name with the <code>tenant</code> argument:</p>
+<p>When authenticating to the Microsoft 365 Business services,
+Microsoft365R will detect your Azure Active Directory tenant from your
+logged-in credentials in the browser. Sometimes this doesn’t work, in
+particular if you are logged in with a personal account that is also a
+guest account in a tenant. To solve this, specify your tenant name with
+the <code>tenant</code> argument:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/client.html">get_business_onedrive</a></span><span class="op">(</span>tenant<span class="op">=</span><span class="st">"mytenant"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/client.html">get_business_outlook</a></span><span class="op">(</span>tenant<span class="op">=</span><span class="st">"mytenant"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/client.html">get_sharepoint_site</a></span><span class="op">(</span><span class="st">"My site"</span>, tenant<span class="op">=</span><span class="st">"mytenant"</span><span class="op">)</span>
-<span class="fu"><a href="../reference/client.html">get_team</a></span><span class="op">(</span><span class="st">"My team"</span>, tenant<span class="op">=</span><span class="st">"mytenant"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/client.html">get_business_onedrive</a></span><span class="op">(</span>tenant<span class="op">=</span><span class="st">"mytenant"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/client.html">get_business_outlook</a></span><span class="op">(</span>tenant<span class="op">=</span><span class="st">"mytenant"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/client.html">get_sharepoint_site</a></span><span class="op">(</span><span class="st">"My site"</span>, tenant<span class="op">=</span><span class="st">"mytenant"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/client.html">get_team</a></span><span class="op">(</span><span class="st">"My team"</span>, tenant<span class="op">=</span><span class="st">"mytenant"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
 <h2 id="app-registration-and-approvals">App registration and approvals<a class="anchor" aria-label="anchor" href="#app-registration-and-approvals"></a>
 </h2>
-<p>Microsoft365R comes with a default app registration for authenticating with AAD; depending on your organisation’s security policy, you may have to get an admin to grant it access to your tenant. See <a href="https://github.com/Azure/Microsoft365R/blob/master/inst/app_registration.md" class="external-link">app_registration.md</a> for details on the permissions that Microsoft365R requires.</p>
+<p>Microsoft365R comes with a default app registration for
+authenticating with AAD; depending on your organisation’s security
+policy, you may have to get an admin to grant it access to your tenant.
+See <a href="https://github.com/Azure/Microsoft365R/blob/master/inst/app_registration.md" class="external-link">app_registration.md</a>
+for details on the permissions that Microsoft365R requires.</p>
 <div class="section level3">
 <h3 id="using-your-own-app-registration">Using your own app registration<a class="anchor" aria-label="anchor" href="#using-your-own-app-registration"></a>
 </h3>
-<p>Rather than getting the default app registration approved, you can also create your own registration for authentication. If this is for use in a local R session, it should have a mobile &amp; desktop redirect URI of <code>https://localhost:1410</code> (not a web or SPA redirect), and the “Allow native client” setting should be enabled. You can use the same permissions as the default app, or set your own: for example, if you know you don’t need to interact with Outlook, you can omit the Mail.Send and Mail.ReadWrite permissions.</p>
-<p>Once the app has been registered, you can pass the app ID to Microsoft365R in a couple of ways.</p>
+<p>Rather than getting the default app registration approved, you can
+also create your own registration for authentication. If this is for use
+in a local R session, it should have a mobile &amp; desktop redirect URI
+of <code>https://localhost:1410</code> (not a web or SPA redirect), and
+the “Allow native client” setting should be enabled. You can use the
+same permissions as the default app, or set your own: for example, if
+you know you don’t need to interact with Outlook, you can omit the
+Mail.Send and Mail.ReadWrite permissions.</p>
+<p>Once the app has been registered, you can pass the app ID to
+Microsoft365R in a couple of ways.</p>
 <ul>
 <li>
-<p>The client functions can accept the app ID as the <code>app</code> argument:</p>
+<p>The client functions can accept the app ID as the
+<code>app</code> argument:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/client.html">get_business_onedrive</a></span><span class="op">(</span>app<span class="op">=</span><span class="st">"myappid"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/client.html">get_business_onedrive</a></span><span class="op">(</span>app<span class="op">=</span><span class="st">"myappid"</span><span class="op">)</span></span></code></pre></div>
 </li>
-<li><p>Alternatively, if the environment variable <code>CLIMICROSOFT365_AADAPPID</code> is set, Microsoft365R will use its value as the app ID for authenticating to the Microsoft 365 Business services (Teams, SharePoint and OneDrive for Business). This environment variable is defined by the <a href="https://pnp.github.io/cli-microsoft365/" class="external-link">CLI for Microsoft365</a>, an open source tool for managing Microsoft 365 accounts; you thus can reuse the same app ID for both the CLI and Microsoft365R.</p></li>
+<li><p>Alternatively, if the environment variable
+<code>CLIMICROSOFT365_AADAPPID</code> is set, Microsoft365R will use its
+value as the app ID for authenticating to the Microsoft 365 Business
+services (Teams, SharePoint and OneDrive for Business). This environment
+variable is defined by the <a href="https://pnp.github.io/cli-microsoft365/" class="external-link">CLI for Microsoft365</a>,
+an open source tool for managing Microsoft 365 accounts; you thus can
+reuse the same app ID for both the CLI and Microsoft365R.</p></li>
 </ul>
-<p>If you want to use Microsoft365R outside a local R session, creating a custom app registration is <strong>required</strong>. In particular, this includes the following common scenarios:</p>
+<p>If you want to use Microsoft365R outside a local R session, creating
+a custom app registration is <strong>required</strong>. In particular,
+this includes the following common scenarios:</p>
 <ul>
 <li>Using Microsoft365R inside a Shiny webapp</li>
-<li>Using it in an unattended (automated) script, eg in a GitHub Actions workflow or other CI/CD pipeline</li>
+<li>Using it in an unattended (automated) script, eg in a GitHub Actions
+workflow or other CI/CD pipeline</li>
 </ul>
-<p>See the vignettes “Using Microsoft365R in a Shiny app” and “Using Microsoft365R in an unattended script” for more on these use cases, including how to configure the app registration in Azure Active Directory.</p>
+<p>See the vignettes “Using Microsoft365R in a Shiny app” and “Using
+Microsoft365R in an unattended script” for more on these use cases,
+including how to configure the app registration in Azure Active
+Directory.</p>
 </div>
 <div class="section level3">
 <h3 id="using-other-app-registrations-last-resort-workarounds">Using other app registrations: last-resort workarounds<a class="anchor" aria-label="anchor" href="#using-other-app-registrations-last-resort-workarounds"></a>
 </h3>
-<p>The above methods are the <strong>recommended solutions</strong> to dealing with access restrictions on Microsoft365R. If they are not feasible, it’s possible to work around these issues by piggybacking on other apps:</p>
+<p>The above methods are the <strong>recommended solutions</strong> to
+dealing with access restrictions on Microsoft365R. If they are not
+feasible, it’s possible to work around these issues by piggybacking on
+other apps:</p>
 <ul>
 <li>
-<p>By setting the R option <code>microsoft365r_use_cli_app_id</code> to a non-NULL value, Microsoft365R will authenticate using the app ID for the CLI for Microsoft 365—effectively pretending to be the CLI itself. Technically this app still requires admin approval, but it is in widespread use and is maintained by Microsoft employees, and so may already be allowed in your organisation. The CLI supports most Microsoft 365 services, but not Outlook or personal OneDrive.</p>
+<p>By setting the R option <code>microsoft365r_use_cli_app_id</code>
+to a non-NULL value, Microsoft365R will authenticate using the app ID
+for the CLI for Microsoft 365—effectively pretending to be the CLI
+itself. Technically this app still requires admin approval, but it is in
+widespread use and is maintained by Microsoft employees, and so may
+already be allowed in your organisation. The CLI supports most Microsoft
+365 services, but not Outlook or personal OneDrive.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>microsoft365r_use_cli_app_id<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="../reference/client.html">get_team</a></span><span class="op">(</span><span class="st">"My team"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>microsoft365r_use_cli_app_id<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/client.html">get_team</a></span><span class="op">(</span><span class="st">"My team"</span><span class="op">)</span></span></code></pre></div>
 </li>
 <li>
-<p>You can authenticate using the Azure CLI’s app ID: <code>04b07795-8ddb-461a-bbee-02f9e1bf7b46</code>. This is a first-party Microsoft app, and hence can be used in any tenant. It is not intended for use with Microsoft 365, so not all functionality may be supported; however it should be possible to access Teams and SharePoint sites (but not Outlook, personal OneDrive or OneDrive for Business).</p>
+<p>You can authenticate using the Azure CLI’s app ID:
+<code>04b07795-8ddb-461a-bbee-02f9e1bf7b46</code>. This is a first-party
+Microsoft app, and hence can be used in any tenant. It is not intended
+for use with Microsoft 365, so not all functionality may be supported;
+however it should be possible to access Teams and SharePoint sites (but
+not Outlook, personal OneDrive or OneDrive for Business).</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/client.html">get_sharepoint_site</a></span><span class="op">(</span><span class="st">"My site"</span>, app<span class="op">=</span><span class="st">"04b07795-8ddb-461a-bbee-02f9e1bf7b46"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/client.html">get_sharepoint_site</a></span><span class="op">(</span><span class="st">"My site"</span>, app<span class="op">=</span><span class="st">"04b07795-8ddb-461a-bbee-02f9e1bf7b46"</span><span class="op">)</span></span></code></pre></div>
 </li>
 </ul>
-<p>Be warned that these workarounds may draw the attention of your admin!</p>
+<p>Be warned that these workarounds may draw the attention of your
+admin!</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="authenticating-with-a-token">Authenticating with a token<a class="anchor" aria-label="anchor" href="#authenticating-with-a-token"></a>
 </h2>
-<p>In some circumstances, it may be desirable to carry out authentication/authorization as a separate step prior to making requests to the Microsoft 365 REST API. This holds in a Shiny app, for example, since only the UI part can talk to the browser while the server part does the rest of the work. Another scenario is if the refresh token lifetime set by your org is too short, so that the token expires in between R sessions. In this case, you can authenticate by obtaining a new token with <code><a href="https://rdrr.io/pkg/AzureAuth/man/get_azure_token.html" class="external-link">AzureAuth::get_azure_token</a></code>, and passing the token object to the client function.</p>
-<p>When calling <code>get_azure_token</code>, the scopes you should use are those given in the <code>scopes</code> argument for each client function, and the API host is <code>https://graph.microsoft.com/</code>. The Microsoft365R internal app ID is <code>d44a05d5-c6a5-4bbb-82d2-443123722380</code>, while that for the CLI for Microsoft 365 is <code>31359c7f-bd7e-475c-86db-fdb8c937548e</code>. As noted above, however, these app IDs <strong>only</strong> work for a local R session; you must create your own app registration if you want to use the package inside a Shiny app.</p>
+<p>In some circumstances, it may be desirable to carry out
+authentication/authorization as a separate step prior to making requests
+to the Microsoft 365 REST API. This holds in a Shiny app, for example,
+since only the UI part can talk to the browser while the server part
+does the rest of the work. Another scenario is if the refresh token
+lifetime set by your org is too short, so that the token expires in
+between R sessions. In this case, you can authenticate by obtaining a
+new token with <code><a href="https://rdrr.io/pkg/AzureAuth/man/get_azure_token.html" class="external-link">AzureAuth::get_azure_token</a></code>, and passing the
+token object to the client function.</p>
+<p>When calling <code>get_azure_token</code>, the scopes you should use
+are those given in the <code>scopes</code> argument for each client
+function, and the API host is <code>https://graph.microsoft.com/</code>.
+The Microsoft365R internal app ID is
+<code>d44a05d5-c6a5-4bbb-82d2-443123722380</code>, while that for the
+CLI for Microsoft 365 is
+<code>31359c7f-bd7e-475c-86db-fdb8c937548e</code>. As noted above,
+however, these app IDs <strong>only</strong> work for a local R session;
+you must create your own app registration if you want to use the package
+inside a Shiny app.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># authenticating separately to working with the MS365 API</span>
-<span class="va">scopes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>
-    <span class="st">"https://graph.microsoft.com/Files.ReadWrite.All"</span>,
-    <span class="st">"https://graph.microsoft.com/User.Read"</span>,
-    <span class="st">"openid"</span>, <span class="st">"offline_access"</span>
-<span class="op">)</span>
-<span class="va">app</span> <span class="op">&lt;-</span> <span class="st">"d44a05d5-c6a5-4bbb-82d2-443123722380"</span> <span class="co"># for local use only</span>
-<span class="va">token</span> <span class="op">&lt;-</span> <span class="fu">AzureAuth</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/AzureAuth/man/get_azure_token.html" class="external-link">get_azure_token</a></span><span class="op">(</span><span class="va">scopes</span>, <span class="st">"mytenant"</span>, <span class="va">app</span>, version<span class="op">=</span><span class="fl">2</span><span class="op">)</span>
-<span class="va">od</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/client.html">get_business_onedrive</a></span><span class="op">(</span>token<span class="op">=</span><span class="va">token</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># authenticating separately to working with the MS365 API</span></span>
+<span><span class="va">scopes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>    <span class="st">"https://graph.microsoft.com/Files.ReadWrite.All"</span>,</span>
+<span>    <span class="st">"https://graph.microsoft.com/User.Read"</span>,</span>
+<span>    <span class="st">"openid"</span>, <span class="st">"offline_access"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">app</span> <span class="op">&lt;-</span> <span class="st">"d44a05d5-c6a5-4bbb-82d2-443123722380"</span> <span class="co"># for local use only</span></span>
+<span><span class="va">token</span> <span class="op">&lt;-</span> <span class="fu">AzureAuth</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/AzureAuth/man/get_azure_token.html" class="external-link">get_azure_token</a></span><span class="op">(</span><span class="va">scopes</span>, <span class="st">"mytenant"</span>, <span class="va">app</span>, version<span class="op">=</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="va">od</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/client.html">get_business_onedrive</a></span><span class="op">(</span>token<span class="op">=</span><span class="va">token</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="other-issues">Other issues<a class="anchor" aria-label="anchor" href="#other-issues"></a>
 </h2>
-<p>The AzureR packages save your login sessions so that you don’t need to reauthenticate each time. If you’re experiencing authentication failures, you can try clearing the saved data by running the following code:</p>
+<p>The AzureR packages save your login sessions so that you don’t need
+to reauthenticate each time. If you’re experiencing authentication
+failures, you can try clearing the saved data by running the following
+code:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">AzureAuth</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/AzureAuth/man/get_azure_token.html" class="external-link">clean_token_directory</a></span><span class="op">(</span><span class="op">)</span>
-<span class="fu">AzureGraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/AzureGraph/man/graph_login.html" class="external-link">delete_graph_login</a></span><span class="op">(</span>tenant<span class="op">=</span><span class="st">"mytenant"</span><span class="op">)</span></code></pre></div>
-<p>You can also consult the vignettes from the AzureAuth and AzureGraph packages for more information on this topic.</p>
+<code class="sourceCode R"><span><span class="fu">AzureAuth</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/AzureAuth/man/get_azure_token.html" class="external-link">clean_token_directory</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu">AzureGraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/AzureGraph/man/graph_login.html" class="external-link">delete_graph_login</a></span><span class="op">(</span>tenant<span class="op">=</span><span class="st">"mytenant"</span><span class="op">)</span></span></code></pre></div>
+<p>You can also consult the vignettes from the AzureAuth and AzureGraph
+packages for more information on this topic.</p>
 <ul>
-<li><a href="https://cran.r-project.org/package=AzureAuth/vignettes/scenarios.html" class="external-link">AzureAuth: Authentication scenarios</a></li>
-<li><a href="https://cran.r-project.org/package=AzureGraph/vignettes/auth.html" class="external-link">AzureGraph: Authentication</a></li>
+<li><a href="https://cran.r-project.org/package=AzureAuth/vignettes/scenarios.html" class="external-link">AzureAuth:
+Authentication scenarios</a></li>
+<li><a href="https://cran.r-project.org/package=AzureGraph/vignettes/auth.html" class="external-link">AzureGraph:
+Authentication</a></li>
 </ul>
 </div>
   </div>
@@ -234,7 +316,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

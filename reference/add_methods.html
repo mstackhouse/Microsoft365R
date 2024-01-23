@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Microsoft365R</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.3.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.0.9000</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -81,51 +81,52 @@
     <div id="usage">
     <h2>Usage</h2>
     
-<div class="sourceCode"><pre><code><span class="co">## R6 method for class 'az_user'</span>
-<span class="fu"><a href="../reference/client.html">get_chat</a></span><span class="op">(</span><span class="va">chat_id</span><span class="op">)</span>
 
-<span class="co">## R6 method for class 'ms_graph'</span>
-<span class="fu">get_drive</span><span class="op">(</span><span class="va">drive_id</span><span class="op">)</span>
 
-<span class="co">## R6 method for class 'az_user'</span>
-<span class="fu">get_drive</span><span class="op">(</span>drive_id <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-
-<span class="co">## R6 method for class 'az_group'</span>
-<span class="fu">get_drive</span><span class="op">(</span>drive_name <span class="op">=</span> <span class="cn">NULL</span>, drive_id <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-
-<span class="co">## R6 method for class 'az_group'</span>
-<span class="fu">get_plan</span><span class="op">(</span>plan_title <span class="op">=</span> <span class="cn">NULL</span>, plan_id <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-
-<span class="co">## R6 method for class 'ms_graph'</span>
-<span class="fu"><a href="../reference/client.html">get_sharepoint_site</a></span><span class="op">(</span>site_url <span class="op">=</span> <span class="cn">NULL</span>, site_id <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-
-<span class="co">## R6 method for class 'az_group'</span>
-<span class="fu"><a href="../reference/client.html">get_sharepoint_site</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="co">## R6 method for class 'ms_graph'</span>
-<span class="fu"><a href="../reference/client.html">get_team</a></span><span class="op">(</span>team_id <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-
-<span class="co">## R6 method for class 'az_group'</span>
-<span class="fu"><a href="../reference/client.html">get_team</a></span><span class="op">(</span><span class="op">)</span>
-
-<span class="co">## R6 method for class 'az_user'</span>
-<span class="fu"><a href="../reference/client.html">list_chats</a></span><span class="op">(</span>filter <span class="op">=</span> <span class="cn">NULL</span>, n <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span>
-
-<span class="co">## R6 method for class 'az_user'</span>
-<span class="fu">list_drives</span><span class="op">(</span>filter <span class="op">=</span> <span class="cn">NULL</span>, n <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span>
-
-<span class="co">## R6 method for class 'az_group'</span>
-<span class="fu">list_drives</span><span class="op">(</span>filter <span class="op">=</span> <span class="cn">NULL</span>, n <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span>
-
-<span class="co">## R6 method for class 'az_group'</span>
-<span class="fu">list_plans</span><span class="op">(</span>filter <span class="op">=</span> <span class="cn">NULL</span>, n <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span>
-
-<span class="co">## R6 method for class 'az_user'</span>
-<span class="fu"><a href="../reference/client.html">list_sharepoint_sites</a></span><span class="op">(</span>filter <span class="op">=</span> <span class="cn">NULL</span>, n <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span>
-
-<span class="co">## R6 method for class 'az_user'</span>
-<span class="fu"><a href="../reference/client.html">list_teams</a></span><span class="op">(</span>filter <span class="op">=</span> <span class="cn">NULL</span>, n <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span></code></pre></div>
-
+<p></p><div class="sourceCode"><pre><code><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="do">## R6 method for class 'az_user'</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">get_chat</span>(chat_id)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="do">## R6 method for class 'ms_graph'</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">get_drive</span>(drive_id)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="do">## R6 method for class 'az_user'</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">get_drive</span>(<span class="at">drive_id =</span> <span class="cn">NULL</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="do">## R6 method for class 'az_group'</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">get_drive</span>(<span class="at">drive_name =</span> <span class="cn">NULL</span>, <span class="at">drive_id =</span> <span class="cn">NULL</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="do">## R6 method for class 'az_group'</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">get_plan</span>(<span class="at">plan_title =</span> <span class="cn">NULL</span>, <span class="at">plan_id =</span> <span class="cn">NULL</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="do">## R6 method for class 'ms_graph'</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">get_sharepoint_site</span>(<span class="at">site_url =</span> <span class="cn">NULL</span>, <span class="at">site_id =</span> <span class="cn">NULL</span>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="do">## R6 method for class 'az_group'</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="fu">get_sharepoint_site</span>()</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="do">## R6 method for class 'ms_graph'</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="fu">get_team</span>(<span class="at">team_id =</span> <span class="cn">NULL</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="do">## R6 method for class 'az_group'</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="fu">get_team</span>()</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="do">## R6 method for class 'az_user'</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="fu">list_chats</span>(<span class="at">filter =</span> <span class="cn">NULL</span>, <span class="at">n =</span> <span class="cn">Inf</span>)</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a><span class="do">## R6 method for class 'az_user'</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a><span class="fu">list_drives</span>(<span class="at">filter =</span> <span class="cn">NULL</span>, <span class="at">n =</span> <span class="cn">Inf</span>)</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a><span class="do">## R6 method for class 'az_group'</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a><span class="fu">list_drives</span>(<span class="at">filter =</span> <span class="cn">NULL</span>, <span class="at">n =</span> <span class="cn">Inf</span>)</span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a><span class="do">## R6 method for class 'az_group'</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a><span class="fu">list_plans</span>(<span class="at">filter =</span> <span class="cn">NULL</span>, <span class="at">n =</span> <span class="cn">Inf</span>)</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="do">## R6 method for class 'az_user'</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a><span class="fu">list_sharepoint_sites</span>(<span class="at">filter =</span> <span class="cn">NULL</span>, <span class="at">n =</span> <span class="cn">Inf</span>)</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a><span class="do">## R6 method for class 'az_user'</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true" tabindex="-1"></a><span class="fu">list_teams</span>(<span class="at">filter =</span> <span class="cn">NULL</span>, <span class="at">n =</span> <span class="cn">Inf</span>)</span></code></pre><p></p></div>
     </div>
     <div id="arguments">
     <h2>Arguments</h2>
@@ -152,7 +153,7 @@
     <h2>List methods</h2>
     
 
-<p>All <code>list_*</code> methods have <code>filter</code> and <code>n</code> arguments to limit the number of results. The former should be an <a href="https://docs.microsoft.com/en-us/graph/query-parameters#filter-parameter" class="external-link">OData expression</a> as a string to filter the result set on. The latter should be a number setting the maximum number of (filtered) results to return. The default values are <code>filter=NULL</code> and <code>n=Inf</code>. If <code>n=NULL</code>, the <code>ms_graph_pager</code> iterator object is returned instead to allow manual iteration over the results.</p>
+<p>All <code>list_*</code> methods have <code>filter</code> and <code>n</code> arguments to limit the number of results. The former should be an <a href="https://learn.microsoft.com/en-us/graph/query-parameters#filter-parameter" class="external-link">OData expression</a> as a string to filter the result set on. The latter should be a number setting the maximum number of (filtered) results to return. The default values are <code>filter=NULL</code> and <code>n=Inf</code>. If <code>n=NULL</code>, the <code>ms_graph_pager</code> iterator object is returned instead to allow manual iteration over the results.</p>
 <p>Support in the underlying Graph API for OData queries is patchy. Not all endpoints that return lists of objects support filtering, and if they do, they may not allow all of the defined operators. If your filtering expression results in an error, you can carry out the operation without filtering and then filter the results on the client side.</p>
     </div>
     <div id="value">
@@ -172,29 +173,29 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># 'consumers' tenant -&gt; personal OneDrive for a user</span></span>
-<span class="r-in"><span class="va">gr</span> <span class="op">&lt;-</span> <span class="fu">AzureGraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/AzureGraph/man/graph_login.html" class="external-link">get_graph_login</a></span><span class="op">(</span><span class="st">"consumers"</span>, app<span class="op">=</span><span class="st">"myapp"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">me</span> <span class="op">&lt;-</span> <span class="va">gr</span><span class="op">$</span><span class="fu">get_user</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">me</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># organisational tenant -&gt; business OneDrive for a user</span></span>
-<span class="r-in"><span class="va">gr2</span> <span class="op">&lt;-</span> <span class="fu">AzureGraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/AzureGraph/man/graph_login.html" class="external-link">get_graph_login</a></span><span class="op">(</span><span class="st">"mycompany"</span>, app<span class="op">=</span><span class="st">"myapp"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">myuser</span> <span class="op">&lt;-</span> <span class="va">gr2</span><span class="op">$</span><span class="fu">get_user</span><span class="op">(</span><span class="st">"username@mycompany.onmicrosoft.com"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">myuser</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># get a site/drive directly from a URL/ID</span></span>
-<span class="r-in"><span class="va">gr2</span><span class="op">$</span><span class="fu">get_sharepoint_site</span><span class="op">(</span><span class="st">"My site"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">gr2</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="st">"drive-id"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># site/drive(s) for a group</span></span>
-<span class="r-in"><span class="va">grp</span> <span class="op">&lt;-</span> <span class="va">gr2</span><span class="op">$</span><span class="fu">get_group</span><span class="op">(</span><span class="st">"group-id"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">grp</span><span class="op">$</span><span class="fu">get_sharepoint_site</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">grp</span><span class="op">$</span><span class="fu">list_drives</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">grp</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># 'consumers' tenant -&gt; personal OneDrive for a user</span></span></span>
+<span class="r-in"><span><span class="va">gr</span> <span class="op">&lt;-</span> <span class="fu">AzureGraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/AzureGraph/man/graph_login.html" class="external-link">get_graph_login</a></span><span class="op">(</span><span class="st">"consumers"</span>, app<span class="op">=</span><span class="st">"myapp"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">me</span> <span class="op">&lt;-</span> <span class="va">gr</span><span class="op">$</span><span class="fu">get_user</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">me</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># organisational tenant -&gt; business OneDrive for a user</span></span></span>
+<span class="r-in"><span><span class="va">gr2</span> <span class="op">&lt;-</span> <span class="fu">AzureGraph</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/AzureGraph/man/graph_login.html" class="external-link">get_graph_login</a></span><span class="op">(</span><span class="st">"mycompany"</span>, app<span class="op">=</span><span class="st">"myapp"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">myuser</span> <span class="op">&lt;-</span> <span class="va">gr2</span><span class="op">$</span><span class="fu">get_user</span><span class="op">(</span><span class="st">"username@mycompany.onmicrosoft.com"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">myuser</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># get a site/drive directly from a URL/ID</span></span></span>
+<span class="r-in"><span><span class="va">gr2</span><span class="op">$</span><span class="fu">get_sharepoint_site</span><span class="op">(</span><span class="st">"My site"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">gr2</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="st">"drive-id"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># site/drive(s) for a group</span></span></span>
+<span class="r-in"><span><span class="va">grp</span> <span class="op">&lt;-</span> <span class="va">gr2</span><span class="op">$</span><span class="fu">get_group</span><span class="op">(</span><span class="st">"group-id"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">grp</span><span class="op">$</span><span class="fu">get_sharepoint_site</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">grp</span><span class="op">$</span><span class="fu">list_drives</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">grp</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -209,7 +210,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

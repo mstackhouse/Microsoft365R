@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Microsoft365R</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.3.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.0.9000</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -101,15 +101,23 @@
 <li><p><code>do_operation(...)</code>: Carry out an arbitrary operation on the item.</p></li>
 <li><p><code>sync_fields()</code>: Synchronise the R object with the item metadata in Microsoft Graph.</p></li>
 <li><p><code><a href="https://rdrr.io/r/base/connections.html" class="external-link">open()</a></code>: Open the item in your browser.</p></li>
+<li><p><code>copy(dest, dest_folder_item=NULL)</code>: Copy the item to the given location.</p></li>
+<li><p><code>move(dest, dest_folder_item=NULL)</code>: Move the item to the given location.</p></li>
 <li><p><code>list_items(...), list_files(...)</code>: List the files and folders under the specified path.</p></li>
-<li><p><code>download(dest, overwrite)</code>: Download the file. Only applicable for a file item.</p></li>
+<li><p><code>download(dest, overwrite, recursive, parallel)</code>: Download the file or folder. See below.</p></li>
 <li><p><code>create_share_link(type, expiry, password, scope)</code>: Create a shareable link to the file or folder.</p></li>
-<li><p><code>upload(src, dest, blocksize)</code>: Upload a file. Only applicable for a folder item.</p></li>
+<li><p><code>upload(src, dest, blocksize, , recursive, parallel)</code>: Upload a file or folder. See below.</p></li>
 <li><p><code>create_folder(path)</code>: Create a folder. Only applicable for a folder item.</p></li>
 <li><p><code>get_item(path)</code>: Get a child item (file or folder) under this folder.</p></li>
-<li><p><code>get_parent_folder()</code>: Get the parent folder for this item, as a drive item object. Returns the root folder for the root.</p></li>
-<li><p><code>get_path()</code>: Get the absolute path for this item, as a character string.</p></li>
+<li><p><code>get_parent_folder()</code>: Get the parent folder for this item, as a drive item object. Returns the root folder for the root. Not supported for remote items.</p></li>
+<li><p><code>get_path()</code>: Get the absolute path for this item, as a character string. Not supported for remote items.</p></li>
 <li><p><code>is_folder()</code>: Information function, returns TRUE if this item is a folder.</p></li>
+<li><p><code>load_dataframe(delim=NULL, ...)</code>: Download a delimited file and return its contents as a data frame. See 'Saving and loading data' below.</p></li>
+<li><p><code>load_rds()</code>: Download a .rds file and return the saved object.</p></li>
+<li><p><code>load_rdata(envir)</code>: Load a .RData or .Rda file into the specified environment.</p></li>
+<li><p><code>save_dataframe(df, file, delim=",", ...)</code> Save a dataframe to a delimited file.</p></li>
+<li><p><code>save_rds(object, file)</code>: Save an R object to a .rds file.</p></li>
+<li><p><code>save_rdata(..., file)</code>: Save the specified objects to a .RData file.</p></li>
 </ul></div>
     <div id="initialization">
     <h2>Initialization</h2>
@@ -129,10 +137,15 @@
 <li><p><code>filter, n</code>: See 'List methods' below.</p></li>
 <li><p><code>pagesize</code>: The number of results to return for each call to the REST endpoint. You can try reducing this argument below the default of 1000 if you are experiencing timeouts.</p></li>
 </ul><p><code>list_files</code> is a synonym for <code>list_items</code>.</p>
-<p><code>download</code> downloads the file item to the local machine. It is an error to try to download a folder item.</p>
-<p><code>upload</code> uploads a file from the local machine into the folder item, and returns another <code>ms_drive_item</code> object representing the uploaded file. The uploading is done in blocks of 32MB by default; you can change this by setting the <code>blocksize</code> argument. For technical reasons, the block size <a href="https://docs.microsoft.com/en-us/graph/api/driveitem-createuploadsession?view=graph-rest-1.0#upload-bytes-to-the-upload-session" class="external-link">must be a multiple of 320KB</a>. This returns an <code>ms_drive_item</code> object, invisibly.</p>
-<p>It is an error to try to upload to a file item, or to upload a source directory.</p>
-<p><code>get_item</code> retrieves the file or folder with the given path, as another object of class <code>ms_drive_item</code>.</p>
+<p><code>download</code> downloads the item to the local machine. If this is a file, it is downloaded; in this case, the <code>dest</code> argument can be the path to the destination file, or NULL to return the downloaded content in a raw vector. If the item is a folder, all its files are downloaded, including subfolders if the <code>recursive</code> argument is TRUE.</p>
+<p><code>upload</code> uploads a file or folder from the local machine into the folder item. The <code>src</code> argument can be the path to the source file, a <a href="https://rdrr.io/r/base/rawConnection.html" class="external-link">rawConnection</a> or a <a href="https://rdrr.io/r/base/textconnections.html" class="external-link">textConnection</a> object. If <code>src</code> is a folder, all its files are uploaded, including subfolders if the <code>recursive</code> argument iS TRUE. An <code>ms_drive_item</code> object is returned invisibly.</p>
+<p>Uploading is done in blocks of 32MB by default; you can change this by setting the <code>blocksize</code> argument. For technical reasons, the block size <a href="https://learn.microsoft.com/en-us/graph/api/driveitem-createuploadsession?view=graph-rest-1.0#upload-bytes-to-the-upload-session" class="external-link">must be a multiple of 320KB</a>.</p>
+<p>Uploading and downloading folders can be done in parallel, which can result in substantial speedup when transferring a large number of small files. This is controlled by the <code>parallel</code> argument to <code>upload</code> and <code>download</code>, which can have the following values:</p><ul><li><p>TRUE: A cluster with 5 workers is created</p></li>
+<li><p>A number: A cluster with this many workers is created</p></li>
+<li><p>A cluster object, created via the parallel package</p></li>
+<li><p>FALSE: The transfer is done serially</p></li>
+</ul><p><code>get_item</code> retrieves the file or folder with the given path, as another object of class <code>ms_drive_item</code>.</p><ul><li><p><code>copy</code> and <code>move</code> can take the destination location as either a full pathname (in the <code>dest</code> argument), or a name plus a drive item object (in the <code>dest_folder_item</code> argument). If the latter is supplied, any path in <code>dest</code> is ignored with a warning. Note that copying is an <em>asynchronous</em> operation, meaning the method returns before the copy is complete.</p></li>
+</ul><p>For copying and moving, the destination folder must exist beforehand. When copying/moving a large number of files, it's much more efficient to supply the destination folder in the <code>dest_folder_item</code> argument rather than as a path.</p>
 <p><code>create_folder</code> creates a folder with the specified path. Trying to create an already existing folder is an error. This returns an <code>ms_drive_item</code> object, invisibly.</p>
 <p><code>create_share_link(path, type, expiry, password, scope)</code> returns a shareable link to the item. Its arguments are</p><ul><li><p><code>path</code>: The path.</p></li>
 <li><p><code>type</code>: Either "view" for a read-only link, "edit" for a read-write link, or "embed" for a link that can be embedded in a web page. The last one is only available for personal OneDrive.</p></li>
@@ -141,53 +154,84 @@
 <li><p><code>scope</code>: Optionally the scope of the link, either "anonymous" or "organization". The latter allows only users in your AAD tenant to access the link, and is only available for OneDrive for Business or SharePoint.</p></li>
 </ul><p>This method returns a URL to access the item, for <code>type="view"</code> or "<code>type=edit"</code>. For <code>type="embed"</code>, it returns a list with components <code>webUrl</code> containing the URL, and <code>webHtml</code> containing a HTML fragment to embed the link in an IFRAME. The default is a viewable link, expiring in 7 days.</p>
     </div>
+    <div id="saving-and-loading-data">
+    <h2>Saving and loading data</h2>
+    
+
+<p>The following methods are provided to simplify the task of loading and saving datasets and R objects.</p><ul><li><p><code>load_dataframe</code> downloads a delimited file and returns its contents as a data frame. The delimiter can be specified with the <code>delim</code> argument; if omitted, this is "," if the file extension is .csv, ";" if the file extension is .csv2, and a tab otherwise. If the readr package is installed, the <code><a href="https://readr.tidyverse.org/reference/read_delim.html" class="external-link">readr::read_delim</a></code> function is used to parse the file, otherwise <code><a href="https://rdrr.io/r/utils/read.table.html" class="external-link">utils::read.delim</a></code> is used. You can supply other arguments to the parsing function via the <code>...</code> argument.</p></li>
+<li><p><code>save_dataframe</code> is the inverse of <code>load_dataframe</code>: it uploads the given data frame to a folder item. Specify the delimiter with the <code>delim</code> argument. The <code><a href="https://readr.tidyverse.org/reference/write_delim.html" class="external-link">readr::write_delim</a></code> function is used to serialise the data if that package is installed, and <code><a href="https://rdrr.io/r/utils/write.table.html" class="external-link">utils::write.table</a></code> otherwise.</p></li>
+<li><p><code>load_rds</code> downloads a .rds file and returns its contents as an R object. It is analogous to the base <code>readRDS</code> function but for OneDrive/SharePoint drive items.</p></li>
+<li><p><code>save_rds</code> uploads a given R object as a .rds file, analogously to <code>saveRDS</code>.</p></li>
+<li><p><code>load_rdata</code> downloads a .RData or .Rda file and loads its contents into the given environment. It is analogous to the base <code>load</code> function but for OneDrive/SharePoint drive items.</p></li>
+<li><p><code>save_rdata</code> uploads the given R objects as a .RData file, analogously to <code>save</code>.</p></li>
+</ul></div>
     <div id="list-methods">
     <h2>List methods</h2>
     
 
-<p>All <code>list_*</code> methods have <code>filter</code> and <code>n</code> arguments to limit the number of results. The former should be an <a href="https://docs.microsoft.com/en-us/graph/query-parameters#filter-parameter" class="external-link">OData expression</a> as a string to filter the result set on. The latter should be a number setting the maximum number of (filtered) results to return. The default values are <code>filter=NULL</code> and <code>n=Inf</code>. If <code>n=NULL</code>, the <code>ms_graph_pager</code> iterator object is returned instead to allow manual iteration over the results.</p>
+<p>All <code>list_*</code> methods have <code>filter</code> and <code>n</code> arguments to limit the number of results. The former should be an <a href="https://learn.microsoft.com/en-us/graph/query-parameters#filter-parameter" class="external-link">OData expression</a> as a string to filter the result set on. The latter should be a number setting the maximum number of (filtered) results to return. The default values are <code>filter=NULL</code> and <code>n=Inf</code>. If <code>n=NULL</code>, the <code>ms_graph_pager</code> iterator object is returned instead to allow manual iteration over the results.</p>
 <p>Support in the underlying Graph API for OData queries is patchy. Not all endpoints that return lists of objects support filtering, and if they do, they may not allow all of the defined operators. If your filtering expression results in an error, you can carry out the operation without filtering and then filter the results on the client side.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p><code>ms_graph</code>, <code><a href="ms_site.html">ms_site</a></code>, <code><a href="ms_drive.html">ms_drive</a></code></p>
-<p><a href="https://docs.microsoft.com/en-us/graph/overview" class="external-link">Microsoft Graph overview</a>,
-<a href="https://docs.microsoft.com/en-us/graph/api/resources/onedrive?view=graph-rest-1.0" class="external-link">OneDrive API reference</a></p></div>
+<p><a href="https://learn.microsoft.com/en-us/graph/overview" class="external-link">Microsoft Graph overview</a>,
+<a href="https://learn.microsoft.com/en-us/graph/api/resources/onedrive?view=graph-rest-1.0" class="external-link">OneDrive API reference</a></p></div>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># personal OneDrive</span></span>
-<span class="r-in"><span class="va">mydrv</span> <span class="op">&lt;-</span> <span class="fu"><a href="client.html">get_personal_onedrive</a></span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">docs</span> <span class="op">&lt;-</span> <span class="va">mydrv</span><span class="op">$</span><span class="fu">get_item</span><span class="op">(</span><span class="st">"Documents"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">docs</span><span class="op">$</span><span class="fu">list_files</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">docs</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># this is the file 'Documents/myfile.docx'</span></span>
-<span class="r-in"><span class="va">myfile</span> <span class="op">&lt;-</span> <span class="va">docs</span><span class="op">$</span><span class="fu">get_item</span><span class="op">(</span><span class="st">"myfile.docx"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">myfile</span><span class="op">$</span><span class="va">properties</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># rename a file</span></span>
-<span class="r-in"><span class="va">myfile</span><span class="op">$</span><span class="fu">update</span><span class="op">(</span>name<span class="op">=</span><span class="st">"newname.docx"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># open the file in the browser</span></span>
-<span class="r-in"><span class="va">myfile</span><span class="op">$</span><span class="fu">open</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># download the file to the working directory</span></span>
-<span class="r-in"><span class="va">myfile</span><span class="op">$</span><span class="fu">download</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># shareable links</span></span>
-<span class="r-in"><span class="va">myfile</span><span class="op">$</span><span class="fu">create_share_link</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">myfile</span><span class="op">$</span><span class="fu">create_share_link</span><span class="op">(</span>type<span class="op">=</span><span class="st">"edit"</span>, expiry<span class="op">=</span><span class="st">"24 hours"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">myfile</span><span class="op">$</span><span class="fu">create_share_link</span><span class="op">(</span>password<span class="op">=</span><span class="st">"Use-strong-passwords!"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># delete the file (will ask for confirmation first)</span></span>
-<span class="r-in"><span class="va">myfile</span><span class="op">$</span><span class="fu">delete</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># personal OneDrive</span></span></span>
+<span class="r-in"><span><span class="va">mydrv</span> <span class="op">&lt;-</span> <span class="fu"><a href="client.html">get_personal_onedrive</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">docs</span> <span class="op">&lt;-</span> <span class="va">mydrv</span><span class="op">$</span><span class="fu">get_item</span><span class="op">(</span><span class="st">"Documents"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">docs</span><span class="op">$</span><span class="fu">list_files</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">docs</span><span class="op">$</span><span class="fu">list_items</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># this is the file 'Documents/myfile.docx'</span></span></span>
+<span class="r-in"><span><span class="va">myfile</span> <span class="op">&lt;-</span> <span class="va">docs</span><span class="op">$</span><span class="fu">get_item</span><span class="op">(</span><span class="st">"myfile.docx"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">myfile</span><span class="op">$</span><span class="va">properties</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># rename a file</span></span></span>
+<span class="r-in"><span><span class="va">myfile</span><span class="op">$</span><span class="fu">update</span><span class="op">(</span>name<span class="op">=</span><span class="st">"newname.docx"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># copy a file (destination folder must exist)</span></span></span>
+<span class="r-in"><span><span class="va">myfile</span><span class="op">$</span><span class="fu">copy</span><span class="op">(</span><span class="st">"/Documents/folder2/myfile_copied.docx"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># alternate way of copying: supply the destination folder</span></span></span>
+<span class="r-in"><span><span class="va">destfolder</span> <span class="op">&lt;-</span> <span class="va">docs</span><span class="op">$</span><span class="fu">get_item</span><span class="op">(</span><span class="st">"folder2"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">myfile</span><span class="op">$</span><span class="fu">copy</span><span class="op">(</span><span class="st">"myfile_copied.docx"</span>, dest_folder_item<span class="op">=</span><span class="va">destfolder</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># move a file (destination folder must exist)</span></span></span>
+<span class="r-in"><span><span class="va">myfile</span><span class="op">$</span><span class="fu">move</span><span class="op">(</span><span class="st">"Documents/folder2/myfile_moved.docx"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># open the file in the browser</span></span></span>
+<span class="r-in"><span><span class="va">myfile</span><span class="op">$</span><span class="fu">open</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># download the file to the working directory</span></span></span>
+<span class="r-in"><span><span class="va">myfile</span><span class="op">$</span><span class="fu">download</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># shareable links</span></span></span>
+<span class="r-in"><span><span class="va">myfile</span><span class="op">$</span><span class="fu">create_share_link</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">myfile</span><span class="op">$</span><span class="fu">create_share_link</span><span class="op">(</span>type<span class="op">=</span><span class="st">"edit"</span>, expiry<span class="op">=</span><span class="st">"24 hours"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">myfile</span><span class="op">$</span><span class="fu">create_share_link</span><span class="op">(</span>password<span class="op">=</span><span class="st">"Use-strong-passwords!"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># delete the file (will ask for confirmation first)</span></span></span>
+<span class="r-in"><span><span class="va">myfile</span><span class="op">$</span><span class="fu">delete</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># saving and loading data</span></span></span>
+<span class="r-in"><span><span class="va">myfolder</span> <span class="op">&lt;-</span> <span class="va">mydrv</span><span class="op">$</span><span class="fu">get_item</span><span class="op">(</span><span class="st">"myfolder"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">myfolder</span><span class="op">$</span><span class="fu">save_dataframe</span><span class="op">(</span><span class="va">iris</span>, <span class="st">"iris.csv"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">iris2</span> <span class="op">&lt;-</span> <span class="va">myfolder</span><span class="op">$</span><span class="fu">get_item</span><span class="op">(</span><span class="st">"iris.csv"</span><span class="op">)</span><span class="op">$</span><span class="fu">load_dataframe</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">iris</span>, <span class="va">iris2</span><span class="op">)</span>  <span class="co"># TRUE</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">myfolder</span><span class="op">$</span><span class="fu">save_rds</span><span class="op">(</span><span class="va">iris</span>, <span class="st">"iris.rds"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">iris3</span> <span class="op">&lt;-</span> <span class="va">myfolder</span><span class="op">$</span><span class="fu">get_item</span><span class="op">(</span><span class="st">"iris.rds"</span><span class="op">)</span><span class="op">$</span><span class="fu">load_rds</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/identical.html" class="external-link">identical</a></span><span class="op">(</span><span class="va">iris</span>, <span class="va">iris3</span><span class="op">)</span>  <span class="co"># TRUE</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -202,7 +246,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Microsoft365R</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.3.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.0.9000</span>
       </span>
     </div>
 
@@ -50,7 +50,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -97,7 +97,7 @@
 
       
 
-      </header><script src="teams_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Teams</h1>
@@ -111,173 +111,235 @@
 
     
     
-<p>Microsoft365R is a simple yet powerful R interface to <a href="https://www.microsoft.com/en-us/microsoft-365" class="external-link">Microsoft 365</a> (formerly known as Office 365), leveraging the facilities provided by the <a href="https://cran.r-project.org/package=AzureGraph" class="external-link">AzureGraph</a> package. This vignette describes how to interact with <a href="https://www.microsoft.com/en-au/microsoft-teams/group-chat-software" class="external-link">Microsoft Teams</a>.</p>
-<p>See the “Authenticating to Microsoft 365” vignette for more details on authentication if required.</p>
+<p>Microsoft365R is a simple yet powerful R interface to <a href="https://www.microsoft.com/en-us/microsoft-365" class="external-link">Microsoft 365</a>
+(formerly known as Office 365), leveraging the facilities provided by
+the <a href="https://cran.r-project.org/package=AzureGraph" class="external-link">AzureGraph</a>
+package. This vignette describes how to interact with <a href="https://www.microsoft.com/en-au/microsoft-teams/group-chat-software" class="external-link">Microsoft
+Teams</a>.</p>
+<p>See the “Authenticating to Microsoft 365” vignette for more details
+on authentication if required.</p>
 <div class="section level2">
 <h2 id="teams">Teams<a class="anchor" aria-label="anchor" href="#teams"></a>
 </h2>
-<p>To access a team in Microsoft Teams, use the <code><a href="../reference/client.html">get_team()</a></code> function and provide the team name or ID. You can also list the teams you’re in with <code><a href="../reference/client.html">list_teams()</a></code>. These return objects of R6 class <code>ms_team</code>.</p>
+<p>To access a team in Microsoft Teams, use the <code><a href="../reference/client.html">get_team()</a></code>
+function and provide the team name or ID. You can also list the teams
+you’re in with <code><a href="../reference/client.html">list_teams()</a></code>. These return objects of R6
+class <code>ms_team</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/client.html">list_teams</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">team</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/client.html">get_team</a></span><span class="op">(</span><span class="st">"My team"</span><span class="op">)</span></code></pre></div>
-<p>The <code>ms_team</code> class has methods for working with channels and drives. Each team will generally have at least one drive, and possibly two: the default “Documents” drive, which is where uploaded files are stored, and the “Teams Wiki Data” drive, if the team has a wiki. Each team channel will have an associated folder in each drive, if at least one file has been uploaded to it.</p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/client.html">list_teams</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">team</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/client.html">get_team</a></span><span class="op">(</span><span class="st">"My team"</span><span class="op">)</span></span></code></pre></div>
+<p>The <code>ms_team</code> class has methods for working with channels
+and drives. Each team will generally have at least one drive, and
+possibly two: the default “Documents” drive, which is where uploaded
+files are stored, and the “Teams Wiki Data” drive, if the team has a
+wiki. Each team channel will have an associated folder in each drive, if
+at least one file has been uploaded to it.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># list the channels in a team (including private channels you're a member of)</span>
-<span class="va">team</span><span class="op">$</span><span class="fu">list_channels</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># get the primary channel for a team</span>
-<span class="va">team</span><span class="op">$</span><span class="fu">get_channel</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># get a specific channel</span>
-<span class="va">team</span><span class="op">$</span><span class="fu">get_channel</span><span class="op">(</span><span class="st">"My channel"</span><span class="op">)</span>
-
-<span class="co"># drives for a team</span>
-<span class="va">team</span><span class="op">$</span><span class="fu">list_drives</span><span class="op">(</span><span class="op">)</span>
-<span class="va">team</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p>A drive is an <code>ms_drive</code> object, so the same methods apply as for OneDrives and SharePoint document libraries—see the “OneDrive and SharePoint” vignette for more information.</p>
+<code class="sourceCode R"><span><span class="co"># list the channels in a team (including private channels you're a member of)</span></span>
+<span><span class="va">team</span><span class="op">$</span><span class="fu">list_channels</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># get the primary channel for a team</span></span>
+<span><span class="va">team</span><span class="op">$</span><span class="fu">get_channel</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># get a specific channel</span></span>
+<span><span class="va">team</span><span class="op">$</span><span class="fu">get_channel</span><span class="op">(</span><span class="st">"My channel"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># drives for a team</span></span>
+<span><span class="va">team</span><span class="op">$</span><span class="fu">list_drives</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">team</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>A drive is an <code>ms_drive</code> object, so the same methods apply
+as for OneDrives and SharePoint document libraries—see the “OneDrive and
+SharePoint” vignette for more information.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">drv</span> <span class="op">&lt;-</span> <span class="va">team</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># one folder per channel</span>
-<span class="va">drv</span><span class="op">$</span><span class="fu">list_files</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># upload will appear in the Files tab of "My channel" in the Teams client</span>
-<span class="va">drv</span><span class="op">$</span><span class="fu">upload_file</span><span class="op">(</span><span class="st">"myfile.csv"</span>, <span class="st">"My channel/myfile.csv"</span><span class="op">)</span></code></pre></div>
-<p>Note that the drives mentioned here are actually the document libraries of an underlying SharePoint site: as far as file storage is concerned, you can think of Teams as simply an alternative interface to functionality provided by SharePoint. The <code>ms_team</code> class in fact has a <code><a href="../reference/client.html">get_sharepoint_site()</a></code> method to retrieve the backing site, and you can access the same files via the site’s drive.</p>
+<code class="sourceCode R"><span><span class="va">drv</span> <span class="op">&lt;-</span> <span class="va">team</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># one folder per channel</span></span>
+<span><span class="va">drv</span><span class="op">$</span><span class="fu">list_files</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># upload will appear in the Files tab of "My channel" in the Teams client</span></span>
+<span><span class="va">drv</span><span class="op">$</span><span class="fu">upload_file</span><span class="op">(</span><span class="st">"myfile.csv"</span>, <span class="st">"My channel/myfile.csv"</span><span class="op">)</span></span></code></pre></div>
+<p>Note that the drives mentioned here are actually the document
+libraries of an underlying SharePoint site: as far as file storage is
+concerned, you can think of Teams as simply an alternative interface to
+functionality provided by SharePoint. The <code>ms_team</code> class in
+fact has a <code><a href="../reference/client.html">get_sharepoint_site()</a></code> method to retrieve the
+backing site, and you can access the same files via the site’s
+drive.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">site</span> <span class="op">&lt;-</span> <span class="va">team</span><span class="op">$</span><span class="fu">get_sharepoint_site</span><span class="op">(</span><span class="op">)</span>
-<span class="va">site_drv</span> <span class="op">&lt;-</span> <span class="va">site</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># the previous upload will also appear in this file listing</span>
-<span class="va">site_drv</span><span class="op">$</span><span class="fu">list_files</span><span class="op">(</span><span class="st">"My channel"</span><span class="op">)</span></code></pre></div>
-<p>You can also retrieve the team members with the <code>list_members()</code> and <code>get_member()</code> methods. For the latter, you can retrieve a member using either their display name, email address, or internal ID.</p>
+<code class="sourceCode R"><span><span class="va">site</span> <span class="op">&lt;-</span> <span class="va">team</span><span class="op">$</span><span class="fu">get_sharepoint_site</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">site_drv</span> <span class="op">&lt;-</span> <span class="va">site</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># the previous upload will also appear in this file listing</span></span>
+<span><span class="va">site_drv</span><span class="op">$</span><span class="fu">list_files</span><span class="op">(</span><span class="st">"My channel"</span><span class="op">)</span></span></code></pre></div>
+<p>You can also retrieve the team members with the
+<code>list_members()</code> and <code>get_member()</code> methods. For
+the latter, you can retrieve a member using either their display name,
+email address, or internal ID.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">team</span><span class="op">$</span><span class="fu">list_members</span><span class="op">(</span><span class="op">)</span>
-<span class="va">team</span><span class="op">$</span><span class="fu">get_member</span><span class="op">(</span><span class="st">"Joe Smith"</span><span class="op">)</span>
-<span class="va">team</span><span class="op">$</span><span class="fu">get_member</span><span class="op">(</span>email<span class="op">=</span><span class="st">"joesmith@mytenant.com"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">team</span><span class="op">$</span><span class="fu">list_members</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">team</span><span class="op">$</span><span class="fu">get_member</span><span class="op">(</span><span class="st">"Joe Smith"</span><span class="op">)</span></span>
+<span><span class="va">team</span><span class="op">$</span><span class="fu">get_member</span><span class="op">(</span>email<span class="op">=</span><span class="st">"joesmith@mytenant.com"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="channels">Channels<a class="anchor" aria-label="anchor" href="#channels"></a>
 </h2>
-<p>A team object has methods for listing, retrieving, creating and deleting channels. However you should not create and delete channels unnecessarily, since Teams tracks all channels ever created, even after you delete them. In turn, a channel object has methods for retrieving members, listing and sending messages, and uploading and deleting files.</p>
+<p>A team object has methods for listing, retrieving, creating and
+deleting channels. However you should not create and delete channels
+unnecessarily, since Teams tracks all channels ever created, even after
+you delete them. In turn, a channel object has methods for retrieving
+members, listing and sending messages, and uploading and deleting
+files.</p>
 <div class="section level3">
 <h3 id="channel-messages">Channel messages<a class="anchor" aria-label="anchor" href="#channel-messages"></a>
 </h3>
-<p>Teams channels are semi-threaded. Getting the list of messages for a channel retrieves only the first message in each thread; to get an entire thread, you get the starting message and then retrieve the replies to it. Note that channels don’t have nested replies, so you can’t reply to a reply—only to the starting message.</p>
-<p>The body of a message is part of the list of properties returned from the host, and can be found in the <code>properties</code> field of the object. Other properties include metadata such as the author, date, list of attachments, etc.</p>
+<p>Teams channels are semi-threaded. Getting the list of messages for a
+channel retrieves only the first message in each thread; to get an
+entire thread, you get the starting message and then retrieve the
+replies to it. Note that channels don’t have nested replies, so you
+can’t reply to a reply—only to the starting message.</p>
+<p>The body of a message is part of the list of properties returned from
+the host, and can be found in the <code>properties</code> field of the
+object. Other properties include metadata such as the author, date, list
+of attachments, etc.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">chan</span> <span class="op">&lt;-</span> <span class="va">team</span><span class="op">$</span><span class="fu">get_channel</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># by default, retrieve only the 50 most recent messages</span>
-<span class="va">msgs</span> <span class="op">&lt;-</span> <span class="va">chan</span><span class="op">$</span><span class="fu">list_messages</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># retrieve the 100 most recent messages</span>
-<span class="va">chan</span><span class="op">$</span><span class="fu">list_messages</span><span class="op">(</span>n<span class="op">=</span><span class="fl">100</span><span class="op">)</span>
-
-<span class="co"># retrieve all messages: set n = infinity</span>
-<span class="va">chan</span><span class="op">$</span><span class="fu">list_messages</span><span class="op">(</span>n<span class="op">=</span><span class="cn">Inf</span><span class="op">)</span>
-
-<span class="co"># get the latest message by ID</span>
-<span class="va">msg</span> <span class="op">&lt;-</span> <span class="va">chan</span><span class="op">$</span><span class="fu">get_message</span><span class="op">(</span><span class="va">msgs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">properties</span><span class="op">$</span><span class="va">id</span><span class="op">)</span>
-
-<span class="co"># body of the message</span>
-<span class="va">msg</span><span class="op">$</span><span class="va">properties</span><span class="op">$</span><span class="va">body</span>
-
-<span class="co"># 10 most recent replies</span>
-<span class="va">repl_list</span> <span class="op">&lt;-</span> <span class="va">msg</span><span class="op">$</span><span class="fu">list_replies</span><span class="op">(</span>n<span class="op">=</span><span class="fl">10</span><span class="op">)</span>
-
-<span class="co"># body of an individual reply</span>
-<span class="va">repl_list</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">properties</span><span class="op">$</span><span class="va">body</span></code></pre></div>
-<p>You can send a message to a channel as plain text (the default) or HTML. For the latter, Teams imposes security restrictions on which HTML tags are allowed; you should limit your message to contain only basic formatting and no embedded scripts. You can also include files as attachments, or as inline images (JPEG or PNG only). Similarly, you can <span class="citation">@mention</span> a team, channel, or an individual team or channel member. For the latter, the message must be HTML and not plain text.</p>
+<code class="sourceCode R"><span><span class="va">chan</span> <span class="op">&lt;-</span> <span class="va">team</span><span class="op">$</span><span class="fu">get_channel</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># by default, retrieve only the 50 most recent messages</span></span>
+<span><span class="va">msgs</span> <span class="op">&lt;-</span> <span class="va">chan</span><span class="op">$</span><span class="fu">list_messages</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># retrieve the 100 most recent messages</span></span>
+<span><span class="va">chan</span><span class="op">$</span><span class="fu">list_messages</span><span class="op">(</span>n<span class="op">=</span><span class="fl">100</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># retrieve all messages: set n = infinity</span></span>
+<span><span class="va">chan</span><span class="op">$</span><span class="fu">list_messages</span><span class="op">(</span>n<span class="op">=</span><span class="cn">Inf</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># get the latest message by ID</span></span>
+<span><span class="va">msg</span> <span class="op">&lt;-</span> <span class="va">chan</span><span class="op">$</span><span class="fu">get_message</span><span class="op">(</span><span class="va">msgs</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">properties</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># body of the message</span></span>
+<span><span class="va">msg</span><span class="op">$</span><span class="va">properties</span><span class="op">$</span><span class="va">body</span></span>
+<span></span>
+<span><span class="co"># 10 most recent replies</span></span>
+<span><span class="va">repl_list</span> <span class="op">&lt;-</span> <span class="va">msg</span><span class="op">$</span><span class="fu">list_replies</span><span class="op">(</span>n<span class="op">=</span><span class="fl">10</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># body of an individual reply</span></span>
+<span><span class="va">repl_list</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">properties</span><span class="op">$</span><span class="va">body</span></span></code></pre></div>
+<p>You can send a message to a channel as plain text (the default) or
+HTML. For the latter, Teams imposes security restrictions on which HTML
+tags are allowed; you should limit your message to contain only basic
+formatting and no embedded scripts. You can also include files as
+attachments, or as inline images (JPEG or PNG only). Similarly, you can
+<span class="citation">@mention</span> a team, channel, or an individual
+team or channel member. For the latter, the message must be HTML and not
+plain text.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># sending messages to a channel</span>
-<span class="va">chan</span><span class="op">$</span><span class="fu">send_message</span><span class="op">(</span><span class="st">"Hello from R"</span><span class="op">)</span>
-<span class="va">chan</span><span class="op">$</span><span class="fu">send_message</span><span class="op">(</span><span class="st">"&lt;div&gt;Hello from &lt;em&gt;R&lt;/em&gt;&lt;/div&gt;"</span>, content_type<span class="op">=</span><span class="st">"html"</span><span class="op">)</span>
-
-<span class="co"># send attachments by including a vector of filenames</span>
-<span class="va">chan</span><span class="op">$</span><span class="fu">send_message</span><span class="op">(</span><span class="st">"Hello with attachments"</span>, attachments<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"intro.md"</span>, <span class="st">"myfile.csv"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># images can be sent inline rather than as attachments: set content_type to 'html'</span>
-<span class="va">chan</span><span class="op">$</span><span class="fu">send_message</span><span class="op">(</span><span class="st">""</span>, content_type<span class="op">=</span><span class="st">"html"</span>, inline<span class="op">=</span><span class="st">"graph.png"</span><span class="op">)</span>
-
-<span class="co"># send a reply to a message</span>
-<span class="va">msg</span> <span class="op">&lt;-</span> <span class="va">chan</span><span class="op">$</span><span class="fu">send_message</span><span class="op">(</span><span class="st">"Starting a new thread in R"</span><span class="op">)</span>
-<span class="va">msg</span><span class="op">$</span><span class="fu">send_reply</span><span class="op">(</span><span class="st">"Reply from R"</span><span class="op">)</span>
-
-<span class="co"># send a reply with an attachment</span>
-<span class="va">msg</span><span class="op">$</span><span class="fu">send_reply</span><span class="op">(</span><span class="st">"See attached file"</span>, attachments<span class="op">=</span><span class="st">"reply.md"</span><span class="op">)</span>
-
-<span class="co"># mention a channel member</span>
-<span class="va">usr</span> <span class="op">&lt;-</span> <span class="va">chan</span><span class="op">$</span><span class="fu">get_member</span><span class="op">(</span><span class="st">"Joe Smith"</span><span class="op">)</span>
-<span class="va">msg</span><span class="op">$</span><span class="fu">send_message</span><span class="op">(</span><span class="st">"FYI Joe"</span>, mentions<span class="op">=</span><span class="va">usr</span>, content_type<span class="op">=</span><span class="st">"html"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># sending messages to a channel</span></span>
+<span><span class="va">chan</span><span class="op">$</span><span class="fu">send_message</span><span class="op">(</span><span class="st">"Hello from R"</span><span class="op">)</span></span>
+<span><span class="va">chan</span><span class="op">$</span><span class="fu">send_message</span><span class="op">(</span><span class="st">"&lt;div&gt;Hello from &lt;em&gt;R&lt;/em&gt;&lt;/div&gt;"</span>, content_type<span class="op">=</span><span class="st">"html"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># send attachments by including a vector of filenames</span></span>
+<span><span class="va">chan</span><span class="op">$</span><span class="fu">send_message</span><span class="op">(</span><span class="st">"Hello with attachments"</span>, attachments<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"intro.md"</span>, <span class="st">"myfile.csv"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># images can be sent inline rather than as attachments: set content_type to 'html'</span></span>
+<span><span class="va">chan</span><span class="op">$</span><span class="fu">send_message</span><span class="op">(</span><span class="st">""</span>, content_type<span class="op">=</span><span class="st">"html"</span>, inline<span class="op">=</span><span class="st">"graph.png"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># send a reply to a message</span></span>
+<span><span class="va">msg</span> <span class="op">&lt;-</span> <span class="va">chan</span><span class="op">$</span><span class="fu">send_message</span><span class="op">(</span><span class="st">"Starting a new thread in R"</span><span class="op">)</span></span>
+<span><span class="va">msg</span><span class="op">$</span><span class="fu">send_reply</span><span class="op">(</span><span class="st">"Reply from R"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># send a reply with an attachment</span></span>
+<span><span class="va">msg</span><span class="op">$</span><span class="fu">send_reply</span><span class="op">(</span><span class="st">"See attached file"</span>, attachments<span class="op">=</span><span class="st">"reply.md"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># mention a channel member</span></span>
+<span><span class="va">usr</span> <span class="op">&lt;-</span> <span class="va">chan</span><span class="op">$</span><span class="fu">get_member</span><span class="op">(</span><span class="st">"Joe Smith"</span><span class="op">)</span></span>
+<span><span class="va">msg</span><span class="op">$</span><span class="fu">send_message</span><span class="op">(</span><span class="st">"FYI Joe"</span>, mentions<span class="op">=</span><span class="va">usr</span>, content_type<span class="op">=</span><span class="st">"html"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="channel-files">Channel files<a class="anchor" aria-label="anchor" href="#channel-files"></a>
 </h3>
-<p>Uploading a file to a channel will place it in the channel’s drive folder. Note that message attachments are actually uploaded to the channel’s folder with the message then including a link to the uploaded file.</p>
-<p>The channel object itself provides convenience functions to list, upload and download files. It also provides a <code>get_folder()</code> method to retrieve the folder for the channel, as an <code>ms_drive_item</code> object; this object has more general methods for working with files. Again, see the “OneDrive and SharePoint” vignette for more information on drive item objects.</p>
+<p>Uploading a file to a channel will place it in the channel’s drive
+folder. Note that message attachments are actually uploaded to the
+channel’s folder with the message then including a link to the uploaded
+file.</p>
+<p>The channel object itself provides convenience functions to list,
+upload and download files. It also provides a <code>get_folder()</code>
+method to retrieve the folder for the channel, as an
+<code>ms_drive_item</code> object; this object has more general methods
+for working with files. Again, see the “OneDrive and SharePoint”
+vignette for more information on drive item objects.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># files for the channel</span>
-<span class="va">chan</span><span class="op">$</span><span class="fu">list_files</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># upload a file to the channel</span>
-<span class="va">chan</span><span class="op">$</span><span class="fu">upload_file</span><span class="op">(</span><span class="st">"myfile.docx"</span><span class="op">)</span>
-
-<span class="co"># open the uploaded document for editing in Word Online, then download it again</span>
-<span class="va">chan_folder</span> <span class="op">&lt;-</span> <span class="va">chan</span><span class="op">$</span><span class="fu">get_folder</span><span class="op">(</span><span class="op">)</span>
-<span class="va">item</span> <span class="op">&lt;-</span> <span class="va">chan_folder</span><span class="op">$</span><span class="fu">get_item</span><span class="op">(</span><span class="st">"myfile.docx"</span><span class="op">)</span>
-<span class="va">item</span><span class="op">$</span><span class="fu">open</span><span class="op">(</span><span class="op">)</span>
-<span class="va">item</span><span class="op">$</span><span class="fu">download</span><span class="op">(</span>overwrite<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span>
-
-<span class="co"># create a shareable link (read-only, expires in 7 days)</span>
-<span class="va">item</span><span class="op">$</span><span class="fu">create_share_link</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># files for the channel</span></span>
+<span><span class="va">chan</span><span class="op">$</span><span class="fu">list_files</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># upload a file to the channel</span></span>
+<span><span class="va">chan</span><span class="op">$</span><span class="fu">upload_file</span><span class="op">(</span><span class="st">"myfile.docx"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># open the uploaded document for editing in Word Online, then download it again</span></span>
+<span><span class="va">chan_folder</span> <span class="op">&lt;-</span> <span class="va">chan</span><span class="op">$</span><span class="fu">get_folder</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">item</span> <span class="op">&lt;-</span> <span class="va">chan_folder</span><span class="op">$</span><span class="fu">get_item</span><span class="op">(</span><span class="st">"myfile.docx"</span><span class="op">)</span></span>
+<span><span class="va">item</span><span class="op">$</span><span class="fu">open</span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">item</span><span class="op">$</span><span class="fu">download</span><span class="op">(</span>overwrite<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># create a shareable link (read-only, expires in 7 days)</span></span>
+<span><span class="va">item</span><span class="op">$</span><span class="fu">create_share_link</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="private-channels">Private channels<a class="anchor" aria-label="anchor" href="#private-channels"></a>
 </h3>
-<p>Private channels function much the same way as regular public channels, and the methods described above should also work with them. The main difference is that a private channel’s files are stored in a separate SharePoint site to the public channels, so any files you upload to the private channel won’t appear in the file listings for the main site.</p>
+<p>Private channels function much the same way as regular public
+channels, and the methods described above should also work with them.
+The main difference is that a private channel’s files are stored in a
+separate SharePoint site to the public channels, so any files you upload
+to the private channel won’t appear in the file listings for the main
+site.</p>
 </div>
 </div>
 <div class="section level2">
 <h2 id="chats">Chats<a class="anchor" aria-label="anchor" href="#chats"></a>
 </h2>
-<p>Microsoft365R also supports messaging in chats. There are three types of chats: group, meeting and one-on-one, but the same interface applies to all types. To access the chats that you are part of, use the <code><a href="../reference/client.html">list_chats()</a></code> function. You can also retrieve a specific chat with <code><a href="../reference/client.html">get_chat()</a></code>, passing it the chat ID.</p>
+<p>Microsoft365R also supports messaging in chats. There are three types
+of chats: group, meeting and one-on-one, but the same interface applies
+to all types. To access the chats that you are part of, use the
+<code><a href="../reference/client.html">list_chats()</a></code> function. You can also retrieve a specific
+chat with <code><a href="../reference/client.html">get_chat()</a></code>, passing it the chat ID.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">chats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/client.html">list_chats</a></span><span class="op">(</span><span class="op">)</span>
-<span class="va">chat_id</span> <span class="op">&lt;-</span> <span class="va">chats</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">properties</span><span class="op">$</span><span class="va">id</span>
-<span class="va">chat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/client.html">get_chat</a></span><span class="op">(</span><span class="va">chat_id</span><span class="op">)</span></code></pre></div>
-<p>In general, the functionality is very similar to messaging in channels:</p>
+<code class="sourceCode R"><span><span class="va">chats</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/client.html">list_chats</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">chat_id</span> <span class="op">&lt;-</span> <span class="va">chats</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">properties</span><span class="op">$</span><span class="va">id</span></span>
+<span><span class="va">chat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/client.html">get_chat</a></span><span class="op">(</span><span class="va">chat_id</span><span class="op">)</span></span></code></pre></div>
+<p>In general, the functionality is very similar to messaging in
+channels:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># by default, retrieve only the 50 most recent messages</span>
-<span class="va">msgs</span> <span class="op">&lt;-</span> <span class="va">chat</span><span class="op">$</span><span class="fu">list_messages</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># retrieve the 100 most recent messages</span>
-<span class="va">chat</span><span class="op">$</span><span class="fu">list_messages</span><span class="op">(</span>n<span class="op">=</span><span class="fl">100</span><span class="op">)</span>
-
-<span class="co"># retrieve all messages: set n = infinity</span>
-<span class="va">chat</span><span class="op">$</span><span class="fu">list_messages</span><span class="op">(</span>n<span class="op">=</span><span class="cn">Inf</span><span class="op">)</span>
-
-<span class="co"># sending messages to a chat</span>
-<span class="va">chat</span><span class="op">$</span><span class="fu">send_message</span><span class="op">(</span><span class="st">"Hello from R"</span><span class="op">)</span>
-<span class="va">chat</span><span class="op">$</span><span class="fu">send_message</span><span class="op">(</span><span class="st">"&lt;div&gt;Hello from &lt;em&gt;R&lt;/em&gt;&lt;/div&gt;"</span>, content_type<span class="op">=</span><span class="st">"html"</span><span class="op">)</span>
-
-<span class="co"># send attachments by including a vector of filenames</span>
-<span class="va">chat</span><span class="op">$</span><span class="fu">send_message</span><span class="op">(</span><span class="st">"Hello with attachments"</span>, attachments<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"intro.md"</span>, <span class="st">"myfile.csv"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># images can be sent inline rather than as attachments: set content_type to 'html'</span>
-<span class="va">chat</span><span class="op">$</span><span class="fu">send_message</span><span class="op">(</span><span class="st">""</span>, content_type<span class="op">=</span><span class="st">"html"</span>, inline<span class="op">=</span><span class="st">"graph.png"</span><span class="op">)</span>
-
-<span class="co"># send a reply to a message</span>
-<span class="va">msg</span> <span class="op">&lt;-</span> <span class="va">chat</span><span class="op">$</span><span class="fu">send_message</span><span class="op">(</span><span class="st">"Starting a new thread in R"</span><span class="op">)</span>
-<span class="va">msg</span><span class="op">$</span><span class="fu">send_reply</span><span class="op">(</span><span class="st">"Reply from R"</span><span class="op">)</span>
-
-<span class="co"># list participants in a chat</span>
-<span class="va">chat</span><span class="op">$</span><span class="fu">list_members</span><span class="op">(</span><span class="op">)</span>
-
-<span class="co"># mention someone</span>
-<span class="va">usr</span> <span class="op">&lt;-</span> <span class="va">chat</span><span class="op">$</span><span class="fu">get_member</span><span class="op">(</span><span class="st">"Joe Smith"</span><span class="op">)</span>
-<span class="va">msg</span><span class="op">$</span><span class="fu">send_message</span><span class="op">(</span><span class="st">"FYI Joe"</span>, mentions<span class="op">=</span><span class="va">usr</span>, content_type<span class="op">=</span><span class="st">"html"</span><span class="op">)</span></code></pre></div>
-<p>Note that unlike a team channel, there is no drive folder associated with a chat.</p>
+<code class="sourceCode R"><span><span class="co"># by default, retrieve only the 50 most recent messages</span></span>
+<span><span class="va">msgs</span> <span class="op">&lt;-</span> <span class="va">chat</span><span class="op">$</span><span class="fu">list_messages</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># retrieve the 100 most recent messages</span></span>
+<span><span class="va">chat</span><span class="op">$</span><span class="fu">list_messages</span><span class="op">(</span>n<span class="op">=</span><span class="fl">100</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># retrieve all messages: set n = infinity</span></span>
+<span><span class="va">chat</span><span class="op">$</span><span class="fu">list_messages</span><span class="op">(</span>n<span class="op">=</span><span class="cn">Inf</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># sending messages to a chat</span></span>
+<span><span class="va">chat</span><span class="op">$</span><span class="fu">send_message</span><span class="op">(</span><span class="st">"Hello from R"</span><span class="op">)</span></span>
+<span><span class="va">chat</span><span class="op">$</span><span class="fu">send_message</span><span class="op">(</span><span class="st">"&lt;div&gt;Hello from &lt;em&gt;R&lt;/em&gt;&lt;/div&gt;"</span>, content_type<span class="op">=</span><span class="st">"html"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># send attachments by including a vector of filenames</span></span>
+<span><span class="va">chat</span><span class="op">$</span><span class="fu">send_message</span><span class="op">(</span><span class="st">"Hello with attachments"</span>, attachments<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"intro.md"</span>, <span class="st">"myfile.csv"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># images can be sent inline rather than as attachments: set content_type to 'html'</span></span>
+<span><span class="va">chat</span><span class="op">$</span><span class="fu">send_message</span><span class="op">(</span><span class="st">""</span>, content_type<span class="op">=</span><span class="st">"html"</span>, inline<span class="op">=</span><span class="st">"graph.png"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># send a reply to a message</span></span>
+<span><span class="va">msg</span> <span class="op">&lt;-</span> <span class="va">chat</span><span class="op">$</span><span class="fu">send_message</span><span class="op">(</span><span class="st">"Starting a new thread in R"</span><span class="op">)</span></span>
+<span><span class="va">msg</span><span class="op">$</span><span class="fu">send_reply</span><span class="op">(</span><span class="st">"Reply from R"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># list participants in a chat</span></span>
+<span><span class="va">chat</span><span class="op">$</span><span class="fu">list_members</span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># mention someone</span></span>
+<span><span class="va">usr</span> <span class="op">&lt;-</span> <span class="va">chat</span><span class="op">$</span><span class="fu">get_member</span><span class="op">(</span><span class="st">"Joe Smith"</span><span class="op">)</span></span>
+<span><span class="va">msg</span><span class="op">$</span><span class="fu">send_message</span><span class="op">(</span><span class="st">"FYI Joe"</span>, mentions<span class="op">=</span><span class="va">usr</span>, content_type<span class="op">=</span><span class="st">"html"</span><span class="op">)</span></span></code></pre></div>
+<p>Note that unlike a team channel, there is no drive folder associated
+with a chat.</p>
 </div>
   </div>
 
@@ -298,7 +360,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

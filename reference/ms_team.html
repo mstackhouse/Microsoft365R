@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">Microsoft365R</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.3.2.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.4.0.9000</span>
       </span>
     </div>
 
@@ -26,7 +26,7 @@
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     Articles
      
     <span class="caret"></span>
@@ -121,34 +121,34 @@
     <h2>List methods</h2>
     
 
-<p>All <code>list_*</code> methods have <code>filter</code> and <code>n</code> arguments to limit the number of results. The former should be an <a href="https://docs.microsoft.com/en-us/graph/query-parameters#filter-parameter" class="external-link">OData expression</a> as a string to filter the result set on. The latter should be a number setting the maximum number of (filtered) results to return. The default values are <code>filter=NULL</code> and <code>n=Inf</code>. If <code>n=NULL</code>, the <code>ms_graph_pager</code> iterator object is returned instead to allow manual iteration over the results.</p>
+<p>All <code>list_*</code> methods have <code>filter</code> and <code>n</code> arguments to limit the number of results. The former should be an <a href="https://learn.microsoft.com/en-us/graph/query-parameters#filter-parameter" class="external-link">OData expression</a> as a string to filter the result set on. The latter should be a number setting the maximum number of (filtered) results to return. The default values are <code>filter=NULL</code> and <code>n=Inf</code>. If <code>n=NULL</code>, the <code>ms_graph_pager</code> iterator object is returned instead to allow manual iteration over the results.</p>
 <p>Support in the underlying Graph API for OData queries is patchy. Not all endpoints that return lists of objects support filtering, and if they do, they may not allow all of the defined operators. If your filtering expression results in an error, you can carry out the operation without filtering and then filter the results on the client side.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p><code>ms_graph</code>, <code>az_group</code>, <code><a href="ms_channel.html">ms_channel</a></code>, <code><a href="ms_site.html">ms_site</a></code>, <code><a href="ms_drive.html">ms_drive</a></code></p>
-<p><a href="https://docs.microsoft.com/en-us/graph/overview" class="external-link">Microsoft Graph overview</a>,
-<a href="https://docs.microsoft.com/en-us/graph/api/resources/teams-api-overview?view=graph-rest-1.0" class="external-link">Microsoft Teams API reference</a></p></div>
+<p><a href="https://learn.microsoft.com/en-us/graph/overview" class="external-link">Microsoft Graph overview</a>,
+<a href="https://learn.microsoft.com/en-us/graph/api/resources/teams-api-overview?view=graph-rest-1.0" class="external-link">Microsoft Teams API reference</a></p></div>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">myteam</span> <span class="op">&lt;-</span> <span class="fu"><a href="client.html">get_team</a></span><span class="op">(</span><span class="st">"my team"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">myteam</span><span class="op">$</span><span class="fu">list_channels</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">myteam</span><span class="op">$</span><span class="fu">get_channel</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">myteam</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">myteam</span><span class="op">$</span><span class="fu">create_channel</span><span class="op">(</span><span class="st">"Test channel"</span>, description<span class="op">=</span><span class="st">"A channel for testing"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">myteam</span><span class="op">$</span><span class="fu">delete_channel</span><span class="op">(</span><span class="st">"Test channel"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># team members</span></span>
-<span class="r-in"><span class="va">myteam</span><span class="op">$</span><span class="fu">list_members</span><span class="op">(</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">myteam</span><span class="op">$</span><span class="fu">get_member</span><span class="op">(</span><span class="st">"Jane Smith"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">myteam</span><span class="op">$</span><span class="fu">get_member</span><span class="op">(</span>email<span class="op">=</span><span class="st">"billg@mycompany.com"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">myteam</span> <span class="op">&lt;-</span> <span class="fu"><a href="client.html">get_team</a></span><span class="op">(</span><span class="st">"my team"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">myteam</span><span class="op">$</span><span class="fu">list_channels</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">myteam</span><span class="op">$</span><span class="fu">get_channel</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">myteam</span><span class="op">$</span><span class="fu">get_drive</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">myteam</span><span class="op">$</span><span class="fu">create_channel</span><span class="op">(</span><span class="st">"Test channel"</span>, description<span class="op">=</span><span class="st">"A channel for testing"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">myteam</span><span class="op">$</span><span class="fu">delete_channel</span><span class="op">(</span><span class="st">"Test channel"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># team members</span></span></span>
+<span class="r-in"><span><span class="va">myteam</span><span class="op">$</span><span class="fu">list_members</span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">myteam</span><span class="op">$</span><span class="fu">get_member</span><span class="op">(</span><span class="st">"Jane Smith"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">myteam</span><span class="op">$</span><span class="fu">get_member</span><span class="op">(</span>email<span class="op">=</span><span class="st">"billg@mycompany.com"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -163,7 +163,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
